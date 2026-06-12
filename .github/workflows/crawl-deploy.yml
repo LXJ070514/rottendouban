@@ -1,0 +1,146 @@
+name: Crawl and Deploy
+
+on:
+  # 每周一和周四凌晨4点(UTC)自动运行，对应北京时间12点
+  schedule:
+    - cron: '0 4 * * 1,4'
+  # 支持手动触发
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  crawl-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Chrome and dependencies
+        run: |
+          # 安装 Chrome 浏览器
+          wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y /tmp/chrome.deb
+          # 安装 xvfb 虚拟显示器（让浏览器看起来有真实屏幕）
+          sudo apt-get install -y xvfb
+          # 验证 Chrome 安装
+          google-chrome --version
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run crawler with virtual display
+        env:
+          CRAWLER_HEADLESS: true
+          CI_ENV: true
+          RT_MAX_MOVIES: 50
+        run: |
+          # 启动虚拟显示器
+          Xvfb :99 -screen 0 1920x1080x24 &
+          export DISPLAY=:99
+          # 运行爬虫
+          python run.py
+
+      - name: Fix data format for website
+        run: |
+          python -c "
+          import os, sys, json, shutil
+          sys.path.insert(0, os.getcwd())
+
+          from crawler.database import Database
+          from crawler.config import POSTERS_DIR, SITE_DIR
+
+          # 1. 修复数据库中的评分格式（字符串→数字）
+          db = Database()
+          def normalize_score(value, default=-1):
+              if value is None or value == '' or value == 'None':
+                  return default
+              raw = str(value).replace('%', '').strip()
+              try:
+                  num = float(raw)
+                  return int(num) if num > 10 else round(num, 1)
+              except:
+                  return default
+
+          cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score, poster_local, douban_vote_count FROM movies')
+          for row in cursor:
+              t = normalize_score(row['tomatometer'])
+              a = normalize_score(row['audience_score'])
+              d = normalize_score(row['douban_score'])
+              w = normalize_score(row['weighted_score'])
+              vc = 0
+              try:
+                  vc = int(str(row['douban_vote_count'] or '0').replace(',', ''))
+              except:
+                  vc = 0
+              poster = row['poster_local']
+              if poster and not poster.startswith('posters/'):
+                  poster = f'posters/{poster}'
+              db.conn.execute('UPDATE movies SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=?, poster_local=?, douban_vote_count=? WHERE id=?',
+                             (t, a, d, w, poster, vc, row['id']))
+
+          # 修复评分历史
+          cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score FROM score_history')
+          for row in cursor:
+              t = normalize_score(row['tomatometer'])
+              a = normalize_score(row['audience_score'])
+              d = normalize_score(row['douban_score'])
+              w = normalize_score(row['weighted_score'])
+              db.conn.execute('UPDATE score_history SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=? WHERE id=?',
+                             (t, a, d, w, row['id']))
+          db.conn.commit()
+
+          # 2. 生成网站数据到根目录 site/
+          from crawler.main import generate_site_data
+          generate_site_data(db, 'site')
+
+          # 3. 从 crawler/site/posters 同步海报到 site/posters
+          src_posters = os.path.join('crawler', 'site', 'posters')
+          dst_posters = os.path.join('site', 'posters')
+          if os.path.exists(src_posters):
+              os.makedirs(dst_posters, exist_ok=True)
+              for f in os.listdir(src_posters):
+                  if f.lower().endswith(('jpg','jpeg','png','webp')):
+                      shutil.copy2(os.path.join(src_posters, f), os.path.join(dst_posters, f))
+
+          # 4. 也从 crawler/data/posters 同步
+          data_posters = os.path.join('crawler', 'data', 'posters')
+          if os.path.exists(data_posters):
+              for f in os.listdir(data_posters):
+                  if f.lower().endswith(('jpg','jpeg','png','webp')):
+                      shutil.copy2(os.path.join(data_posters, f), os.path.join(dst_posters, f))
+
+          db.close()
+          print('Data format fixed and site data generated')
+          "
+
+      - name: Verify site data
+        run: |
+          python -c "
+          import json
+          with open('site/data/movies.json', 'r') as f:
+              data = json.load(f)
+          print(f'Movies count: {len(data)}')
+          for m in data[:3]:
+              print(f'  {m[\"title\"]}: tomatometer={m[\"tomatometer\"]}({type(m[\"tomatometer\"]).__name__}), audience={m[\"audience_score\"]}, weighted={m[\"weighted_score\"]}, poster={m[\"poster_local\"]}')
+          "
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Auto deploy: crawl data update [skip ci]'

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RottenDouban - 烂番茄豆瓣聚合评分</title>
+    <meta name="description" content="聚合烂番茄与豆瓣评分，解决国内用户无法直接访问烂番茄的问题">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e50914">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js for trend charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <!-- html2canvas for share image generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-rt">RT</span><span class="logo-db">豆瓣</span>
+                <span class="logo-text">RottenDouban</span>
+            </div>
+            <nav class="header-nav">
+                <button id="btn-home" class="nav-btn active">首页</button>
+                <button id="btn-compare" class="nav-btn">对比</button>
+                <button id="btn-trends" class="nav-btn">趋势</button>
+                <button id="btn-recommend" class="nav-btn">推荐</button>
+            </nav>
+            <div class="header-actions">
+                <div class="search-box">
+                    <input id="search-input" type="text" placeholder="搜索电影..." autocomplete="off">
+                    <button id="search-btn" class="search-icon">🔍</button>
+                </div>
+                <button id="theme-toggle" class="icon-btn" title="切换主题">🌙</button>
+                <button id="export-btn" class="icon-btn" title="导出数据">📥</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats Bar -->
+        <section class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-value" id="stat-total">0</span>
+                <span class="stat-label">部电影</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-avg">0</span>
+                <span class="stat-label">平均加权分</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-matched">0</span>
+                <span class="stat-label">豆瓣匹配</span>
+            </div>
+        </section>
+
+        <!-- Filter Bar -->
+        <section class="filter-bar">
+            <div class="filter-group">
+                <label>分类:</label>
+                <select id="filter-category">
+                    <option value="">全部</option>
+                    <option value="影院热映">影院热映</option>
+                    <option value="即将上映">即将上映</option>
+                    <option value="家庭观影">家庭观影</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>类型:</label>
+                <select id="filter-genre">
+                    <option value="">全部</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>排序:</label>
+                <select id="filter-sort">
+                    <option value="weighted_score">加权评分</option>
+                    <option value="tomatometer">番茄影评人</option>
+                    <option value="audience_score">番茄观众</option>
+                    <option value="douban_score">豆瓣评分</option>
+                    <option value="year">年份</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Movie Grid -->
+        <section class="movie-grid" id="movie-grid"></section>
+
+        <!-- Movie Detail Modal -->
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal-content" id="modal-content">
+                <button class="modal-close" id="modal-close">&times;</button>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+
+        <!-- Compare Panel -->
+        <section class="compare-panel" id="compare-panel" style="display:none">
+            <h2>电影对比</h2>
+            <div class="compare-select-row">
+                <select id="compare-a" class="compare-select"></select>
+                <span class="compare-vs">VS</span>
+                <select id="compare-b" class="compare-select"></select>
+            </div>
+            <div class="compare-result" id="compare-result"></div>
+        </section>
+
+        <!-- Trends Panel -->
+        <section class="trends-panel" id="trends-panel" style="display:none">
+            <h2>评分趋势</h2>
+            <select id="trends-movie-select" class="trends-select"></select>
+            <div class="trends-chart-container">
+                <canvas id="trends-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Recommend Panel -->
+        <section class="recommend-panel" id="recommend-panel" style="display:none">
+            <h2>为你推荐</h2>
+            <div class="recommend-grid" id="recommend-grid"></div>
+        </section>
+    </main>
+
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="share-modal" style="display:none">
+        <div class="modal-content share-modal-content">
+            <button class="modal-close" id="share-close">&times;</button>
+            <div id="share-capture-area"></div>
+            <div class="share-actions">
+                <button id="share-download-btn">下载分享图</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal-overlay" id="export-modal" style="display:none">
+        <div class="modal-content export-modal-content">
+            <button class="modal-close" id="export-close">&times;</button>
+            <h2>导出数据</h2>
+            <div class="export-options">
+                <button id="export-json-btn" class="export-btn">导出 JSON</button>
+                <button id="export-csv-btn" class="export-btn">导出 CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>RottenDouban - 开源电影评分聚合 | 数据来自烂番茄 & 豆瓣 | <a href="https://github.com" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

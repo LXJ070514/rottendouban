@@ -1,0 +1,16 @@
+{
+    "name": "RottenDouban",
+    "short_name": "RT豆瓣",
+    "description": "聚合烂番茄与豆瓣评分，解决国内访问烂番茄问题",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#f8f9fa",
+    "theme_color": "#e50914",
+    "icons": [
+        {
+            "src": "images/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
