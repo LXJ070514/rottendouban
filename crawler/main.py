@@ -10,6 +10,7 @@ import csv
 import io
 import shutil
 import logging
+import signal
 import time
 import traceback
 import urllib.request
@@ -69,6 +70,71 @@ def setup_logging():
     logger.info(f"RottenDouban 爬虫 v3.0 启动 - {datetime.now()}")
     logger.info("=" * 60)
     return logger
+
+
+# ==================== SIGTERM 信号处理 (CI超时保存部分数据) ====================
+_partial_movies = []
+_db_instance = None
+_rt_crawler_instance = None
+
+def _sigterm_handler(signum, frame):
+    """收到 SIGTERM 时保存已有数据 (GitHub Actions 超时前约10秒触发)"""
+    logger = logging.getLogger("main")
+    logger.warning(f"收到 SIGTERM 信号! 尝试保存部分数据 ({len(_partial_movies)} 部电影)")
+
+    global _db_instance, _rt_crawler_instance
+    if _partial_movies and _db_instance:
+        try:
+            # 计算加权评分
+            for movie in _partial_movies:
+                ws = calc_weighted_score(
+                    movie.get("tomatometer", ""),
+                    movie.get("audience_score", ""),
+                    movie.get("douban_score", ""),
+                )
+                movie["weighted_score"] = f"{ws:.2f}" if ws is not None else ""
+
+            # 下载海报
+            poster_results = download_posters_concurrent(_partial_movies)
+            for movie in _partial_movies:
+                title = movie.get("title", "")
+                if title in poster_results:
+                    _, filename = poster_results[title]
+                    movie["poster_local"] = filename
+                else:
+                    movie["poster_local"] = ""
+
+            # 入库
+            success_count = _db_instance.batch_insert_movies(_partial_movies)
+            logger.warning(f"部分数据入库完成: {success_count}/{len(_partial_movies)}")
+
+            # 生成网站数据
+            from crawler.config import SITE_DIR
+            generate_site_data(_db_instance, SITE_DIR)
+            logger.warning("部分数据网站生成完成!")
+        except Exception as e:
+            logger.error(f"保存部分数据失败: {e}")
+
+    # 关闭浏览器
+    if _rt_crawler_instance:
+        try:
+            _rt_crawler_instance.close()
+        except Exception:
+            pass
+    if _db_instance:
+        try:
+            _db_instance.close()
+        except Exception:
+            pass
+
+    logger.warning("SIGTERM 处理完成, 退出")
+    sys.exit(0)
+
+# 注册信号处理
+try:
+    signal.signal(signal.SIGTERM, _sigterm_handler)
+except (OSError, ValueError):
+    pass  # Windows 不支持 SIGTERM
 
 
 # ==================== 加权评分 (参考 rottentomatoes_spider.py) ====================
@@ -261,15 +327,19 @@ def generate_site_data(db, output_dir):
 # ==================== 主流程 ====================
 def main():
     """爬虫主入口"""
+    global _db_instance, _rt_crawler_instance, _partial_movies
+
     logger = setup_logging()
     start_time = time.time()
 
     # 初始化数据库
     db = Database()
+    _db_instance = db
     logger.info("数据库初始化完成")
 
     # 初始化烂番茄爬虫
     rt_crawler = RottenTomatoesCrawler()
+    _rt_crawler_instance = rt_crawler
     logger.info("烂番茄爬虫初始化完成")
 
     # 豆瓣匹配器共用同一个 driver
@@ -286,23 +356,37 @@ def main():
         movies_list = rt_crawler.crawl_all()
         logger.info(f"烂番茄数据收集完成: {len(movies_list)} 部电影")
 
-        # 2. 豆瓣匹配和抓取
+        # 2. 豆瓣匹配和抓取 (逐部匹配，保存进度)
         logger.info("===== 开始豆瓣匹配 =====")
-        for movie in movies_list:
+        douban_timeout = int(os.environ.get("DOUBAN_PER_MOVIE_TIMEOUT", "60"))
+        for i, movie in enumerate(movies_list):
             try:
+                start_match = time.time()
                 douban_data = douban_matcher.match_and_fetch(
                     movie.get("title", ""),
-                    movie.get("original_title", "")
+                    movie.get("original_title", ""),
+                    timeout=douban_timeout,
                 )
                 # 合并豆瓣数据
                 for key, value in douban_data.items():
                     movie[key] = value
-                logger.info(f"豆瓣匹配完成: {movie.get('title')} → "
-                             f"豆瓣={douban_data.get('douban_title', '未匹配')}")
+                elapsed = time.time() - start_match
+                logger.info(f"豆瓣匹配完成 [{i+1}/{len(movies_list)}]: "
+                             f"{movie.get('title')} → "
+                             f"豆瓣={douban_data.get('douban_title', '未匹配')} "
+                             f"({elapsed:.1f}s)")
+                # 超过限定时间则跳过后续
+                if elapsed > douban_timeout:
+                    logger.warning(f"单部电影匹配超时 ({elapsed:.1f}s>{douban_timeout}s), "
+                                   f"跳过剩余豆瓣匹配")
+                    break
             except Exception as e:
                 logger.error(f"豆瓣匹配失败: {movie.get('title')} - {e}")
                 db.log_error(movie.get("rt_url", ""), "douban_match", str(e),
                              traceback.format_exc())
+
+            # 更新部分数据列表 (供 SIGTERM 使用)
+            _partial_movies = movies_list[:i+1]
 
         # 3. 计算加权评分 (使用参考代码的 _parse_score)
         logger.info("===== 计算加权评分 =====")

@@ -6,7 +6,9 @@
 - 与烂番茄共用同一个 driver，避免额外浏览器开销
 - 返回: 评分、简介、类型、导演、演员、海报、评论数、中文名
 - 指数退避重试
+- CI 环境自动缩短延迟，支持单部电影超时
 """
+import os
 import re
 import time
 import random
@@ -29,7 +31,14 @@ class DoubanMatcher:
     def __init__(self, driver=None):
         self.driver = driver
         self._cache = {}
-        self._search_delay = (1.5, 3.0)
+        # CI 环境减少延迟 (不需要模拟人类行为)
+        ci_env = os.environ.get("CI_ENV", "").lower() in ("true", "1", "yes")
+        if ci_env:
+            self._search_delay = (0.5, 1.0)
+            self._detail_delay = (1.0, 2.0)
+        else:
+            self._search_delay = (1.5, 3.0)
+            self._detail_delay = (2.0, 4.0)
 
     def _build_search_url(self, title):
         query = title.strip()
@@ -88,7 +97,7 @@ class DoubanMatcher:
 
             # 2. 访问豆瓣详情页
             self.driver.get(url)
-            time.sleep(random.uniform(2.0, 4.0))
+            time.sleep(random.uniform(*self._detail_delay))
 
             data = {'url': url, 'title': title}
 
@@ -226,16 +235,28 @@ class DoubanMatcher:
             return ''
 
     # ==================== 对外接口 (适配 main.py) ====================
-    def match_and_fetch(self, title, original_title=None):
-        """自动匹配豆瓣并抓取完整数据 (适配 main.py 的调用方式)"""
+    def match_and_fetch(self, title, original_title=None, timeout=60):
+        """自动匹配豆瓣并抓取完整数据 (适配 main.py 的调用方式)
+        timeout: 单部电影匹配最大秒数, 超时返回空结果
+        """
+        start = time.time()
         # 优先用英文原名搜索，再用中文标题
         search_title = original_title or title
         douban_info = self.find_movie(search_title, '')
 
-        if not douban_info:
+        if not douban_info and (time.time() - start) < timeout:
             # 回退: 用标题搜索
             if original_title and original_title != title:
                 douban_info = self.find_movie(title, '')
+
+        if time.time() - start > timeout:
+            logger.warning(f"豆瓣匹配超时 ({time.time()-start:.1f}s>{timeout}s): {title[:30]}")
+            return {
+                "douban_id": "", "douban_url": "", "douban_score": "",
+                "douban_vote_count": "", "douban_title": "", "douban_genre": "",
+                "douban_director": "", "douban_cast": "", "douban_synopsis": "",
+                "douban_poster": "",
+            }
 
         if douban_info:
             douban_id = ''

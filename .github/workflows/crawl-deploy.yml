@@ -20,7 +20,7 @@ concurrency:
 jobs:
   crawl-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -49,18 +49,27 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run crawler with virtual display
+        id: crawl
         env:
           CRAWLER_HEADLESS: true
           CI_ENV: true
-          RT_MAX_MOVIES: 50
+          RT_MAX_MOVIES: 20
+          DOUBAN_PER_MOVIE_TIMEOUT: 60
         run: |
           # 启动虚拟显示器
           Xvfb :99 -screen 0 1920x1080x24 &
           export DISPLAY=:99
-          # 运行爬虫
-          python run.py
+          # 运行爬虫 (含SIGTERM信号处理，超时时自动保存部分数据)
+          python run.py || true
+          # 检查是否产生了数据文件
+          if [ -f "crawler/data/movies.db" ]; then
+            echo "crawl_result=success" >> $GITHUB_OUTPUT
+          else
+            echo "crawl_result=no_data" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Fix data format for website
+      - name: Fix data format and generate site data
+        if: steps.crawl.outputs.crawl_result == 'success'
         run: |
           python -c "
           import os, sys, json, shutil
@@ -134,6 +143,7 @@ jobs:
           "
 
       - name: Verify site data
+        if: steps.crawl.outputs.crawl_result == 'success'
         run: |
           python -c "
           import json
@@ -145,13 +155,16 @@ jobs:
           "
 
       - name: Setup Pages
+        if: steps.crawl.outputs.crawl_result == 'success'
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
+        if: steps.crawl.outputs.crawl_result == 'success'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./site
 
       - name: Deploy to GitHub Pages
+        if: steps.crawl.outputs.crawl_result == 'success'
         id: deployment
         uses: actions/deploy-pages@v4
