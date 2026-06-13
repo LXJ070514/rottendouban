@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rottendouban"
+version = "5.0.0"
+description = "RottenDouban - 烂番茄豆瓣聚合评分，聚合 Rotten Tomatoes 与豆瓣评分"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "RottenDouban Contributors"},
+]
+keywords = ["rottentomatoes", "douban", "movie", "rating", "aggregation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Entertainment :: Movies",
+]
+
+dependencies = [
+    "requests>=2.31.0",
+]
+
+[project.urls]
+Homepage = "https://lxj070514.github.io/rottendouban/"
+Repository = "https://github.com/LXJ070514/rottendouban"
+
+[tool.setuptools.packages.find]
+include = ["crawler*"]

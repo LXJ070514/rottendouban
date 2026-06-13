@@ -1,0 +1,38 @@
+name: Publish Package
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish to GitHub Packages
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          twine upload \
+            --repository-url https://pypi.pkg.github.com/${{ github.repository_owner }} \
+            --skip-existing \
+            dist/*
