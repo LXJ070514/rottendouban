@@ -1,11 +1,11 @@
 """
-豆瓣电影爬虫模块 v4.0
+豆瓣电影爬虫模块 v5.0
 ============================
-- 使用豆瓣搜索 API (search.douban.com) 替代 Selenium
+- 搜索API优先 (search.douban.com), 无需浏览器, 海外IP可用
+- 豆瓣数据缓存机制: 只爬新电影, 已有数据直接使用 (只爬一次)
 - 从搜索结果页面提取嵌入的 JSON 数据 (window.__DATA__)
 - 返回: 评分、评分人数、类型、海报、中文名、豆瓣URL
-- 无需浏览器, 海外IP可用, 每部电影不到1秒
-- Selenium 作为本地回退方案 (driver 可用时自动使用)
+- Selenium 仅作为本地回退方案 (driver 可用时自动使用)
 """
 import os
 import re
@@ -20,9 +20,13 @@ import urllib.request
 from crawler.config import (
     DOUBAN_BASE_URL, DOUBAN_SEARCH_URL,
     IMAGE_RETRY_MAX, IMAGE_RETRY_BACKOFF_FACTOR,
+    DATA_DIR,
 )
 
 logger = logging.getLogger("douban")
+
+# 豆瓣缓存文件路径 (存储已匹配的豆瓣数据, 只爬一次)
+DOUBAN_CACHE_PATH = os.path.join(DATA_DIR, "douban_cache.json")
 
 # 豆瓣搜索 API 请求头 (不要设置 Accept-Encoding, urllib不自动解压gzip)
 _SEARCH_HEADERS = {
@@ -35,12 +39,13 @@ _SEARCH_HEADERS = {
 
 
 class DoubanMatcher:
-    """豆瓣电影匹配器 v4.0 — 搜索API优先, Selenium回退"""
+    """豆瓣电影匹配器 v5.0 — 缓存优先, 搜索API次之, Selenium回退"""
 
-    def __init__(self, driver=None):
+    def __init__(self, driver=None, use_cache=True):
         self.driver = driver
-        self._cache = {}
         self._use_selenium = driver is not None
+        self._use_cache = use_cache
+        self._cache = {}  # 内存缓存 (title -> douban_data)
         # CI 环境减少延迟
         ci_env = os.environ.get("CI_ENV", "").lower() in ("true", "1", "yes")
         if ci_env:
@@ -49,6 +54,57 @@ class DoubanMatcher:
         else:
             self._search_delay = (1.5, 3.0)
             self._detail_delay = (2.0, 4.0)
+        # 启动时加载持久缓存
+        if self._use_cache:
+            self._load_cache()
+
+    # ==================== 缓存机制 (豆瓣只爬一次) ====================
+
+    def _load_cache(self):
+        """从 douban_cache.json 加载持久缓存"""
+        try:
+            if os.path.exists(DOUBAN_CACHE_PATH):
+                with open(DOUBAN_CACHE_PATH, 'r', encoding='utf-8') as f:
+                    cached = json.load(f)
+                self._cache.update(cached)
+                logger.info(f"豆瓣缓存加载完成: {len(cached)} 条记录")
+            else:
+                logger.info("豆瓣缓存文件不存在, 将创建新缓存")
+        except Exception as e:
+            logger.warning(f"豆瓣缓存加载失败: {e}, 使用空缓存")
+
+    def _save_cache(self):
+        """将缓存保存到 douban_cache.json"""
+        try:
+            os.makedirs(os.path.dirname(DOUBAN_CACHE_PATH), exist_ok=True)
+            with open(DOUBAN_CACHE_PATH, 'w', encoding='utf-8') as f:
+                json.dump(self._cache, f, ensure_ascii=False, indent=2)
+            logger.info(f"豆瓣缓存保存完成: {len(self._cache)} 条记录")
+        except Exception as e:
+            logger.error(f"豆瓣缓存保存失败: {e}")
+
+    def _check_cache(self, title):
+        """检查缓存中是否已有该电影的豆瓣数据"""
+        if not self._use_cache:
+            return None
+        # 用标题作为缓存 key (支持英文原名和中文标题)
+        cache_key = f"{title.strip().lower()}"
+        if cache_key in self._cache:
+            cached_data = self._cache[cache_key]
+            if cached_data:  # 有数据 (非空匹配)
+                logger.info(f"  豆瓣缓存命中: {title[:25]} -> "
+                            f"{cached_data.get('title', 'N/A')[:25]} "
+                            f"评分:{cached_data.get('score', '-')}")
+                return cached_data
+        return None
+
+    def _update_cache(self, title, douban_data):
+        """更新缓存"""
+        if not self._use_cache:
+            return
+        cache_key = f"{title.strip().lower()}"
+        if douban_data:
+            self._cache[cache_key] = douban_data
 
     # ==================== 搜索 API 方式 (无需浏览器) ====================
 
@@ -307,14 +363,15 @@ class DoubanMatcher:
     # ==================== 对外接口 ====================
 
     def find_movie(self, title, release_date=''):
-        """匹配豆瓣电影 — 优先用搜索API, Selenium回退"""
-        cache_key = f"{title}|{release_date}"
-        if cache_key in self._cache:
-            return self._cache[cache_key]
+        """匹配豆瓣电影 — 缓存优先, 搜索API次之, Selenium回退"""
+        # 1. 先查缓存 (豆瓣只爬一次)
+        cached = self._check_cache(title)
+        if cached is not None:
+            return cached
 
         result = {}
         try:
-            # 方案1: 搜索API (快速, 无需浏览器)
+            # 2. 搜索API (快速, 无需浏览器)
             api_results = self._api_search(title)
             if api_results:
                 result = self._best_match(api_results, title)
@@ -322,18 +379,20 @@ class DoubanMatcher:
                             f"{result.get('title', 'N/A')[:25]} "
                             f"评分:{result.get('score', '-')}")
 
-            # 方案2: 如果API没找到且有driver, 回退Selenium
+            # 3. 如果API没找到且有driver, 回退Selenium
             if not result and self._use_selenium:
                 result = self._selenium_full_fetch(title, release_date)
         except Exception as err:
             logger.debug(f"豆瓣匹配异常 [{title[:30]}]: {err}")
 
-        self._cache[cache_key] = result
+        # 更新缓存
+        self._update_cache(title, result)
         return result
 
     def match_and_fetch(self, title, original_title=None, timeout=60):
         """自动匹配豆瓣并抓取完整数据 (适配 main.py)
         搜索API模式下 timeout 参数主要影响重试次数
+        缓存优先: 如果已有数据直接返回, 不再重复爬取
         """
         # 优先用英文原名搜索
         search_title = original_title or title
