@@ -1,26 +1,15 @@
-name: Crawl and Deploy v4
+name: Crawl and Deploy
 
 on:
-  # 每周一和周四凌晨4点(UTC)自动运行，对应北京时间12点
   schedule:
     - cron: '0 4 * * 1,4'
-  # 支持手动触发
   workflow_dispatch:
-  # push到main时也触发 (方便调试)
-  push:
-    branches: [main]
-    paths-ignore: ['crawler/data/douban_cache.json', 'site/data/movies.json']
-  # 暂时添加push触发 (workflow_dispatch注册后移除)
-  push:
-    paths:
-      - .github/workflows/crawl-deploy.yml
 
 permissions:
   contents: write
   pages: write
   id-token: write
 
-# 只允许一个并发部署
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -46,7 +35,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      # ==================== 步骤1: 运行爬虫 (Algolia API, 无需Chrome) ====================
       - name: Run crawler
         id: crawl
         continue-on-error: true
@@ -56,27 +44,25 @@ jobs:
           RT_MAX_MOVIES: 50
           DOUBAN_PER_MOVIE_TIMEOUT: 60
         run: |
-          echo "=== Starting crawler (Algolia API mode, no Chrome needed) ==="
+          echo "=== Starting crawler (Algolia API + Douban API, no browser) ==="
           python run.py 2>&1 ; CRAWLER_EXIT=$?
           echo "=== Crawler exit code: $CRAWLER_EXIT ==="
-          # 显示爬虫日志
-          echo "=== Crawler log (last 100 lines) ==="
+          echo "=== Crawler log (last 80 lines) ==="
           if [ -f "crawler/data/crawler.log" ]; then
-            tail -100 crawler/data/crawler.log
+            tail -80 crawler/data/crawler.log
           else
             echo "No crawler.log found"
           fi
-          # 检查数据库电影数量
           if [ -f "crawler/data/movies.db" ]; then
-            MOVIE_COUNT=$(python3 -c "
-import sys
-sys.path.insert(0, '.')
+            MOVIE_COUNT=$(python3 << 'PYEOF'
+import sys; sys.path.insert(0, '.')
 from crawler.database import Database
 db = Database()
 c = db.conn.execute('SELECT COUNT(*) FROM movies')
 print(c.fetchone()[0])
 db.close()
-")
+PYEOF
+)
             echo "Database: $MOVIE_COUNT movies"
             if [ "$MOVIE_COUNT" -gt "0" ]; then
               echo "crawl_result=success" >> $GITHUB_OUTPUT
@@ -86,22 +72,10 @@ db.close()
           else
             echo "crawl_result=no_data" >> $GITHUB_OUTPUT
           fi
-          # 显示豆瓣缓存
-          if [ -f "crawler/data/douban_cache.json" ]; then
-            CACHE_COUNT=$(python3 -c "
-import json
-with open('crawler/data/douban_cache.json','r') as f:
-    d = json.load(f)
-print(len(d))
-")
-            echo "Douban cache: $CACHE_COUNT entries"
-          fi
 
-      # ==================== 步骤2: 更新网站数据 ====================
       - name: Update site data
         if: steps.crawl.outputs.crawl_result == 'success'
-        run: |
-          python3 -c "
+        run: python3 << 'PYEOF'
 import os, sys, json, shutil
 sys.path.insert(0, os.getcwd())
 from crawler.database import Database
@@ -120,7 +94,6 @@ def normalize_score(value, default=-1):
     except:
         return default
 
-# 修复评分格式
 cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score, poster_local, douban_vote_count FROM movies')
 for row in cursor:
     t = normalize_score(row['tomatometer'])
@@ -148,10 +121,8 @@ for row in cursor:
                    (t, a, d, w, row['id']))
 db.conn.commit()
 
-# 生成网站数据
 generate_site_data(db, 'site')
 
-# 同步海报
 for src_dir in ['crawler/site/posters', 'crawler/data/posters']:
     if os.path.exists(src_dir):
         dst_dir = os.path.join('site', 'posters')
@@ -161,33 +132,25 @@ for src_dir in ['crawler/site/posters', 'crawler/data/posters']:
                 shutil.copy2(os.path.join(src_dir, f), os.path.join(dst_dir, f))
 
 db.close()
-print('Site data updated successfully')
-"
+print('Site data updated')
+PYEOF
 
-      # ==================== 步骤3: 验证网站数据 ====================
       - name: Verify site data
-        run: |
-          python3 -c "
+        run: python3 << 'PYEOF'
 import json
 try:
     with open('site/data/movies.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
-    print(f'Movies count: {len(data)}')
+    print(f'Movies: {len(data)}')
     douban_matched = [m for m in data if m.get('douban_score', -1) > 0]
     print(f'Douban matched: {len(douban_matched)}')
     for m in data[:3]:
-        title = m.get('title', '?')
-        tomato = m.get('tomatometer', '-')
-        audience = m.get('audience_score', '-')
-        douban = m.get('douban_score', '-')
-        weighted = m.get('weighted_score', '-')
-        print(f'  {title}: tomato={tomato} audience={audience} douban={douban} weighted={weighted}')
+        print(f"  {m.get('title','?')}: tomato={m.get('tomatometer','-')} audience={m.get('audience_score','-')} douban={m.get('douban_score','-')} weighted={m.get('weighted_score','-')}")
 except Exception as e:
     print(f'Error: {e}')
-"
+PYEOF
 
-      # ==================== 步骤4: 保存豆瓣缓存 ====================
-      - name: Save Douban cache to repo
+      - name: Save Douban cache
         if: steps.crawl.outputs.crawl_result == 'success'
         run: |
           if [ -f "crawler/data/douban_cache.json" ]; then
@@ -197,18 +160,11 @@ except Exception as e:
             if git diff --cached --quiet; then
               echo "No cache changes"
             else
-              CACHE_COUNT=$(python3 -c "
-import json
-with open('crawler/data/douban_cache.json','r') as f:
-    d = json.load(f)
-print(len(d))
-")
-              git commit -m "Update Douban cache: $CACHE_COUNT entries [skip ci]"
+              git commit -m "Update Douban cache [skip ci]"
               git push
             fi
           fi
 
-      # ==================== 步骤5: 部署 ====================
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
