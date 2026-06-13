@@ -56,15 +56,7 @@ jobs:
             echo "No crawler.log found"
           fi
           if [ -f "crawler/data/movies.db" ]; then
-            MOVIE_COUNT=$(python3 << 'PYEOF'
-import sys; sys.path.insert(0, '.')
-from crawler.database import Database
-db = Database()
-c = db.conn.execute('SELECT COUNT(*) FROM movies')
-print(c.fetchone()[0])
-db.close()
-PYEOF
-)
+            MOVIE_COUNT=$(python scripts/check_db.py)
             echo "Database: $MOVIE_COUNT movies"
             if [ "$MOVIE_COUNT" -gt "0" ]; then
               echo "crawl_result=success" >> $GITHUB_OUTPUT
@@ -77,80 +69,10 @@ PYEOF
 
       - name: Update site data
         if: steps.crawl.outputs.crawl_result == 'success'
-        run: python3 << 'PYEOF'
-import os, sys, json, shutil
-sys.path.insert(0, os.getcwd())
-from crawler.database import Database
-from crawler.config import POSTERS_DIR, SITE_DIR
-from crawler.main import generate_site_data
-
-db = Database()
-
-def normalize_score(value, default=-1):
-    if value is None or value == '' or value == 'None':
-        return default
-    raw = str(value).replace('%', '').strip()
-    try:
-        num = float(raw)
-        return int(num) if num > 10 else round(num, 1)
-    except:
-        return default
-
-cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score, poster_local, douban_vote_count FROM movies')
-for row in cursor:
-    t = normalize_score(row['tomatometer'])
-    a = normalize_score(row['audience_score'])
-    d = normalize_score(row['douban_score'])
-    w = normalize_score(row['weighted_score'])
-    vc = 0
-    try:
-        vc = int(str(row['douban_vote_count'] or '0').replace(',', ''))
-    except:
-        vc = 0
-    poster = row['poster_local']
-    if poster and not poster.startswith('posters/'):
-        poster = 'posters/' + poster
-    db.conn.execute('UPDATE movies SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=?, poster_local=?, douban_vote_count=? WHERE id=?',
-                   (t, a, d, w, poster, vc, row['id']))
-
-cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score FROM score_history')
-for row in cursor:
-    t = normalize_score(row['tomatometer'])
-    a = normalize_score(row['audience_score'])
-    d = normalize_score(row['douban_score'])
-    w = normalize_score(row['weighted_score'])
-    db.conn.execute('UPDATE score_history SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=? WHERE id=?',
-                   (t, a, d, w, row['id']))
-db.conn.commit()
-
-generate_site_data(db, 'site')
-
-for src_dir in ['crawler/site/posters', 'crawler/data/posters']:
-    if os.path.exists(src_dir):
-        dst_dir = os.path.join('site', 'posters')
-        os.makedirs(dst_dir, exist_ok=True)
-        for f in os.listdir(src_dir):
-            if f.lower().endswith(('jpg','jpeg','png','webp')):
-                shutil.copy2(os.path.join(src_dir, f), os.path.join(dst_dir, f))
-
-db.close()
-print('Site data updated')
-PYEOF
+        run: python scripts/update_site.py
 
       - name: Verify site data
-        run: python3 << 'PYEOF'
-import json
-try:
-    with open('site/data/movies.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    print(f'Movies: {len(data)}')
-    douban_matched = [m for m in data if m.get('douban_score', -1) > 0]
-    print(f'Douban matched: {len(douban_matched)}')
-    for m in data[:3]:
-        print(f"  {m.get('title','?')}: tomato={m.get('tomatometer','-')} audience={m.get('audience_score','-')} douban={m.get('douban_score','-')} weighted={m.get('weighted_score','-')}")
-except Exception as e:
-    print(f'Error: {e}')
-PYEOF
+        run: python scripts/verify_site.py
 
       - name: Save Douban cache
         if: steps.crawl.outputs.crawl_result == 'success'

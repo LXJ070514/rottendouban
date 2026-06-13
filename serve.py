@@ -5,7 +5,7 @@ import os
 import webbrowser
 
 PORT = 8080
-DIRECTORY = r"C:/Users/LXJ20/Desktop/烂番茄豆瓣爬虫/site"
+DIRECTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site")
 
 os.chdir(DIRECTORY)
 
