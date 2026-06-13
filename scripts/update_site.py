@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from crawler.database import Database
 from crawler.config import POSTERS_DIR, SITE_DIR
-from crawler.main import generate_site_data
+from crawler.site_generator import generate_site_data
 
 
 def normalize_score(value, default=-1):

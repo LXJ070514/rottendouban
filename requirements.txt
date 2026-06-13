@@ -1,7 +1,2 @@
-# 核心依赖 (CI必需)
+# 核心依赖 (纯API模式，无浏览器依赖)
 requests>=2.31.0
-
-# Selenium相关 (本地回退, CI不需要)
-undetected-chromedriver>=3.5.0
-selenium>=4.10.0
-selenium-stealth>=1.0.6

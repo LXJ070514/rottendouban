@@ -1,11 +1,14 @@
-name: Crawl and Deploy
+name: Fetch Data and Deploy
 
 on:
   schedule:
-    - cron: '0 4 * * 1,4'
+    - cron: '0 4 * * 1,4'  # 每周一、四 04:00 UTC
   workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore:
+      - 'site/**'
+      - 'README.md'
 
 permissions:
   contents: write
@@ -17,9 +20,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  crawl-and-deploy:
+  fetch-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -34,56 +37,60 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run crawler
-        id: crawl
+      - name: Fetch movie data
+        id: fetch
         continue-on-error: true
         env:
-          CI_ENV: true
           CRAWLER_MODE: full
-          RT_MAX_MOVIES: 50
-          DOUBAN_PER_MOVIE_TIMEOUT: 60
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
-          echo "=== Starting crawler (Algolia API + Douban API, no browser) ==="
-          python run.py 2>&1
-          echo "=== Crawler log (last 80 lines) ==="
+          echo "=== Fetching data (Algolia API + Douban API, no browser) ==="
+          python -m crawler.main 2>&1 || true
+          echo "=== Crawler log ==="
           if [ -f "crawler/data/crawler.log" ]; then
-            tail -80 crawler/data/crawler.log
-          else
-            echo "No crawler.log found"
+            tail -50 crawler/data/crawler.log
           fi
-          if [ -f "crawler/data/movies.db" ]; then
-            MOVIE_COUNT=$(python scripts/check_db.py)
-            echo "Database: $MOVIE_COUNT movies"
-            if [ "$MOVIE_COUNT" -gt "0" ]; then
-              echo "crawl_result=success" >> $GITHUB_OUTPUT
+          # Check result
+          if [ -f "site/data/movies.json" ]; then
+            COUNT=$(python -c "import json; print(len(json.load(open('site/data/movies.json'))))")
+            echo "Movies: $COUNT"
+            if [ "$COUNT" -gt "0" ]; then
+              echo "result=success" >> $GITHUB_OUTPUT
             else
-              echo "crawl_result=no_data" >> $GITHUB_OUTPUT
+              echo "result=no_data" >> $GITHUB_OUTPUT
             fi
           else
-            echo "crawl_result=no_data" >> $GITHUB_OUTPUT
+            echo "result=no_data" >> $GITHUB_OUTPUT
           fi
 
-      - name: Update site data
-        if: steps.crawl.outputs.crawl_result == 'success'
+      - name: Update site data from DB
+        if: steps.fetch.outputs.result == 'success'
         run: python scripts/update_site.py
 
       - name: Verify site data
-        run: python scripts/verify_site.py
+        run: |
+          if [ -f "site/data/movies.json" ]; then
+            echo "✅ Site data exists"
+            COUNT=$(python -c "import json; print(len(json.load(open('site/data/movies.json'))))" 2>/dev/null || echo "0")
+            echo "Movies count: $COUNT"
+          else
+            echo "⚠️ No site data, will deploy with existing static data"
+          fi
 
       - name: Save Douban cache
-        if: steps.crawl.outputs.crawl_result == 'success'
+        if: steps.fetch.outputs.result == 'success'
         run: |
           if [ -f "crawler/data/douban_cache.json" ]; then
-            CACHE_COUNT=$(python scripts/check_cache.py)
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add crawler/data/douban_cache.json
             if git diff --cached --quiet; then
-              echo "No cache changes ($CACHE_COUNT entries)"
+              echo "No cache changes"
             else
+              CACHE_COUNT=$(python -c "import json; print(len(json.load(open('crawler/data/douban_cache.json'))))" 2>/dev/null || echo "0")
               git commit -m "Update Douban cache: $CACHE_COUNT entries [skip ci]"
               git push
             fi

@@ -4,7 +4,7 @@
     "description": "聚合烂番茄与豆瓣评分，解决国内访问烂番茄问题",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#f8f9fa",
+    "background_color": "#0a0a0f",
     "theme_color": "#e50914",
     "icons": [
         {

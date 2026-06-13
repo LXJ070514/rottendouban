@@ -1,80 +1,18 @@
-写一个开源项目，目标是通过 GitHub Pages 构建一个可交互的静态电影评分网站，聚合 RottenTomatoes（烂番茄）和豆瓣评分，解决国内用户无法直接访问烂番茄的问题。
+RottenDouban v5.0 - 烂番茄豆瓣聚合评分
+==========================================
 
-爬取烂番茄网站数据：获取电影信息、影评人评分、观众评分等
-GitHub 开源：为开源运动贡献
-GitHub Pages 静态网站：生成可交互的纯静态网站，解决国内访问烂番茄问题
-豆瓣链接匹配：爬取豆瓣相关电影链接，快速定位国内平台
-定时爬取：自动定期爬取数据，自动更新网站
-电影分享模块：自动生成分享图片
-加权计算：对烂番茄影评人评分 + 观众评分 + 豆瓣评分进行加权，按加权分排序
-Headers 请求头：增加请求头反检测
-要求提出更多改进想法，并优化代码问题
-AI 建议并实现的改进：
-日志系统 (logging) 替代 print
-线程池并发下载海报 (ThreadPoolExecutor)
-批量数据库提交
-豆瓣自动匹配
-评分历史追踪 + 电影推荐
-数据库错误日志、图片下载指数退避重试
+核心功能:
+- 烂番茄新鲜度 + 爆米花指数展示
+- 豆瓣评分 + 热门短评展示
+- 加权评分 (影评人0.3 + 观众0.3 + 豆瓣0.4)
+- 纯API数据获取，无浏览器依赖
+- GitHub Actions 自动部署
+- 暗色/亮色主题，响应式布局
 
-修复各种 bug：str/int 类型错误、数据库列缺失、safe_extract 参数错误、JS 语法错误
-解决反爬：烂番茄的反爬/Cloudflare 阻止问题，要求 undetected-chromedriver + selenium-stealth + 人类行为模拟
-修复评分提取：番茄/观众评分全部显示为 -，需要多策略回退（JS → XPath → 正文正则）
-修复数据过长：导演字段 mDirector 超长导致插入失败，需要字段宽度 ALTER TABLE + 自动截断
-修复批量插入失败：一条失败导致全部丢弃 → 改为逐条 try/except
-修复 SSL 错误：图片下载 [ASN1: NOT_ENOUGH_DATA] → 改用 requests 库下载
-修复导演/演员混合：提取的数据中含有 CSS/SVG 噪声 → 添加 _clean_text() 和 _clean_name_list() 清理函数
-修复网站显示：电影名显示序号 → 去掉序号；空数据不显示"未知" → 隐藏空字段
-导演/演员重复：要求精准分离导演和演员（从 "Director:" 和 "Cast:" 标签行专门提取）
+数据源:
+- 烂番茄: Algolia 搜索 API
+- 豆瓣: 搜索 API + 缓存
 
-网站重写：要求现代、美观、可视化的设计风格
-确认评分图表正确：要求确保评分圆圈可视化正确，加权计算无误
-
-豆瓣链接：网站需要显示烂番茄和豆瓣的链接
-豆瓣内容展示：豆瓣的数据也要放到网站上展示
-重写豆瓣爬虫：要抓取豆瓣的完整信息（评分、评分人数、简介、类型、导演、演员、海报、中文名）
-
-初始化浏览器 (undetected-chromedriver 优先，selenium-stealth 回退)
-  → 应用反检测补丁 (覆盖 webdriver/plugins/chrome 等 JS 属性)
-  → 初始化数据库 (CREATE TABLE + 自动迁移)
-  → 遍历3个分类页 (影院热映/即将上映/家庭观影)
-    → _safe_get 访问列表页 → _wait_for_cloudflare 等待验证
-    → scroll_to_load + click_load_more 加载更多
-    → 收集电影详情链接
-    → 遍历每部电影
-      → parse_detail_page 解析详情页
-        → 提取标题、评级、评分 (多策略: JS → XPath → 正则)
-        → 提取类型、导演、演员 (JS精准提取，清理CSS噪声)
-        → 提取影评人共识、剧情简介、上映日期、片长、海报
-        → 豆瓣匹配 (搜索 → 详情页 → 抓取完整数据)
-        → 加权评分计算 (番茄0.3 + 观众0.3 + 豆瓣0.4，缺失按比例重新分配)
-        → 异步下载海报 (ThreadPoolExecutor + requests)
-        → 缓冲入库 (5条一批，ON DUPLICATE KEY UPDATE)
-        → 记录评分历史
-
-反检测机制（四层防护）
-Layer 1: undetected-chromedriver (最优先，专门绕过 Cloudflare)
-Layer 2: selenium-stealth (回退方案，伪装浏览器指纹)
-Layer 3: JS 属性覆盖 (webdriver, plugins, languages, chrome, permissions, devicePixelRatio)
-Layer 4: 人类行为模拟 (随机滚动、随机延时、Cloudflare 检测等待)
-
-评分提取（三重回退）
-对于番茄评分和观众评分：
-
-JS 执行读取 score-board 组件属性
-XPath 提取 [data-qa="tomatometer"] 等元素
-正文正则匹配 (\d+)% 百分比
-
-数据清理
-_clean_text(): 正则过滤 .icon-bg{fill:...} 等 CSS 片段、<svg> 标签
-_clean_name_list(): 过滤姓名列表中的 CSS/SVG 噪声、超长字符、无效项
-
-网站集成评分趋势图（折线图，复用 score_history 表）
-更好的推荐算法（结合类型、导演、评分的协同过滤）
-分享功能一键触发生成和下载
-支持数据导出 (JSON/CSV)
-增加电影对比功能
-搜索增强（模糊搜索 + 中文拼音搜索）
-网站增加暗色/亮色主题切换
-移动端 PWA 支持（离线缓存）
-
+部署:
+- 推送到 GitHub，Actions 自动获取数据并部署到 Pages
+- 本地无需运行爬虫

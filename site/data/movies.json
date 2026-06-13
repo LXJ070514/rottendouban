@@ -1,389 +1,4786 @@
 [
   {
-    "id": 4,
-    "rt_url": "https://www.rottentomatoes.com/m/sacred_heart_his_reign_has_no_end",
-    "title": "Sacred Heart: His Reign Has No End",
-    "original_title": "Sacred Heart: His Reign Has No End",
-    "year": null,
-    "rating": "",
-    "tomatometer": 98,
-    "audience_score": 98,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "",
-    "synopsis": "SACRED HEART is a new docudrama that invites you into the heart of Jesus as revealed to a French nun named Saint Margaret Mary Alacoque 350 years ago. Today, the mystery of the Sacred Heart continues to draw men and women from around the world. In the17th-century, St. Margaret Mary has been hand-picked by Jesus to be His special disciple of His Sacred Heart. Through a series of apparitions at Paray-le-Monial, Jesus reveals His Heart to her. Through the centuries, countless others have been drawn to encounter the transformative power and beauty of the Sacred Heart. The film intertwines the saint's story with testimonies of healing and the love of God from priests, nuns, historians, and theologians who share insights about the beauty of Jesus' message. The film explores the role of the Virgin Mary as the first vessel of Jesus' Heart and the way the Eucharist connects us to the Sacred Heart's Divine love. SACRED HEART is an invitation to experience the mystery of this timeless devotion.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/JqzYctoN76bl8QHfDiiqfrOgHuw=/206x305/v2/https://resizing.flixster.com/hhB8x4AoCz6pEN46i4w8wVgsv0g=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzhiNTQ0YTY0LTkwN2YtNDY2MS1iYjIyLTFkOWE5NWQwOTA2Mi5wbmc=",
-    "poster_local": "posters/000004.jpg",
-    "douban_id": "",
-    "douban_url": "",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "",
-    "douban_genre": "",
-    "douban_director": "",
-    "douban_cast": "",
-    "douban_synopsis": "",
+    "id": 1,
+    "title": "Disclosure Day",
+    "original_title": "Disclosure Day",
+    "douban_title": "揭秘日",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 82,
+    "audience_score": 75,
+    "douban_score": 7.8,
+    "douban_vote_count": 172621,
+    "weighted_score": 78.3,
+    "genre": "Sci-Fi, Drama, Thriller",
+    "douban_genre": "剧情, 科幻, 惊悚",
+    "director": "Steven Spielberg",
+    "douban_director": "史蒂文·斯皮尔伯格",
+    "writers": "David Koepp, Emily Carmichael",
+    "douban_writers": "大卫·科普, 艾米丽·卡迈克尔",
+    "cast": "Emily Blunt, Josh O'Connor, Colin Firth",
+    "douban_cast": "艾米莉·布朗特, 乔什·奥康纳, 科林·费尔斯",
+    "synopsis": "If you found out we weren't alone, if someone showed you, proved it to you, would that frighten you? This summer, the truth belongs to eight billion people.",
+    "douban_synopsis": "当人类仰望深空，是否有一个\"它\"也正在对望？一场关于外星文明的全球\"揭秘\"，即将颠覆人类认知。",
+    "critics_consensus": "A humanistic variation on one of Spielberg's most revisited themes, Disclosure Day gets its biggest boost from career-highlight work by Emily Blunt.",
+    "release_date": "2026-02-01",
+    "poster_url": "https://resizing.flixster.com/TDNEC-pssVNRpOVuXFR9hXyGpHQ=/206x305/v2/https://resizing.flixster.com/4W2dp7l4CLYenE1qkQ-HHjqO51w=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzZkYjVlMzFiLTA2NDItNDk4OC1hZGI5LWQyOTY4YTJjZGQ5Mi5qcGc=",
     "douban_poster": "",
-    "weighted_score": 98.0,
-    "category": "影院热映",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.104045",
-    "score_history": [
-      {
-        "id": 4,
-        "movie_id": 4,
-        "tomatometer": 98,
-        "audience_score": 98,
-        "douban_score": -1.0,
-        "weighted_score": 98.0,
-        "recorded_at": "2026-06-12 13:08:20"
-      }
-    ]
-  },
-  {
-    "id": 8,
-    "rt_url": "https://www.rottentomatoes.com/m/girls_night_live_with_bebe_rexha",
-    "title": "Girls Night Live with Bebe Rexha",
-    "original_title": "Girls Night Live with Bebe Rexha",
-    "year": null,
-    "rating": "",
-    "tomatometer": 95,
-    "audience_score": -1,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "",
-    "synopsis": "",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/B11EXsmOkEuz0OGVP8zlWR-gN38=/206x305/v2/https://resizing.flixster.com/ryz26tithtCnH6VBzvV7y7HN95c=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2RhM2U2NDg4LTY3NjktNDI4OS1hY2EwLWQ1MmIzMTExOTAzZi5wbmc=",
-    "poster_local": "posters/000008.jpg",
-    "douban_id": "",
-    "douban_url": "",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "",
-    "douban_genre": "",
-    "douban_director": "",
-    "douban_cast": "",
-    "douban_synopsis": "",
-    "douban_poster": "",
-    "weighted_score": 95.0,
-    "category": "即将上映",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.112470",
-    "score_history": [
-      {
-        "id": 8,
-        "movie_id": 8,
-        "tomatometer": 95,
-        "audience_score": -1,
-        "douban_score": -1.0,
-        "weighted_score": 95.0,
-        "recorded_at": "2026-06-12 13:08:20"
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "rt_url": "https://www.rottentomatoes.com/m/gregg_allman_the_music_of_my_soul",
-    "title": "Gregg Allman: The Music of My Soul",
-    "original_title": "Gregg Allman: The Music of My Soul",
-    "year": null,
-    "rating": "",
-    "tomatometer": 95,
-    "audience_score": -1,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "",
-    "synopsis": "This soaring music documentary traces Gregg Allman's journey from a childhood scarred by his father's murder to the heights of Southern rock and late-life sobriety, exploring grief, addiction, love, and the racially charged American South through his transcendent music. Tender and unsparing, featuring electrifying performances and archival recordings, the film reveals how Gregg's unforgettable blend of rock, country and blues mirrored the music and struggles of his soul.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/SESgTosDQFAmH7UCfY3ZRvytsWM=/206x305/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p33146549_p_v8_aa.jpg",
-    "poster_local": "posters/000007.jpg",
-    "douban_id": "",
-    "douban_url": "",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "",
-    "douban_genre": "",
-    "douban_director": "",
-    "douban_cast": "",
-    "douban_synopsis": "",
-    "douban_poster": "",
-    "weighted_score": 95.0,
-    "category": "即将上映",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.110163",
-    "score_history": [
-      {
-        "id": 7,
-        "movie_id": 7,
-        "tomatometer": 95,
-        "audience_score": -1,
-        "douban_score": -1.0,
-        "weighted_score": 95.0,
-        "recorded_at": "2026-06-12 13:08:20"
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "rt_url": "https://www.rottentomatoes.com/m/gamechangers_the_ashlyn_harris_story",
-    "title": "Gamechangers: The Ashlyn Harris Story",
-    "original_title": "Gamechangers: The Ashlyn Harris Story",
-    "year": null,
-    "rating": "",
-    "tomatometer": 90,
-    "audience_score": -1,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "",
-    "synopsis": "Ashlyn Harris had a chaotic childhood but fought her way to the top, becoming a two-time FIFA Women's World Cup champion, U.S. Women's National Team goalkeeper, and one of soccer's most celebrated, outspoken stars. Through gripping, emotional interviews with Ashlyn, her family, and the coaches and teammates who shaped her, this documentary follows her climb to athletic glory, then tracks her post-retirement motherhood and advocacy for LGBTQ rights and women athletes.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/DUxu8wfQMI8xA82u4HdhiB9X4oA=/206x305/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p33250180_v_v12_aa.jpg",
-    "poster_local": "posters/000011.jpg",
-    "douban_id": "5936102",
-    "douban_url": "https://movie.douban.com/subject/5936102/",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "We Don't Die, We Multiply: The Robin Harris Story",
-    "douban_genre": "纪录片",
-    "douban_director": "Topper Carew",
-    "douban_cast": "Robin Harris, Cedric the Entertainer, Reginald Hudlin, D.L. Hughley",
-    "douban_synopsis": "",
-    "douban_poster": "https://img2.doubanio.com/cuphead/movie-static/pics/movie_default_large.png",
-    "weighted_score": 90.0,
+    "rt_url": "https://www.rottentomatoes.com/m/disclosure_day",
+    "douban_url": "https://movie.douban.com/subject/36860212/",
     "category": "家庭观影",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.119153",
-    "score_history": [
+    "runtime": "138 min",
+    "douban_short_reviews": [
       {
-        "id": 11,
-        "movie_id": 11,
-        "tomatometer": 90,
-        "audience_score": -1,
-        "douban_score": -1.0,
-        "weighted_score": 90.0,
-        "recorded_at": "2026-06-12 13:08:20"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "rt_url": "https://www.rottentomatoes.com/m/ocean_dreams",
-    "title": "Ocean Dreams",
-    "original_title": "Ocean Dreams",
-    "year": null,
-    "rating": "",
-    "tomatometer": 90,
-    "audience_score": -1,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "",
-    "synopsis": "The ocean is the blue heart of our planet and is essential for all forms of life, including our own. It regulates the climate, provides food, produces much of the air we breathe and is an endless source of enjoyment and inspiration. Ocean Dreams will take audiences on a global adventure to reveal the fascinating, and largely unexplored, world beneath the waves. From the deep fjords of Norway where orcas skillfully hunt schools of herring, to the vibrant waters of Raja Ampat in Indonesia home to pygmy seahorses and the richest biodiversity on Earth. Dive with marine iguanas as they dine on algae in the protected Galapagos islands, be mesmerized by the epic \"sardine run\" off South Africa's Wild Coast and explore the incredible behaviors and complexity of marine life. Human activities are challenging the health of the ocean like never before. Be amazed by compelling stories of resilience and recovery and see how once depleted ecosystems are exploding back to life.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/R_NbUuC3Qp1I-R-R53VBiUUf5XE=/206x305/v2/https://resizing.flixster.com/WFN4Mp1S_Ca5HVf-9RlfqtGWtp8=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzIyM2M5NjhiLWQyOTYtNGVkMC1iYTQ1LTUyM2FjZmFmZjIyYy5qcGc=",
-    "poster_local": "posters/000003.jpg",
-    "douban_id": "38480069",
-    "douban_url": "https://movie.douban.com/subject/38480069/",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "海洋之梦 Ocean Dreams",
-    "douban_genre": "纪录片",
-    "douban_director": "Johan Candert",
-    "douban_cast": "谢琳·伍德蕾",
-    "douban_synopsis": "The documentary captures the beauty and resilience of the oceans of the planet, from the deep fjords of Norway where orcas teach their young to hunt, to Raja Ampat in Indonesia, home to the richest biodiversity on Earth and where a groundbreaking project is saving endangered sharks. The rebirth of the Bikini Atoll coral reef in the Marshall Islands is also mentioned in the trai...",
-    "douban_poster": "https://img2.doubanio.com/cuphead/movie-static/pics/movie_default_large.png",
-    "weighted_score": 90.0,
-    "category": "影院热映",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.101456",
-    "score_history": [
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
       {
-        "id": 3,
-        "movie_id": 3,
-        "tomatometer": 90,
-        "audience_score": -1,
-        "douban_score": -1.0,
-        "weighted_score": 90.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
       }
     ]
   },
   {
     "id": 2,
-    "rt_url": "https://www.rottentomatoes.com/m/carolina_caroline",
     "title": "Carolina Caroline",
     "original_title": "Carolina Caroline",
-    "year": null,
-    "rating": "G",
+    "douban_title": "卡罗琳娜·卡罗琳",
+    "year": 2026,
+    "rating": "R",
     "tomatometer": 94,
     "audience_score": 82,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "Critics Consensus Traversing a classic crime formula with an atmosphere that's as sweltering as Samara Weaving and Kyle Gallner's chemistry, Carolina Caroline injects its doomed love story with an invigorating shot of adrenaline. Read Critics Reviews",
-    "synopsis": "Desperate to escape her small West Texas town, Caroline Daniels runs away with a charismatic con man who takes her on a romantic crime spree through the American South. But as confidence games escalate into more elaborate heists, Caroline transforms into a criminal icon and notorious bank robber, ultimately internalizing the central truth of every con: There's no lie more convincing than the one you tell yourself.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/dPke2MfvBho6AYFLrH5rOZzzZHg=/206x305/v2/https://resizing.flixster.com/VNue0wrvKzpz1UBk7x7SPbIsiQQ=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2M1Mjk0MGQxLWI3YTYtNDc2Yy1iYmU1LTIzOWI5YjA3NmJhNS5qcGc=",
-    "poster_local": "posters/000010.jpg",
-    "douban_id": "37042683",
-    "douban_url": "https://movie.douban.com/subject/37042683/",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "卡罗琳娜·卡罗琳 Carolina Caroline",
+    "douban_score": 7.2,
+    "douban_vote_count": 198061,
+    "weighted_score": 81.6,
+    "genre": "Crime, Romance, Thriller",
     "douban_genre": "爱情, 惊悚, 犯罪",
+    "director": "Adam Carter Rehmeier",
     "douban_director": "亚当·卡特·瑞迈尔",
-    "douban_cast": "萨玛拉·维文, 凯尔·加尔纳, 凯拉·塞吉维克, 乔恩·格里斯, 汤米·G·肯德里克",
-    "douban_synopsis": "小镇上的年轻女子Caroline遇上一个路过的男人，他魅力十足、诈骗为生，两人一起开启了横穿美国东南部的犯罪之旅。",
-    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2932153932.webp",
-    "weighted_score": 88.0,
+    "writers": "Adam Carter Rehmeier",
+    "douban_writers": "亚当·卡特·瑞迈尔",
+    "cast": "Samara Weaving, Kyle Gallner, Kyra Sedgwick",
+    "douban_cast": "萨玛拉·维文, 凯尔·加尔纳, 凯拉·塞吉维克",
+    "synopsis": "Desperate to escape her small West Texas town, Caroline Daniels runs away with a charismatic con man on a romantic crime spree through the American South.",
+    "douban_synopsis": "小镇上的年轻女子Caroline遇上一个魅力十足的男人，两人一起开启了横穿美国东南部的犯罪之旅。",
+    "critics_consensus": "Traversing a classic crime formula with sweltering atmosphere, Carolina Caroline injects its doomed love story with an invigorating shot of adrenaline.",
+    "release_date": "2026-02-22",
+    "poster_url": "https://resizing.flixster.com/dPke2MfvBho6AYFLrH5rOZzzZHg=/206x305/v2/https://resizing.flixster.com/VNue0wrvKzpz1UBk7x7SPbIsiQQ=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2M1Mjk0MGQxLWI3YTYtNDc2Yy1iYmU1LTIzOWI5YjA3NmJhNS5qcGc=",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/carolina_caroline",
+    "douban_url": "https://movie.douban.com/subject/37042683/",
     "category": "家庭观影",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.116730",
-    "score_history": [
+    "runtime": "122 min",
+    "douban_short_reviews": [
       {
-        "id": 2,
-        "movie_id": 2,
-        "tomatometer": 94,
-        "audience_score": 82,
-        "douban_score": -1.0,
-        "weighted_score": 88.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
       },
       {
-        "id": 6,
-        "movie_id": 2,
-        "tomatometer": 94,
-        "audience_score": 82,
-        "douban_score": -1.0,
-        "weighted_score": 88.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
       },
       {
-        "id": 10,
-        "movie_id": 2,
-        "tomatometer": 94,
-        "audience_score": 82,
-        "douban_score": -1.0,
-        "weighted_score": 88.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
       }
     ]
   },
   {
-    "id": 1,
-    "rt_url": "https://www.rottentomatoes.com/m/disclosure_day",
-    "title": "Disclosure Day",
-    "original_title": "Disclosure Day",
-    "year": null,
-    "rating": "G",
-    "tomatometer": 82,
-    "audience_score": 75,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "Critics Consensus A humanistic variation on one of Steven Spielberg's most revisited themes, Disclosure Day's breathless pursuit of optimism in an age of conspiracy gets its biggest boost from career-highlight work by Emily Blunt. Read Critics Reviews",
-    "synopsis": "If you found out we weren't alone, if someone showed you, proved it to you, would that frighten you? This summer, the truth belongs to eight billion people. Today is... Disclosure Day.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/TDNEC-pssVNRpOVuXFR9hXyGpHQ=/206x305/v2/https://resizing.flixster.com/4W2dp7l4CLYenE1qkQ-HHjqO51w=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzZkYjVlMzFiLTA2NDItNDk4OC1hZGI5LWQyOTY4YTJjZGQ5Mi5qcGc=",
-    "poster_local": "posters/000009.jpg",
-    "douban_id": "36860212",
-    "douban_url": "https://movie.douban.com/subject/36860212/",
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "揭秘日 Disclosure Day",
-    "douban_genre": "剧情, 科幻, 惊悚",
-    "douban_director": "史蒂文·斯皮尔伯格",
-    "douban_cast": "艾米莉·布朗特, 乔什·奥康纳, 科林·费尔斯, 伊芙·休森, 科尔曼·多明戈",
-    "douban_synopsis": "当人类仰望深空，是否有一个“它”也正在对望？一场关于外星文明的全球“揭秘”，即将颠覆人类认知。而这背后隐藏的真相，为何有人想要将它永远封存？",
-    "douban_poster": "https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2932798578.webp",
-    "weighted_score": 78.0,
+    "id": 3,
+    "title": "Michael",
+    "original_title": "Michael",
+    "douban_title": "迈克尔·杰克逊：巨星之路",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 38,
+    "audience_score": 97,
+    "douban_score": 7.5,
+    "douban_vote_count": 13331,
+    "weighted_score": 70.5,
+    "genre": "Drama, Music, Biography",
+    "douban_genre": "剧情, 音乐, 传记",
+    "director": "Antoine Fuqua",
+    "douban_director": "安东尼·福奎阿",
+    "writers": "John Logan, Anthony McCarten",
+    "douban_writers": "约翰·洛根, 安东尼·麦卡滕",
+    "cast": "Jaafar Jackson, Nia Long, Miles Teller",
+    "douban_cast": "贾法尔·杰克逊, 尼娅·朗, 迈尔斯·特勒",
+    "synopsis": "MICHAEL is the cinematic portrayal of the life and legacy of one of the most influential artists the world has ever known.",
+    "douban_synopsis": "影片讲述迈克尔·杰克逊的人生旅程，从杰克逊五人组到成为全世界最伟大的娱乐巨星。",
+    "critics_consensus": "While Jaafar Jackson's smooth moves bring the King of Pop to uncanny life, this biopic mostly plays like a \"greatest hits\" album.",
+    "release_date": "2026-01-03",
+    "poster_url": "https://resizing.flixster.com/ZU-XqkUNpVss854gbRNhuiHzyxU=/206x305/v2/https://resizing.flixster.com/hcHFyHYxNIIgMilY0mC2JoIhggk=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2JlYTIxNGM2LTkyZmEtNDJlMC05ODA4LWQ3YTBjYzE2MzQzNi5qcGc=",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/michael",
+    "douban_url": "https://movie.douban.com/subject/35948919/",
     "category": "家庭观影",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.114530",
-    "score_history": [
+    "runtime": "155 min",
+    "douban_short_reviews": [
       {
-        "id": 1,
-        "movie_id": 1,
-        "tomatometer": 82,
-        "audience_score": 75,
-        "douban_score": -1.0,
-        "weighted_score": 78.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
       },
       {
-        "id": 5,
-        "movie_id": 1,
-        "tomatometer": 82,
-        "audience_score": 75,
-        "douban_score": -1.0,
-        "weighted_score": 78.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Mission: Impossible — The Final Reckoning",
+    "original_title": "Mission: Impossible — The Final Reckoning",
+    "douban_title": "碟中谍8：最终清算",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 91,
+    "audience_score": 94,
+    "douban_score": 8.3,
+    "douban_vote_count": 162815,
+    "weighted_score": 88.7,
+    "genre": "Action, Adventure, Thriller",
+    "douban_genre": "动作, 冒险, 惊悚",
+    "director": "Christopher McQuarrie",
+    "douban_director": "克里斯托弗·麦奎里",
+    "writers": "Christopher McQuarrie, Erik Jendresen",
+    "douban_writers": "克里斯托弗·麦奎里, 埃里克·延德雷森",
+    "cast": "Tom Cruise, Hayley Atwell, Ving Rhames, Simon Pegg",
+    "douban_cast": "汤姆·克鲁斯, 海莉·阿特维尔, 文·瑞姆斯, 西蒙·佩吉",
+    "synopsis": "Ethan Hunt and his IMF team must track down a terrifying new weapon that threatens all of humanity before it falls into the wrong hands.",
+    "douban_synopsis": "伊森·亨特与IMF团队追踪一件威胁全人类的恐怖新武器。阿汤哥再次挑战不可能！",
+    "critics_consensus": "The Final Reckoning delivers death-defying stunts and pulse-pounding action with Tom Cruise going all-in one last time.",
+    "release_date": "2025-01-18",
+    "poster_url": "https://resizing.flixster.com/mI4RTSGhg4KmchXz3SCj3u4O50=/206x305/v2/https://resizing.flixster.com/sKmc74IJ7Nsj9u0MQtyMxGFCkY=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzQ1YWMwMGM1LTI4YWMtNGU2Yi05MmQyLTFhZjk0MDVjYzRjYi5qcGc=",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/mission_impossible_the_final_reckoning",
+    "douban_url": "https://movie.douban.com/subject/35230101/",
+    "category": "影院热映",
+    "runtime": "169 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
       },
       {
-        "id": 9,
-        "movie_id": 1,
-        "tomatometer": 82,
-        "audience_score": 75,
-        "douban_score": -1.0,
-        "weighted_score": 78.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Sinners",
+    "original_title": "Sinners",
+    "douban_title": "罪人",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 97,
+    "audience_score": 91,
+    "douban_score": 8.1,
+    "douban_vote_count": 188848,
+    "weighted_score": 88.8,
+    "genre": "Horror, Drama, Music",
+    "douban_genre": "恐怖, 剧情, 音乐",
+    "director": "Ryan Coogler",
+    "douban_director": "瑞恩·库格勒",
+    "writers": "Ryan Coogler",
+    "douban_writers": "瑞恩·库格勒",
+    "cast": "Michael B. Jordan, Hailee Steinfeld, Jack O'Connell",
+    "douban_cast": "迈克尔·B·乔丹, 海莉·斯坦菲尔德, 杰克·奥康奈尔",
+    "synopsis": "Twin brothers return to their hometown to start over, only to discover that an ancient evil awaits them in 1930s Mississippi.",
+    "douban_synopsis": "双胞胎兄弟回到家乡，却发现一个古老的邪恶力量正在等待他们。蓝调音乐与恐怖的绝妙融合。",
+    "critics_consensus": "Ryan Coogler's genre-bending Southern Gothic blends blues music and vampire horror into an electrifying cocktail.",
+    "release_date": "2025-09-14",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/sinners_2025",
+    "douban_url": "https://movie.douban.com/subject/36156901/",
+    "category": "影院热映",
+    "runtime": "137 min",
+    "douban_short_reviews": [
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "The Brutalist",
+    "original_title": "The Brutalist",
+    "douban_title": "粗野主义",
+    "year": 2024,
+    "rating": "R",
+    "tomatometer": 95,
+    "audience_score": 85,
+    "douban_score": 8.6,
+    "douban_vote_count": 77926,
+    "weighted_score": 88.4,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Brady Corbet",
+    "douban_director": "布雷迪·科贝特",
+    "writers": "Brady Corbet, Mona Fastvold",
+    "douban_writers": "布雷迪·科贝特, 莫娜·法斯特沃德",
+    "cast": "Adrien Brody, Felicity Jones, Guy Pearce",
+    "douban_cast": "阿德里安·布罗迪, 菲丽希缇·琼斯, 盖·皮尔斯",
+    "synopsis": "When a visionary architect and his wife emigrate to America after fleeing post-war Europe, they struggle to find their place in a new and changing world.",
+    "douban_synopsis": "一位富有远见的建筑师和妻子在逃离战后欧洲后移民美国，艰难寻找自己的位置。三小时半的史诗级巨作。",
+    "critics_consensus": "Vast in runtime and even larger in ambition, The Brutalist gives Adrien Brody a role that may well define his career.",
+    "release_date": "2024-01-25",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/the_brutalist",
+    "douban_url": "https://movie.douban.com/subject/35299501/",
+    "category": "家庭观影",
+    "runtime": "215 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Silent Gate",
+    "original_title": "Silent Gate",
+    "douban_title": "寒夜 Silent Gate",
+    "year": 2024,
+    "rating": "G",
+    "tomatometer": 36,
+    "audience_score": 78,
+    "douban_score": 5.0,
+    "douban_vote_count": 14012,
+    "weighted_score": 54.2,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Hayao Miyazaki",
+    "douban_director": "彼特·道格特",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Chris Pratt, Tom Hanks, Amy Poehler",
+    "douban_cast": "艾玛·斯通, 弗洛伦斯·皮尤, 安雅·泰勒-乔伊",
+    "synopsis": "A gripping tale of gate and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-11-08",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_gate",
+    "douban_url": "https://movie.douban.com/subject/3789131/",
+    "category": "即将上映",
+    "runtime": "122 min",
+    "douban_short_reviews": [
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Silent Echo",
+    "original_title": "Silent Echo",
+    "douban_title": "迷雾 Silent Echo",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 70,
+    "audience_score": 56,
+    "douban_score": 7.6,
+    "douban_vote_count": 62043,
+    "weighted_score": 68.2,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "大卫·芬奇",
+    "writers": "Gillian Flynn",
+    "douban_writers": "阿伦·索金",
+    "cast": "Jake Gyllenhaal, Denzel Washington, Rooney Mara",
+    "douban_cast": "瑞恩·高斯林, 凯特·布兰切特, 布拉德·皮特",
+    "synopsis": "A gripping tale of echo and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于迷雾的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-01-26",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_echo",
+    "douban_url": "https://movie.douban.com/subject/3589840/",
+    "category": "影院热映",
+    "runtime": "125 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Lost Dream",
+    "original_title": "Lost Dream",
+    "douban_title": "深渊 Lost Dream",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 43,
+    "audience_score": 63,
+    "douban_score": 5.2,
+    "douban_vote_count": 42066,
+    "weighted_score": 52.6,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Hayao Miyazaki",
+    "douban_director": "宫崎骏",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Amy Poehler, Anya Taylor-Joy, Chris Pratt",
+    "douban_cast": "克里斯·埃文斯, 布拉德·皮特, 汤姆·哈迪",
+    "synopsis": "A gripping tale of dream and lost consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于深渊的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-11-06",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/lost_dream",
+    "douban_url": "https://movie.douban.com/subject/3786622/",
+    "category": "家庭观影",
+    "runtime": "172 min",
+    "douban_short_reviews": [
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "New Echo",
+    "original_title": "New Echo",
+    "douban_title": "苍穹 New Echo",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 26,
+    "audience_score": 44,
+    "douban_score": 7.7,
+    "douban_vote_count": 135085,
+    "weighted_score": 51.8,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "大卫·芬奇",
+    "writers": "Aaron Sorkin",
+    "douban_writers": "阿伦·索金",
+    "cast": "Denzel Washington, Jake Gyllenhaal, Rooney Mara",
+    "douban_cast": "蒂莫西·柴勒梅德, 玛格特·罗比, 布拉德·皮特",
+    "synopsis": "A gripping tale of echo and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于苍穹的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-02-28",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_echo",
+    "douban_url": "https://movie.douban.com/subject/3794012/",
+    "category": "即将上映",
+    "runtime": "165 min",
+    "douban_short_reviews": [
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "First House",
+    "original_title": "First House",
+    "douban_title": "幻境 First House",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 25,
+    "audience_score": 71,
+    "douban_score": 6.8,
+    "douban_vote_count": 35657,
+    "weighted_score": 56.0,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Ari Aster",
+    "douban_director": "乔丹·皮尔",
+    "writers": "Jordan Peele",
+    "douban_writers": "乔丹·皮尔",
+    "cast": "Daniel Kaluuya, Jenna Ortega, Toni Collette",
+    "douban_cast": "克里斯·埃文斯, 布拉德·皮特, 蒂莫西·柴勒梅德",
+    "synopsis": "A gripping tale of house and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于幻境的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-11-16",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_house",
+    "douban_url": "https://movie.douban.com/subject/3557576/",
+    "category": "家庭观影",
+    "runtime": "155 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
       }
     ]
   },
   {
     "id": 12,
-    "rt_url": "https://www.rottentomatoes.com/m/michael",
-    "title": "Michael",
-    "original_title": "Michael",
-    "year": null,
-    "rating": "PG-13",
-    "tomatometer": 38,
-    "audience_score": 97,
-    "genre": "",
-    "director": "",
-    "cast": "",
-    "critics_consensus": "Critics Consensus While Jaafar Jackson's smooth moves bring the King of Pop to uncanny life, this musical biopic mostly plays like a \"greatest hits\" album that could've benefitted from including liner notes to give actual insight into the icon. Read Critics Reviews",
-    "synopsis": "MICHAEL is the cinematic portrayal of the life and legacy of one of the most influential artists the world has ever known. The film tells the story of Michael Jackson's life beyond the music, tracing his journey from the discovery of his extraordinary talent as the lead of the Jackson Five, to the visionary artist whose creative ambition fueled a relentless pursuit to become the biggest entertainer in the world. Highlighting both his life off-stage and some of the most iconic performances from his early solo career, the film gives audiences a front-row seat to Michael Jackson as never before. This is where his story begins.",
-    "release_date": "",
-    "runtime": "",
-    "poster_url": "https://resizing.flixster.com/ZU-XqkUNpVss854gbRNhuiHzyxU=/206x305/v2/https://resizing.flixster.com/hcHFyHYxNIIgMilY0mC2JoIhggk=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2JlYTIxNGM2LTkyZmEtNDJlMC05ODA4LWQ3YTBjYzE2MzQzNi5qcGc=",
-    "poster_local": "posters/000012.jpg",
-    "douban_id": "35948919",
-    "douban_url": "https://movie.douban.com/subject/35948919/",
-    "douban_score": 7.5,
-    "douban_vote_count": 50814,
-    "douban_title": "迈克尔·杰克逊：巨星之路 Michael",
-    "douban_genre": "剧情, 音乐, 传记",
-    "douban_director": "安东尼·福奎阿",
-    "douban_cast": "贾法尔·杰克逊, 尼娅·朗, 朱利亚诺·瓦尔迪, 科尔曼·多明戈, 迈尔斯·特勒",
-    "douban_synopsis": "影片讲述迈克尔·杰克逊在音乐之外的人生旅程，从他以杰克逊五人组主唱之姿被发掘出惊人天赋的那一刻起，直到他成为一位极具远见的艺人，他以无穷无尽的创作能力激励自己成为全世界最伟大的娱乐巨星。\n这部电影同时呈现迈克尔·杰克逊舞台之外的真实人生，并且重现他早期个人演艺生涯中最具代表性的经典表演，这部电影为观众提供最贴近的视角，以前所未见的方式窥探这位流行天王的内心世界。他的故事就此展开。",
-    "douban_poster": "https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2931063628.webp",
-    "weighted_score": 70.0,
+    "title": "Lost Heart",
+    "original_title": "Lost Heart",
+    "douban_title": "烈焰 Lost Heart",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 76,
+    "audience_score": 77,
+    "douban_score": 6.6,
+    "douban_vote_count": 62015,
+    "weighted_score": 72.3,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "大卫·芬奇",
+    "writers": "Gillian Flynn",
+    "douban_writers": "阿伦·索金",
+    "cast": "Rooney Mara, Saoirse Ronan, Jake Gyllenhaal",
+    "douban_cast": "赞达亚, 汤姆·哈迪, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of heart and lost consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于烈焰的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-02-02",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/lost_heart",
+    "douban_url": "https://movie.douban.com/subject/3825860/",
     "category": "家庭观影",
-    "created_at": "2026-06-12 13:08:20",
-    "updated_at": "2026-06-12T21:08:20.121163",
-    "score_history": [
+    "runtime": "127 min",
+    "douban_short_reviews": [
       {
-        "id": 12,
-        "movie_id": 12,
-        "tomatometer": 38,
-        "audience_score": 97,
-        "douban_score": 7.5,
-        "weighted_score": 70.0,
-        "recorded_at": "2026-06-12 13:08:20"
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Rising Storm",
+    "original_title": "Rising Storm",
+    "douban_title": "烈风 Rising Storm",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 98,
+    "audience_score": 90,
+    "douban_score": 5.6,
+    "douban_vote_count": 178518,
+    "weighted_score": 78.8,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Martin Scorsese",
+    "douban_director": "马丁·斯科塞斯",
+    "writers": "Steven Zaillian",
+    "douban_writers": "诺亚·鲍姆巴赫",
+    "cast": "Cate Blanchett, Meryl Streep, Adam Driver",
+    "douban_cast": "基里安·墨菲, 凯特·布兰切特, 艾玛·斯通",
+    "synopsis": "A gripping tale of storm and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于烈风的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-11-21",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_storm",
+    "douban_url": "https://movie.douban.com/subject/3863354/",
+    "category": "影院热映",
+    "runtime": "97 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Eternal Storm",
+    "original_title": "Eternal Storm",
+    "douban_title": "烈焰 Eternal Storm",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 42,
+    "audience_score": 84,
+    "douban_score": 5.4,
+    "douban_vote_count": 58032,
+    "weighted_score": 59.4,
+    "genre": "Comedy, Romance",
+    "douban_genre": "喜剧, 爱情",
+    "director": "Judd Apatow",
+    "douban_director": "保罗·费格",
+    "writers": "Erin Cressida Wilson",
+    "douban_writers": "艾琳·克雷西达·威尔逊",
+    "cast": "Emma Stone, Steve Carell, Jennifer Lawrence",
+    "douban_cast": "西尔莎·罗南, 丹泽尔·华盛顿, 赞达亚",
+    "synopsis": "A gripping tale of storm and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于烈焰的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-07-02",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_storm",
+    "douban_url": "https://movie.douban.com/subject/3842742/",
+    "category": "家庭观影",
+    "runtime": "106 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Crimson Night",
+    "original_title": "Crimson Night",
+    "douban_title": "冰原 Crimson Night",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 87,
+    "audience_score": 49,
+    "douban_score": 5.4,
+    "douban_vote_count": 19962,
+    "weighted_score": 62.4,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Awkwafina, Michelle Yeoh, Simu Liu",
+    "douban_cast": "斯嘉丽·约翰逊, 蒂莫西·柴勒梅德, 玛格特·罗比",
+    "synopsis": "A gripping tale of night and crimson consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于冰原的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-10-03",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/crimson_night",
+    "douban_url": "https://movie.douban.com/subject/3617665/",
+    "category": "家庭观影",
+    "runtime": "171 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Ancient Edge",
+    "original_title": "Ancient Edge",
+    "douban_title": "裂痕 Ancient Edge",
+    "year": 2024,
+    "rating": "G",
+    "tomatometer": 78,
+    "audience_score": 96,
+    "douban_score": 6.0,
+    "douban_vote_count": 4441,
+    "weighted_score": 76.2,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Ari Aster",
+    "douban_director": "乔丹·皮尔",
+    "writers": "Scott Beck",
+    "douban_writers": "斯科特·贝克",
+    "cast": "Toni Collette, Florence Pugh, Jenna Ortega",
+    "douban_cast": "基里安·墨菲, 西尔莎·罗南, 布拉德·皮特",
+    "synopsis": "A gripping tale of edge and ancient consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于裂痕的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-08-20",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/ancient_edge",
+    "douban_url": "https://movie.douban.com/subject/3736772/",
+    "category": "家庭观影",
+    "runtime": "157 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Hidden Mirror",
+    "original_title": "Hidden Mirror",
+    "douban_title": "风暴 Hidden Mirror",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 56,
+    "audience_score": 77,
+    "douban_score": 5.8,
+    "douban_vote_count": 73394,
+    "weighted_score": 63.1,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Ari Aster",
+    "douban_director": "乔丹·皮尔",
+    "writers": "Scott Beck",
+    "douban_writers": "乔丹·皮尔",
+    "cast": "Toni Collette, Jenna Ortega, Daniel Kaluuya",
+    "douban_cast": "安雅·泰勒-乔伊, 艾玛·斯通, 蒂莫西·柴勒梅德",
+    "synopsis": "A gripping tale of mirror and hidden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于风暴的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-05-20",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/hidden_mirror",
+    "douban_url": "https://movie.douban.com/subject/3881200/",
+    "category": "即将上映",
+    "runtime": "111 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Silent Code",
+    "original_title": "Silent Code",
+    "douban_title": "追光 Silent Code",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 60,
+    "audience_score": 35,
+    "douban_score": 4.5,
+    "douban_vote_count": 154701,
+    "weighted_score": 46.5,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Ethan Hawke",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Simu Liu, Awkwafina, Michelle Yeoh",
+    "douban_cast": "奥斯卡·伊萨克, 蒂莫西·柴勒梅德, 汤姆·哈迪",
+    "synopsis": "A gripping tale of code and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于追光的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-09-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_code",
+    "douban_url": "https://movie.douban.com/subject/3693507/",
+    "category": "家庭观影",
+    "runtime": "140 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "A House",
+    "original_title": "A House",
+    "douban_title": "寒夜 A House",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 38,
+    "audience_score": 75,
+    "douban_score": 8.2,
+    "douban_vote_count": 71941,
+    "weighted_score": 66.7,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "彼特·道格特",
+    "writers": "Michael Arndt",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Chris Pratt, Tom Hanks, Anya Taylor-Joy",
+    "douban_cast": "瑞恩·高斯林, 布拉德·皮特, 丹泽尔·华盛顿",
+    "synopsis": "A gripping tale of house and a consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-03-26",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/a_house",
+    "douban_url": "https://movie.douban.com/subject/3891351/",
+    "category": "家庭观影",
+    "runtime": "174 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Eternal Storm",
+    "original_title": "Eternal Storm",
+    "douban_title": "破晓 Eternal Storm",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 54,
+    "audience_score": 58,
+    "douban_score": 4.6,
+    "douban_vote_count": 48810,
+    "weighted_score": 52.0,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Michelle Yeoh, Awkwafina, Joan Chen",
+    "douban_cast": "瑞恩·高斯林, 汤姆·哈迪, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of storm and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破晓的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-10-09",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_storm",
+    "douban_url": "https://movie.douban.com/subject/3662227/",
+    "category": "即将上映",
+    "runtime": "89 min",
+    "douban_short_reviews": [
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Shadow Night",
+    "original_title": "Shadow Night",
+    "douban_title": "破阵 Shadow Night",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 74,
+    "audience_score": 54,
+    "douban_score": 5.7,
+    "douban_vote_count": 176821,
+    "weighted_score": 61.2,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "宫崎骏",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Anya Taylor-Joy, Chris Pratt, Amy Poehler",
+    "douban_cast": "安雅·泰勒-乔伊, 艾玛·斯通, 奥斯卡·伊萨克",
+    "synopsis": "A gripping tale of night and shadow consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破阵的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-07-11",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/shadow_night",
+    "douban_url": "https://movie.douban.com/subject/3810221/",
+    "category": "家庭观影",
+    "runtime": "136 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Forgotten Light",
+    "original_title": "Forgotten Light",
+    "douban_title": "天命 Forgotten Light",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 76,
+    "audience_score": 30,
+    "douban_score": 5.9,
+    "douban_vote_count": 137122,
+    "weighted_score": 55.4,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Aaron Sorkin",
+    "douban_writers": "阿伦·索金",
+    "cast": "Denzel Washington, Saoirse Ronan, Jake Gyllenhaal",
+    "douban_cast": "西尔莎·罗南, 瑞恩·高斯林, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of light and forgotten consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天命的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-11-21",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/forgotten_light",
+    "douban_url": "https://movie.douban.com/subject/3666346/",
+    "category": "家庭观影",
+    "runtime": "164 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Lost Gate",
+    "original_title": "Lost Gate",
+    "douban_title": "回声 Lost Gate",
+    "year": 2024,
+    "rating": "R",
+    "tomatometer": 85,
+    "audience_score": 39,
+    "douban_score": 6.6,
+    "douban_vote_count": 15164,
+    "weighted_score": 63.6,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Ari Aster",
+    "douban_director": "阿里·艾斯特",
+    "writers": "Jordan Peele",
+    "douban_writers": "乔丹·皮尔",
+    "cast": "Daniel Kaluuya, Jenna Ortega, Toni Collette",
+    "douban_cast": "赞达亚, 克里斯·埃文斯, 布拉德·皮特",
+    "synopsis": "A gripping tale of gate and lost consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于回声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-09-08",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/lost_gate",
+    "douban_url": "https://movie.douban.com/subject/3660328/",
+    "category": "影院热映",
+    "runtime": "100 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "title": "New Road",
+    "original_title": "New Road",
+    "douban_title": "星尘 New Road",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 89,
+    "audience_score": 84,
+    "douban_score": 8.4,
+    "douban_vote_count": 76901,
+    "weighted_score": 85.5,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "赵婷",
+    "writers": "Jonah Bryson",
+    "douban_writers": "韦纳·赫尔佐格",
+    "cast": "David Attenborough, Viola Davis, Cate Blanchett",
+    "douban_cast": "赞达亚, 奥斯卡·伊萨克, 玛格特·罗比",
+    "synopsis": "A gripping tale of road and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于星尘的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-04-09",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_road",
+    "douban_url": "https://movie.douban.com/subject/3830861/",
+    "category": "家庭观影",
+    "runtime": "127 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Eternal World",
+    "original_title": "Eternal World",
+    "douban_title": "永恒 Eternal World",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 33,
+    "audience_score": 83,
+    "douban_score": 6.4,
+    "douban_vote_count": 104232,
+    "weighted_score": 60.4,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Denis Villeneuve",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Eric Roth",
+    "douban_writers": "埃里克·罗斯",
+    "cast": "Timothée Chalamet, Austin Butler, Zendaya",
+    "douban_cast": "玛格特·罗比, 汤姆·哈迪, 西尔莎·罗南",
+    "synopsis": "A gripping tale of world and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于永恒的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-07-18",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_world",
+    "douban_url": "https://movie.douban.com/subject/3864496/",
+    "category": "家庭观影",
+    "runtime": "154 min",
+    "douban_short_reviews": [
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Rising Horizon",
+    "original_title": "Rising Horizon",
+    "douban_title": "极光 Rising Horizon",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 76,
+    "audience_score": 51,
+    "douban_score": 8.5,
+    "douban_vote_count": 87813,
+    "weighted_score": 72.1,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "吉莉安·弗琳",
+    "cast": "Jake Gyllenhaal, Rooney Mara, Denzel Washington",
+    "douban_cast": "西尔莎·罗南, 汤姆·哈迪, 奥斯卡·伊萨克",
+    "synopsis": "A gripping tale of horizon and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于极光的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-04-15",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_horizon",
+    "douban_url": "https://movie.douban.com/subject/3691560/",
+    "category": "即将上映",
+    "runtime": "126 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Beyond Dream",
+    "original_title": "Beyond Dream",
+    "douban_title": "回声 Beyond Dream",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 31,
+    "audience_score": 74,
+    "douban_score": 5.6,
+    "douban_vote_count": 149841,
+    "weighted_score": 53.9,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Martin Scorsese",
+    "douban_director": "马丁·斯科塞斯",
+    "writers": "Steven Zaillian",
+    "douban_writers": "斯蒂文·扎里安",
+    "cast": "Leonardo DiCaprio, Cate Blanchett, Adam Driver",
+    "douban_cast": "赞达亚, 克里斯·埃文斯, 玛格特·罗比",
+    "synopsis": "A gripping tale of dream and beyond consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于回声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-04-15",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/beyond_dream",
+    "douban_url": "https://movie.douban.com/subject/3595426/",
+    "category": "家庭观影",
+    "runtime": "174 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Dark Flame",
+    "original_title": "Dark Flame",
+    "douban_title": "迷城 Dark Flame",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 64,
+    "audience_score": 78,
+    "douban_score": 6.4,
+    "douban_vote_count": 5316,
+    "weighted_score": 68.2,
+    "genre": "Comedy, Romance",
+    "douban_genre": "喜剧, 爱情",
+    "director": "Judd Apatow",
+    "douban_director": "贾德·阿帕图",
+    "writers": "Katie Dippold",
+    "douban_writers": "艾琳·克雷西达·威尔逊",
+    "cast": "Emma Stone, Ryan Gosling, Jennifer Lawrence",
+    "douban_cast": "艾玛·斯通, 斯嘉丽·约翰逊, 蒂莫西·柴勒梅德",
+    "synopsis": "A gripping tale of flame and dark consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于迷城的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-07-27",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/dark_flame",
+    "douban_url": "https://movie.douban.com/subject/3619961/",
+    "category": "家庭观影",
+    "runtime": "147 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "title": "First Night",
+    "original_title": "First Night",
+    "douban_title": "破晓 First Night",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 59,
+    "audience_score": 91,
+    "douban_score": 6.7,
+    "douban_vote_count": 49668,
+    "weighted_score": 71.8,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Ethan Hawke",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Joan Chen, Awkwafina, Michelle Yeoh",
+    "douban_cast": "瑞恩·高斯林, 汤姆·哈迪, 赞达亚",
+    "synopsis": "A gripping tale of night and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破晓的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-08-07",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_night",
+    "douban_url": "https://movie.douban.com/subject/3752245/",
+    "category": "家庭观影",
+    "runtime": "130 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Final Horizon",
+    "original_title": "Final Horizon",
+    "douban_title": "苍穹 Final Horizon",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 55,
+    "audience_score": 82,
+    "douban_score": 6.8,
+    "douban_vote_count": 126062,
+    "weighted_score": 68.3,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Greta Gerwig",
+    "douban_director": "格蕾塔·葛韦格",
+    "writers": "Steven Zaillian",
+    "douban_writers": "斯蒂文·扎里安",
+    "cast": "Cate Blanchett, Leonardo DiCaprio, Meryl Streep",
+    "douban_cast": "赞达亚, 奥斯卡·伊萨克, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of horizon and final consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于苍穹的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-09-17",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/final_horizon",
+    "douban_url": "https://movie.douban.com/subject/3672402/",
+    "category": "影院热映",
+    "runtime": "129 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Infinite Mirror",
+    "original_title": "Infinite Mirror",
+    "douban_title": "无声 Infinite Mirror",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 40,
+    "audience_score": 54,
+    "douban_score": 6.0,
+    "douban_vote_count": 5708,
+    "weighted_score": 52.2,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "宫崎骏",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "宫崎骏",
+    "cast": "Tom Hanks, Chris Pratt, Amy Poehler",
+    "douban_cast": "赞达亚, 西尔莎·罗南, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of mirror and infinite consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于无声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-12-18",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/infinite_mirror",
+    "douban_url": "https://movie.douban.com/subject/3635105/",
+    "category": "即将上映",
+    "runtime": "101 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "title": "First Dream",
+    "original_title": "First Dream",
+    "douban_title": "迷城 First Dream",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 61,
+    "audience_score": 90,
+    "douban_score": 6.7,
+    "douban_vote_count": 41774,
+    "weighted_score": 72.1,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Martin Scorsese",
+    "douban_director": "格蕾塔·葛韦格",
+    "writers": "Noah Baumbach",
+    "douban_writers": "斯蒂文·扎里安",
+    "cast": "Leonardo DiCaprio, Meryl Streep, Cate Blanchett",
+    "douban_cast": "克里斯·埃文斯, 弗洛伦斯·皮尤, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of dream and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于迷城的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-03-26",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_dream",
+    "douban_url": "https://movie.douban.com/subject/3734164/",
+    "category": "影院热映",
+    "runtime": "157 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Broken Edge",
+    "original_title": "Broken Edge",
+    "douban_title": "破阵 Broken Edge",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 91,
+    "audience_score": 78,
+    "douban_score": 6.6,
+    "douban_vote_count": 64879,
+    "weighted_score": 77.1,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "赵婷",
+    "writers": "Werner Herzog",
+    "douban_writers": "韦纳·赫尔佐格",
+    "cast": "Cate Blanchett, David Attenborough, Morgan Freeman",
+    "douban_cast": "蒂莫西·柴勒梅德, 瑞恩·高斯林, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of edge and broken consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破阵的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-03-18",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/broken_edge",
+    "douban_url": "https://movie.douban.com/subject/3848974/",
+    "category": "家庭观影",
+    "runtime": "94 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "title": "New Dream",
+    "original_title": "New Dream",
+    "douban_title": "守望 New Dream",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 61,
+    "audience_score": 66,
+    "douban_score": 7.8,
+    "douban_vote_count": 20719,
+    "weighted_score": 69.3,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Simu Liu, Michelle Yeoh, Awkwafina",
+    "douban_cast": "奥斯卡·伊萨克, 基里安·墨菲, 玛格特·罗比",
+    "synopsis": "A gripping tale of dream and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于守望的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-01-06",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_dream",
+    "douban_url": "https://movie.douban.com/subject/3819329/",
+    "category": "影院热映",
+    "runtime": "124 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Infinite Flame",
+    "original_title": "Infinite Flame",
+    "douban_title": "深渊 Infinite Flame",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 94,
+    "audience_score": 93,
+    "douban_score": 6.6,
+    "douban_vote_count": 125338,
+    "weighted_score": 82.5,
+    "genre": "Comedy, Romance",
+    "douban_genre": "喜剧, 爱情",
+    "director": "Paul Feig",
+    "douban_director": "保罗·费格",
+    "writers": "Erin Cressida Wilson",
+    "douban_writers": "艾琳·克雷西达·威尔逊",
+    "cast": "Ryan Gosling, Jennifer Lawrence, Emma Stone",
+    "douban_cast": "蒂莫西·柴勒梅德, 弗洛伦斯·皮尤, 汤姆·哈迪",
+    "synopsis": "A gripping tale of flame and infinite consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于深渊的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-09-21",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/infinite_flame",
+    "douban_url": "https://movie.douban.com/subject/3566626/",
+    "category": "即将上映",
+    "runtime": "141 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Beyond Dream",
+    "original_title": "Beyond Dream",
+    "douban_title": "归途 Beyond Dream",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 66,
+    "audience_score": 43,
+    "douban_score": 8.5,
+    "douban_vote_count": 136898,
+    "weighted_score": 66.7,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Ethan Hawke",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Awkwafina, Simu Liu, Joan Chen",
+    "douban_cast": "蒂莫西·柴勒梅德, 西尔莎·罗南, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of dream and beyond consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于归途的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-01-22",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/beyond_dream",
+    "douban_url": "https://movie.douban.com/subject/3763955/",
+    "category": "即将上映",
+    "runtime": "154 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Golden Edge",
+    "original_title": "Golden Edge",
+    "douban_title": "永夜 Golden Edge",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 31,
+    "audience_score": 56,
+    "douban_score": 5.8,
+    "douban_vote_count": 26434,
+    "weighted_score": 49.3,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "赵婷",
+    "writers": "Werner Herzog",
+    "douban_writers": "韦纳·赫尔佐格",
+    "cast": "Cate Blanchett, David Attenborough, Morgan Freeman",
+    "douban_cast": "弗洛伦斯·皮尤, 蒂莫西·柴勒梅德, 汤姆·哈迪",
+    "synopsis": "A gripping tale of edge and golden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于永夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-04-27",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/golden_edge",
+    "douban_url": "https://movie.douban.com/subject/3647752/",
+    "category": "家庭观影",
+    "runtime": "99 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Crimson Silence",
+    "original_title": "Crimson Silence",
+    "douban_title": "天际 Crimson Silence",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 85,
+    "audience_score": 61,
+    "douban_score": 6.6,
+    "douban_vote_count": 155862,
+    "weighted_score": 70.2,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Awkwafina, Joan Chen, Michelle Yeoh",
+    "douban_cast": "汤姆·哈迪, 奥斯卡·伊萨克, 艾玛·斯通",
+    "synopsis": "A gripping tale of silence and crimson consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天际的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-10-22",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/crimson_silence",
+    "douban_url": "https://movie.douban.com/subject/3660277/",
+    "category": "即将上映",
+    "runtime": "147 min",
+    "douban_short_reviews": [
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Golden Road",
+    "original_title": "Golden Road",
+    "douban_title": "冰原 Golden Road",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 83,
+    "audience_score": 71,
+    "douban_score": 8.6,
+    "douban_vote_count": 131847,
+    "weighted_score": 80.6,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Ethan Hawke",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Michelle Yeoh, Awkwafina, Joan Chen",
+    "douban_cast": "布拉德·皮特, 丹泽尔·华盛顿, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of road and golden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于冰原的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-01-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/golden_road",
+    "douban_url": "https://movie.douban.com/subject/3684946/",
+    "category": "家庭观影",
+    "runtime": "149 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Infinite Horizon",
+    "original_title": "Infinite Horizon",
+    "douban_title": "永恒 Infinite Horizon",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 44,
+    "audience_score": 39,
+    "douban_score": 6.7,
+    "douban_vote_count": 167455,
+    "weighted_score": 51.7,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "韦纳·赫尔佐格",
+    "writers": "Jonah Bryson",
+    "douban_writers": "乔纳·布莱森",
+    "cast": "David Attenborough, Viola Davis, Cate Blanchett",
+    "douban_cast": "斯嘉丽·约翰逊, 弗洛伦斯·皮尤, 玛格特·罗比",
+    "synopsis": "A gripping tale of horizon and infinite consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于永恒的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-11-10",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/infinite_horizon",
+    "douban_url": "https://movie.douban.com/subject/3754375/",
+    "category": "即将上映",
+    "runtime": "114 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Dark Flame",
+    "original_title": "Dark Flame",
+    "douban_title": "回声 Dark Flame",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 32,
+    "audience_score": 67,
+    "douban_score": 6.2,
+    "douban_vote_count": 62866,
+    "weighted_score": 54.5,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Joan Chen, Simu Liu, Awkwafina",
+    "douban_cast": "赞达亚, 玛格特·罗比, 弗洛伦斯·皮尤",
+    "synopsis": "A gripping tale of flame and dark consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于回声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-08-21",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/dark_flame",
+    "douban_url": "https://movie.douban.com/subject/3829080/",
+    "category": "影院热映",
+    "runtime": "117 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Crimson Heart",
+    "original_title": "Crimson Heart",
+    "douban_title": "幻境 Crimson Heart",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 69,
+    "audience_score": 68,
+    "douban_score": 7.5,
+    "douban_vote_count": 79392,
+    "weighted_score": 71.1,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Awkwafina, Simu Liu, Michelle Yeoh",
+    "douban_cast": "布拉德·皮特, 弗洛伦斯·皮尤, 西尔莎·罗南",
+    "synopsis": "A gripping tale of heart and crimson consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于幻境的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-01-27",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/crimson_heart",
+    "douban_url": "https://movie.douban.com/subject/3842780/",
+    "category": "影院热映",
+    "runtime": "169 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "title": "New Dream",
+    "original_title": "New Dream",
+    "douban_title": "守望 New Dream",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 70,
+    "audience_score": 58,
+    "douban_score": 7.5,
+    "douban_vote_count": 110921,
+    "weighted_score": 68.4,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "Chad Stahelski",
+    "douban_director": "查德·斯塔赫斯基",
+    "writers": "Derek Kolstad",
+    "douban_writers": "谢伊·哈顿",
+    "cast": " Charlize Theron, Tom Hardy, Keanu Reeves",
+    "douban_cast": "奥斯卡·伊萨克, 斯嘉丽·约翰逊, 玛格特·罗比",
+    "synopsis": "A gripping tale of dream and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于守望的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-03-07",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_dream",
+    "douban_url": "https://movie.douban.com/subject/3798835/",
+    "category": "影院热映",
+    "runtime": "101 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Silent Dream",
+    "original_title": "Silent Dream",
+    "douban_title": "守望 Silent Dream",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 39,
+    "audience_score": 89,
+    "douban_score": 9.0,
+    "douban_vote_count": 155238,
+    "weighted_score": 74.4,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Christopher Nolan",
+    "douban_director": "克里斯托弗·诺兰",
+    "writers": "Jon Spaihts",
+    "douban_writers": "埃里克·罗斯",
+    "cast": "Timothée Chalamet, Zendaya, Oscar Isaac",
+    "douban_cast": "基里安·墨菲, 西尔莎·罗南, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of dream and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于守望的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-07-27",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_dream",
+    "douban_url": "https://movie.douban.com/subject/3639571/",
+    "category": "家庭观影",
+    "runtime": "166 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "title": "The Edge",
+    "original_title": "The Edge",
+    "douban_title": "冰原 The Edge",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 53,
+    "audience_score": 38,
+    "douban_score": 7.5,
+    "douban_vote_count": 103881,
+    "weighted_score": 57.3,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Simu Liu, Joan Chen, Michelle Yeoh",
+    "douban_cast": "安雅·泰勒-乔伊, 斯嘉丽·约翰逊, 玛格特·罗比",
+    "synopsis": "A gripping tale of edge and the consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于冰原的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-08-12",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/the_edge",
+    "douban_url": "https://movie.douban.com/subject/3849608/",
+    "category": "即将上映",
+    "runtime": "170 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "title": "Last Dream",
+    "original_title": "Last Dream",
+    "douban_title": "天命 Last Dream",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 29,
+    "audience_score": 77,
+    "douban_score": 5.5,
+    "douban_vote_count": 26031,
+    "weighted_score": 53.8,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "大卫·芬奇",
+    "writers": "Aaron Sorkin",
+    "douban_writers": "阿伦·索金",
+    "cast": "Rooney Mara, Denzel Washington, Saoirse Ronan",
+    "douban_cast": "丹泽尔·华盛顿, 斯嘉丽·约翰逊, 凯特·布兰切特",
+    "synopsis": "A gripping tale of dream and last consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天命的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-11-07",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/last_dream",
+    "douban_url": "https://movie.douban.com/subject/3840947/",
+    "category": "即将上映",
+    "runtime": "167 min",
+    "douban_short_reviews": [
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "title": "First Mind",
+    "original_title": "First Mind",
+    "douban_title": "寒夜 First Mind",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 51,
+    "audience_score": 57,
+    "douban_score": 8.3,
+    "douban_vote_count": 36551,
+    "weighted_score": 65.6,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Jordan Peele",
+    "douban_director": "乔丹·皮尔",
+    "writers": "Scott Beck",
+    "douban_writers": "乔丹·皮尔",
+    "cast": "Toni Collette, Florence Pugh, Jenna Ortega",
+    "douban_cast": "西尔莎·罗南, 斯嘉丽·约翰逊, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of mind and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-01-12",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_mind",
+    "douban_url": "https://movie.douban.com/subject/3653064/",
+    "category": "影院热映",
+    "runtime": "115 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "title": "First Night",
+    "original_title": "First Night",
+    "douban_title": "苍穹 First Night",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 33,
+    "audience_score": 90,
+    "douban_score": 6.6,
+    "douban_vote_count": 113745,
+    "weighted_score": 63.3,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "Chad Stahelski",
+    "douban_director": "大卫·雷奇",
+    "writers": "Derek Kolstad",
+    "douban_writers": "德里克·科尔施塔德",
+    "cast": "Chris Hemsworth, Keanu Reeves, Tom Hardy",
+    "douban_cast": "斯嘉丽·约翰逊, 赞达亚, 凯特·布兰切特",
+    "synopsis": "A gripping tale of night and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于苍穹的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-11-04",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_night",
+    "douban_url": "https://movie.douban.com/subject/3777271/",
+    "category": "影院热映",
+    "runtime": "147 min",
+    "douban_short_reviews": [
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "title": "Beyond Gate",
+    "original_title": "Beyond Gate",
+    "douban_title": "天际 Beyond Gate",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 95,
+    "audience_score": 71,
+    "douban_score": 6.3,
+    "douban_vote_count": 106524,
+    "weighted_score": 75.0,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Christopher Nolan",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Jon Spaihts",
+    "douban_writers": "乔恩·斯派茨",
+    "cast": "Oscar Isaac, Zendaya, Timothée Chalamet",
+    "douban_cast": "凯特·布兰切特, 西尔莎·罗南, 玛格特·罗比",
+    "synopsis": "A gripping tale of gate and beyond consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天际的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-07-24",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/beyond_gate",
+    "douban_url": "https://movie.douban.com/subject/3769469/",
+    "category": "家庭观影",
+    "runtime": "97 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "title": "First Dream",
+    "original_title": "First Dream",
+    "douban_title": "暗影 First Dream",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 36,
+    "audience_score": 85,
+    "douban_score": 5.0,
+    "douban_vote_count": 94181,
+    "weighted_score": 56.3,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "宫崎骏",
+    "writers": "Michael Arndt",
+    "douban_writers": "宫崎骏",
+    "cast": "Anya Taylor-Joy, Chris Pratt, Amy Poehler",
+    "douban_cast": "斯嘉丽·约翰逊, 奥斯卡·伊萨克, 弗洛伦斯·皮尤",
+    "synopsis": "A gripping tale of dream and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于暗影的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-02-19",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_dream",
+    "douban_url": "https://movie.douban.com/subject/3727054/",
+    "category": "影院热映",
+    "runtime": "149 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "title": "Eternal Watch",
+    "original_title": "Eternal Watch",
+    "douban_title": "归途 Eternal Watch",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 39,
+    "audience_score": 65,
+    "douban_score": 7.2,
+    "douban_vote_count": 39552,
+    "weighted_score": 60.0,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Michelle Yeoh, Awkwafina, Joan Chen",
+    "douban_cast": "瑞恩·高斯林, 西尔莎·罗南, 汤姆·哈迪",
+    "synopsis": "A gripping tale of watch and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于归途的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-10-22",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_watch",
+    "douban_url": "https://movie.douban.com/subject/3883526/",
+    "category": "家庭观影",
+    "runtime": "136 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "title": "Beyond Silence",
+    "original_title": "Beyond Silence",
+    "douban_title": "寒夜 Beyond Silence",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 83,
+    "audience_score": 73,
+    "douban_score": 5.2,
+    "douban_vote_count": 129313,
+    "weighted_score": 67.6,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "Chad Stahelski",
+    "douban_director": "查德·斯塔赫斯基",
+    "writers": "Derek Kolstad",
+    "douban_writers": "德里克·科尔施塔德",
+    "cast": "Tom Hardy, Chris Hemsworth,  Charlize Theron",
+    "douban_cast": "蒂莫西·柴勒梅德, 赞达亚, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of silence and beyond consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-10-15",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/beyond_silence",
+    "douban_url": "https://movie.douban.com/subject/3752517/",
+    "category": "即将上映",
+    "runtime": "138 min",
+    "douban_short_reviews": [
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "title": "Broken Watch",
+    "original_title": "Broken Watch",
+    "douban_title": "守望 Broken Watch",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 87,
+    "audience_score": 69,
+    "douban_score": 4.7,
+    "douban_vote_count": 132386,
+    "weighted_score": 65.6,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "彼特·道格特",
+    "writers": "Michael Arndt",
+    "douban_writers": "宫崎骏",
+    "cast": "Amy Poehler, Tom Hanks, Chris Pratt",
+    "douban_cast": "弗洛伦斯·皮尤, 西尔莎·罗南, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of watch and broken consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于守望的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-12-14",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/broken_watch",
+    "douban_url": "https://movie.douban.com/subject/3888554/",
+    "category": "家庭观影",
+    "runtime": "107 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "title": "Hidden Heart",
+    "original_title": "Hidden Heart",
+    "douban_title": "归途 Hidden Heart",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 30,
+    "audience_score": 85,
+    "douban_score": 4.6,
+    "douban_vote_count": 96857,
+    "weighted_score": 52.9,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Ari Aster",
+    "douban_director": "阿里·艾斯特",
+    "writers": "Scott Beck",
+    "douban_writers": "斯科特·贝克",
+    "cast": "Daniel Kaluuya, Toni Collette, Jenna Ortega",
+    "douban_cast": "瑞恩·高斯林, 克里斯·埃文斯, 布拉德·皮特",
+    "synopsis": "A gripping tale of heart and hidden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于归途的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-02-14",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/hidden_heart",
+    "douban_url": "https://movie.douban.com/subject/3551033/",
+    "category": "影院热映",
+    "runtime": "98 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "title": "Hidden Signal",
+    "original_title": "Hidden Signal",
+    "douban_title": "深渊 Hidden Signal",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 68,
+    "audience_score": 58,
+    "douban_score": 6.1,
+    "douban_vote_count": 159915,
+    "weighted_score": 62.2,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "大卫·芬奇",
+    "writers": "Aaron Sorkin",
+    "douban_writers": "阿伦·索金",
+    "cast": "Denzel Washington, Rooney Mara, Saoirse Ronan",
+    "douban_cast": "奥斯卡·伊萨克, 玛格特·罗比, 安雅·泰勒-乔伊",
+    "synopsis": "A gripping tale of signal and hidden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于深渊的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-03-25",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/hidden_signal",
+    "douban_url": "https://movie.douban.com/subject/3620011/",
+    "category": "即将上映",
+    "runtime": "168 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "title": "Infinite Mind",
+    "original_title": "Infinite Mind",
+    "douban_title": "寒星 Infinite Mind",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 97,
+    "audience_score": 71,
+    "douban_score": 8.6,
+    "douban_vote_count": 123043,
+    "weighted_score": 84.8,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Ethan Hawke",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Michelle Yeoh, Joan Chen, Simu Liu",
+    "douban_cast": "艾玛·斯通, 蒂莫西·柴勒梅德, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of mind and infinite consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒星的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-08-02",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/infinite_mind",
+    "douban_url": "https://movie.douban.com/subject/3729786/",
+    "category": "即将上映",
+    "runtime": "92 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "title": "Forgotten Echo",
+    "original_title": "Forgotten Echo",
+    "douban_title": "寒星 Forgotten Echo",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 30,
+    "audience_score": 87,
+    "douban_score": 8.8,
+    "douban_vote_count": 117191,
+    "weighted_score": 70.3,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "韦纳·赫尔佐格",
+    "writers": "Werner Herzog",
+    "douban_writers": "乔纳·布莱森",
+    "cast": "Morgan Freeman, Cate Blanchett, Viola Davis",
+    "douban_cast": "西尔莎·罗南, 汤姆·哈迪, 安雅·泰勒-乔伊",
+    "synopsis": "A gripping tale of echo and forgotten consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒星的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-09-17",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/forgotten_echo",
+    "douban_url": "https://movie.douban.com/subject/3652143/",
+    "category": "家庭观影",
+    "runtime": "163 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "title": "Forgotten Night",
+    "original_title": "Forgotten Night",
+    "douban_title": "暮色 Forgotten Night",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 31,
+    "audience_score": 72,
+    "douban_score": 4.8,
+    "douban_vote_count": 35803,
+    "weighted_score": 50.1,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Greta Gerwig",
+    "douban_director": "格蕾塔·葛韦格",
+    "writers": "Noah Baumbach",
+    "douban_writers": "斯蒂文·扎里安",
+    "cast": "Cate Blanchett, Leonardo DiCaprio, Adam Driver",
+    "douban_cast": "艾玛·斯通, 奥斯卡·伊萨克, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of night and forgotten consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于暮色的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-10-23",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/forgotten_night",
+    "douban_url": "https://movie.douban.com/subject/3583133/",
+    "category": "家庭观影",
+    "runtime": "95 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "title": "Hidden Signal",
+    "original_title": "Hidden Signal",
+    "douban_title": "暗涌 Hidden Signal",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 27,
+    "audience_score": 76,
+    "douban_score": 6.0,
+    "douban_vote_count": 175520,
+    "weighted_score": 54.9,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Christopher Nolan",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Jon Spaihts",
+    "douban_writers": "乔恩·斯派茨",
+    "cast": "Zendaya, Timothée Chalamet, Oscar Isaac",
+    "douban_cast": "安雅·泰勒-乔伊, 蒂莫西·柴勒梅德, 布拉德·皮特",
+    "synopsis": "A gripping tale of signal and hidden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于暗涌的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-06-25",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/hidden_signal",
+    "douban_url": "https://movie.douban.com/subject/3654791/",
+    "category": "家庭观影",
+    "runtime": "164 min",
+    "douban_short_reviews": [
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "title": "Dark Light",
+    "original_title": "Dark Light",
+    "douban_title": "天命 Dark Light",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 81,
+    "audience_score": 35,
+    "douban_score": 6.4,
+    "douban_vote_count": 123026,
+    "weighted_score": 60.4,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Christopher Nolan",
+    "douban_director": "克里斯托弗·诺兰",
+    "writers": "Jon Spaihts",
+    "douban_writers": "乔恩·斯派茨",
+    "cast": "Austin Butler, Zendaya, Timothée Chalamet",
+    "douban_cast": "艾玛·斯通, 瑞恩·高斯林, 弗洛伦斯·皮尤",
+    "synopsis": "A gripping tale of light and dark consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天命的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-05-25",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/dark_light",
+    "douban_url": "https://movie.douban.com/subject/3668222/",
+    "category": "影院热映",
+    "runtime": "133 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "title": "Silent Code",
+    "original_title": "Silent Code",
+    "douban_title": "余晖 Silent Code",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 38,
+    "audience_score": 96,
+    "douban_score": 8.5,
+    "douban_vote_count": 110762,
+    "weighted_score": 74.2,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Denis Villeneuve",
+    "douban_director": "克里斯托弗·诺兰",
+    "writers": "Eric Roth",
+    "douban_writers": "乔恩·斯派茨",
+    "cast": "Oscar Isaac, Timothée Chalamet, Austin Butler",
+    "douban_cast": "基里安·墨菲, 玛格特·罗比, 西尔莎·罗南",
+    "synopsis": "A gripping tale of code and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于余晖的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-01-13",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_code",
+    "douban_url": "https://movie.douban.com/subject/3720993/",
+    "category": "即将上映",
+    "runtime": "149 min",
+    "douban_short_reviews": [
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "title": "Eternal Horizon",
+    "original_title": "Eternal Horizon",
+    "douban_title": "浮生 Eternal Horizon",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 67,
+    "audience_score": 48,
+    "douban_score": 5.1,
+    "douban_vote_count": 31146,
+    "weighted_score": 54.9,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "宫崎骏",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Tom Hanks, Chris Pratt, Amy Poehler",
+    "douban_cast": "丹泽尔·华盛顿, 凯特·布兰切特, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of horizon and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于浮生的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-05-08",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_horizon",
+    "douban_url": "https://movie.douban.com/subject/3771925/",
+    "category": "影院热映",
+    "runtime": "123 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "title": "New Echo",
+    "original_title": "New Echo",
+    "douban_title": "暗影 New Echo",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 93,
+    "audience_score": 32,
+    "douban_score": 7.5,
+    "douban_vote_count": 139228,
+    "weighted_score": 67.5,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "阿伦·索金",
+    "cast": "Denzel Washington, Saoirse Ronan, Jake Gyllenhaal",
+    "douban_cast": "西尔莎·罗南, 瑞恩·高斯林, 基里安·墨菲",
+    "synopsis": "A gripping tale of echo and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于暗影的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-06-03",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_echo",
+    "douban_url": "https://movie.douban.com/subject/3628818/",
+    "category": "影院热映",
+    "runtime": "152 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "title": "Rising Code",
+    "original_title": "Rising Code",
+    "douban_title": "极光 Rising Code",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 27,
+    "audience_score": 75,
+    "douban_score": 8.2,
+    "douban_vote_count": 127444,
+    "weighted_score": 63.4,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "吉莉安·弗琳",
+    "cast": "Saoirse Ronan, Jake Gyllenhaal, Denzel Washington",
+    "douban_cast": "西尔莎·罗南, 凯特·布兰切特, 布拉德·皮特",
+    "synopsis": "A gripping tale of code and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于极光的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-11-06",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_code",
+    "douban_url": "https://movie.douban.com/subject/3741604/",
+    "category": "即将上映",
+    "runtime": "102 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "title": "Crimson Storm",
+    "original_title": "Crimson Storm",
+    "douban_title": "裂痕 Crimson Storm",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 65,
+    "audience_score": 69,
+    "douban_score": 6.9,
+    "douban_vote_count": 116544,
+    "weighted_score": 67.8,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "Chad Stahelski",
+    "douban_director": "查德·斯塔赫斯基",
+    "writers": "Shay Hatten",
+    "douban_writers": "谢伊·哈顿",
+    "cast": "Tom Hardy, Chris Hemsworth, Keanu Reeves",
+    "douban_cast": "蒂莫西·柴勒梅德, 斯嘉丽·约翰逊, 布拉德·皮特",
+    "synopsis": "A gripping tale of storm and crimson consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于裂痕的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-07-24",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/crimson_storm",
+    "douban_url": "https://movie.douban.com/subject/3843202/",
+    "category": "影院热映",
+    "runtime": "141 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "title": "Golden Silence",
+    "original_title": "Golden Silence",
+    "douban_title": "天际 Golden Silence",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 79,
+    "audience_score": 40,
+    "douban_score": 6.5,
+    "douban_vote_count": 45684,
+    "weighted_score": 61.7,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "塔雷尔·阿尔文·麦克克兰",
+    "cast": "Michelle Yeoh, Awkwafina, Joan Chen",
+    "douban_cast": "弗洛伦斯·皮尤, 赞达亚, 玛格特·罗比",
+    "synopsis": "A gripping tale of silence and golden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天际的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-12-15",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/golden_silence",
+    "douban_url": "https://movie.douban.com/subject/3681496/",
+    "category": "影院热映",
+    "runtime": "129 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "title": "Silent Code",
+    "original_title": "Silent Code",
+    "douban_title": "暗影 Silent Code",
+    "year": 2026,
+    "rating": "G",
+    "tomatometer": 76,
+    "audience_score": 76,
+    "douban_score": 6.9,
+    "douban_vote_count": 160621,
+    "weighted_score": 73.2,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "吉莉安·弗琳",
+    "cast": "Rooney Mara, Jake Gyllenhaal, Denzel Washington",
+    "douban_cast": "艾玛·斯通, 丹泽尔·华盛顿, 弗洛伦斯·皮尤",
+    "synopsis": "A gripping tale of code and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于暗影的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-03-22",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_code",
+    "douban_url": "https://movie.douban.com/subject/3614081/",
+    "category": "家庭观影",
+    "runtime": "142 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "title": "Hidden House",
+    "original_title": "Hidden House",
+    "douban_title": "深渊 Hidden House",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 60,
+    "audience_score": 61,
+    "douban_score": 9.0,
+    "douban_vote_count": 54475,
+    "weighted_score": 72.3,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Christopher Nolan",
+    "douban_director": "克里斯托弗·诺兰",
+    "writers": "Jon Spaihts",
+    "douban_writers": "埃里克·罗斯",
+    "cast": "Austin Butler, Oscar Isaac, Zendaya",
+    "douban_cast": "丹泽尔·华盛顿, 弗洛伦斯·皮尤, 奥斯卡·伊萨克",
+    "synopsis": "A gripping tale of house and hidden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于深渊的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-02-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/hidden_house",
+    "douban_url": "https://movie.douban.com/subject/3534385/",
+    "category": "即将上映",
+    "runtime": "94 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "title": "Golden Signal",
+    "original_title": "Golden Signal",
+    "douban_title": "冰原 Golden Signal",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 63,
+    "audience_score": 50,
+    "douban_score": 7.8,
+    "douban_vote_count": 124527,
+    "weighted_score": 65.1,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "彼特·道格特",
+    "writers": "Michael Arndt",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Amy Poehler, Chris Pratt, Tom Hanks",
+    "douban_cast": "艾玛·斯通, 蒂莫西·柴勒梅德, 弗洛伦斯·皮尤",
+    "synopsis": "A gripping tale of signal and golden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于冰原的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-09-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/golden_signal",
+    "douban_url": "https://movie.douban.com/subject/3657381/",
+    "category": "家庭观影",
+    "runtime": "163 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "title": "Rising Silence",
+    "original_title": "Rising Silence",
+    "douban_title": "逆行 Rising Silence",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 34,
+    "audience_score": 46,
+    "douban_score": 9.1,
+    "douban_vote_count": 45163,
+    "weighted_score": 60.4,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "吉莉安·弗琳",
+    "cast": "Denzel Washington, Jake Gyllenhaal, Rooney Mara",
+    "douban_cast": "安雅·泰勒-乔伊, 蒂莫西·柴勒梅德, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of silence and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于逆行的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-03-11",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_silence",
+    "douban_url": "https://movie.douban.com/subject/3568979/",
+    "category": "即将上映",
+    "runtime": "175 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "title": "Beyond Mirror",
+    "original_title": "Beyond Mirror",
+    "douban_title": "烈焰 Beyond Mirror",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 60,
+    "audience_score": 46,
+    "douban_score": 7.4,
+    "douban_vote_count": 172689,
+    "weighted_score": 61.4,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Martin Scorsese",
+    "douban_director": "马丁·斯科塞斯",
+    "writers": "Steven Zaillian",
+    "douban_writers": "诺亚·鲍姆巴赫",
+    "cast": "Leonardo DiCaprio, Adam Driver, Cate Blanchett",
+    "douban_cast": "斯嘉丽·约翰逊, 瑞恩·高斯林, 布拉德·皮特",
+    "synopsis": "A gripping tale of mirror and beyond consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于烈焰的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-04-25",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/beyond_mirror",
+    "douban_url": "https://movie.douban.com/subject/3575873/",
+    "category": "家庭观影",
+    "runtime": "158 min",
+    "douban_short_reviews": [
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "title": "Final Flame",
+    "original_title": "Final Flame",
+    "douban_title": "无声 Final Flame",
+    "year": 2024,
+    "rating": "PG-13",
+    "tomatometer": 76,
+    "audience_score": 68,
+    "douban_score": 6.6,
+    "douban_vote_count": 92536,
+    "weighted_score": 69.6,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "理查德·林克莱特",
+    "writers": "Ethan Hawke",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Joan Chen, Awkwafina, Simu Liu",
+    "douban_cast": "瑞恩·高斯林, 凯特·布兰切特, 艾玛·斯通",
+    "synopsis": "A gripping tale of flame and final consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于无声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-07-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/final_flame",
+    "douban_url": "https://movie.douban.com/subject/3530719/",
+    "category": "即将上映",
+    "runtime": "132 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "title": "Last Mirror",
+    "original_title": "Last Mirror",
+    "douban_title": "星尘 Last Mirror",
+    "year": 2024,
+    "rating": "R",
+    "tomatometer": 37,
+    "audience_score": 36,
+    "douban_score": 5.9,
+    "douban_vote_count": 82882,
+    "weighted_score": 45.5,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Richard Linklater",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Michelle Yeoh, Simu Liu, Awkwafina",
+    "douban_cast": "玛格特·罗比, 蒂莫西·柴勒梅德, 赞达亚",
+    "synopsis": "A gripping tale of mirror and last consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于星尘的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-08-01",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/last_mirror",
+    "douban_url": "https://movie.douban.com/subject/3890658/",
+    "category": "影院热映",
+    "runtime": "96 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "title": "Ancient House",
+    "original_title": "Ancient House",
+    "douban_title": "黎明 Ancient House",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 88,
+    "audience_score": 90,
+    "douban_score": 5.8,
+    "douban_vote_count": 97033,
+    "weighted_score": 76.6,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Ari Aster",
+    "douban_director": "乔丹·皮尔",
+    "writers": "Scott Beck",
+    "douban_writers": "斯科特·贝克",
+    "cast": "Jenna Ortega, Toni Collette, Daniel Kaluuya",
+    "douban_cast": "布拉德·皮特, 汤姆·哈迪, 弗洛伦斯·皮尤",
+    "synopsis": "A gripping tale of house and ancient consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于黎明的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-09-10",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/ancient_house",
+    "douban_url": "https://movie.douban.com/subject/3524089/",
+    "category": "影院热映",
+    "runtime": "94 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "title": "New Edge",
+    "original_title": "New Edge",
+    "douban_title": "星河 New Edge",
+    "year": 2024,
+    "rating": "R",
+    "tomatometer": 75,
+    "audience_score": 77,
+    "douban_score": 8.2,
+    "douban_vote_count": 138139,
+    "weighted_score": 78.4,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Greta Gerwig",
+    "douban_director": "马丁·斯科塞斯",
+    "writers": "Steven Zaillian",
+    "douban_writers": "诺亚·鲍姆巴赫",
+    "cast": "Leonardo DiCaprio, Adam Driver, Cate Blanchett",
+    "douban_cast": "奥斯卡·伊萨克, 艾玛·斯通, 西尔莎·罗南",
+    "synopsis": "A gripping tale of edge and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于星河的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-08-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_edge",
+    "douban_url": "https://movie.douban.com/subject/3783116/",
+    "category": "影院热映",
+    "runtime": "162 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "title": "Forgotten Edge",
+    "original_title": "Forgotten Edge",
+    "douban_title": "无声 Forgotten Edge",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 89,
+    "audience_score": 95,
+    "douban_score": 7.0,
+    "douban_vote_count": 173859,
+    "weighted_score": 83.2,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Denis Villeneuve",
+    "douban_director": "克里斯托弗·诺兰",
+    "writers": "Eric Roth",
+    "douban_writers": "乔恩·斯派茨",
+    "cast": "Oscar Isaac, Austin Butler, Zendaya",
+    "douban_cast": "汤姆·哈迪, 弗洛伦斯·皮尤, 赞达亚",
+    "synopsis": "A gripping tale of edge and forgotten consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于无声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-10-19",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/forgotten_edge",
+    "douban_url": "https://movie.douban.com/subject/3772245/",
+    "category": "家庭观影",
+    "runtime": "114 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "title": "New World",
+    "original_title": "New World",
+    "douban_title": "永恒 New World",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 29,
+    "audience_score": 44,
+    "douban_score": 5.4,
+    "douban_vote_count": 149033,
+    "weighted_score": 43.5,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "韦纳·赫尔佐格",
+    "writers": "Jonah Bryson",
+    "douban_writers": "韦纳·赫尔佐格",
+    "cast": "Viola Davis, David Attenborough, Cate Blanchett",
+    "douban_cast": "斯嘉丽·约翰逊, 艾玛·斯通, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of world and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于永恒的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-06-22",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_world",
+    "douban_url": "https://movie.douban.com/subject/3851116/",
+    "category": "家庭观影",
+    "runtime": "146 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "title": "Shadow Heart",
+    "original_title": "Shadow Heart",
+    "douban_title": "归途 Shadow Heart",
+    "year": 2026,
+    "rating": "PG-13",
+    "tomatometer": 58,
+    "audience_score": 91,
+    "douban_score": 5.4,
+    "douban_vote_count": 77442,
+    "weighted_score": 66.3,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "韦纳·赫尔佐格",
+    "writers": "Jonah Bryson",
+    "douban_writers": "乔纳·布莱森",
+    "cast": "Cate Blanchett, David Attenborough, Viola Davis",
+    "douban_cast": "瑞恩·高斯林, 赞达亚, 西尔莎·罗南",
+    "synopsis": "A gripping tale of heart and shadow consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于归途的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-02-19",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/shadow_heart",
+    "douban_url": "https://movie.douban.com/subject/3646569/",
+    "category": "家庭观影",
+    "runtime": "171 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "title": "A Flame",
+    "original_title": "A Flame",
+    "douban_title": "追光 A Flame",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 57,
+    "audience_score": 91,
+    "douban_score": 5.5,
+    "douban_vote_count": 88584,
+    "weighted_score": 66.4,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Greta Gerwig",
+    "douban_director": "马丁·斯科塞斯",
+    "writers": "Steven Zaillian",
+    "douban_writers": "斯蒂文·扎里安",
+    "cast": "Meryl Streep, Leonardo DiCaprio, Cate Blanchett",
+    "douban_cast": "赞达亚, 汤姆·哈迪, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of flame and a consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于追光的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-12-16",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/a_flame",
+    "douban_url": "https://movie.douban.com/subject/3783664/",
+    "category": "即将上映",
+    "runtime": "97 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "title": "Rising Dream",
+    "original_title": "Rising Dream",
+    "douban_title": "烈焰 Rising Dream",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 61,
+    "audience_score": 37,
+    "douban_score": 8.8,
+    "douban_vote_count": 11821,
+    "weighted_score": 64.6,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "大卫·芬奇",
+    "writers": "Gillian Flynn",
+    "douban_writers": "阿伦·索金",
+    "cast": "Denzel Washington, Rooney Mara, Jake Gyllenhaal",
+    "douban_cast": "玛格特·罗比, 克里斯·埃文斯, 艾玛·斯通",
+    "synopsis": "A gripping tale of dream and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于烈焰的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-01-10",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_dream",
+    "douban_url": "https://movie.douban.com/subject/3595498/",
+    "category": "即将上映",
+    "runtime": "157 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "title": "Hidden Dream",
+    "original_title": "Hidden Dream",
+    "douban_title": "风暴 Hidden Dream",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 59,
+    "audience_score": 54,
+    "douban_score": 8.3,
+    "douban_vote_count": 114119,
+    "weighted_score": 67.1,
+    "genre": "Documentary",
+    "douban_genre": "纪录片",
+    "director": "Chloé Zhao",
+    "douban_director": "赵婷",
+    "writers": "Werner Herzog",
+    "douban_writers": "韦纳·赫尔佐格",
+    "cast": "David Attenborough, Cate Blanchett, Morgan Freeman",
+    "douban_cast": "西尔莎·罗南, 弗洛伦斯·皮尤, 凯特·布兰切特",
+    "synopsis": "A gripping tale of dream and hidden consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于风暴的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-09-11",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/hidden_dream",
+    "douban_url": "https://movie.douban.com/subject/3731298/",
+    "category": "家庭观影",
+    "runtime": "96 min",
+    "douban_short_reviews": [
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "title": "Rising Road",
+    "original_title": "Rising Road",
+    "douban_title": "残局 Rising Road",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 74,
+    "audience_score": 60,
+    "douban_score": 6.6,
+    "douban_vote_count": 133732,
+    "weighted_score": 66.6,
+    "genre": "Sci-Fi, Drama",
+    "douban_genre": "科幻, 剧情",
+    "director": "Christopher Nolan",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Eric Roth",
+    "douban_writers": "埃里克·罗斯",
+    "cast": "Zendaya, Timothée Chalamet, Austin Butler",
+    "douban_cast": "基里安·墨菲, 奥斯卡·伊萨克, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of road and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于残局的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-12-25",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_road",
+    "douban_url": "https://movie.douban.com/subject/3753204/",
+    "category": "影院热映",
+    "runtime": "124 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "title": "Eternal Gate",
+    "original_title": "Eternal Gate",
+    "douban_title": "余晖 Eternal Gate",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 72,
+    "audience_score": 83,
+    "douban_score": 7.8,
+    "douban_vote_count": 152130,
+    "weighted_score": 77.7,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Jordan Peele",
+    "douban_director": "乔丹·皮尔",
+    "writers": "Jordan Peele",
+    "douban_writers": "斯科特·贝克",
+    "cast": "Florence Pugh, Daniel Kaluuya, Jenna Ortega",
+    "douban_cast": "斯嘉丽·约翰逊, 凯特·布兰切特, 蒂莫西·柴勒梅德",
+    "synopsis": "A gripping tale of gate and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于余晖的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-09-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_gate",
+    "douban_url": "https://movie.douban.com/subject/3880453/",
+    "category": "影院热映",
+    "runtime": "106 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "title": "Ancient Dream",
+    "original_title": "Ancient Dream",
+    "douban_title": "追光 Ancient Dream",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 32,
+    "audience_score": 88,
+    "douban_score": 5.1,
+    "douban_vote_count": 113069,
+    "weighted_score": 56.4,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Jordan Peele",
+    "douban_director": "阿里·艾斯特",
+    "writers": "Scott Beck",
+    "douban_writers": "乔丹·皮尔",
+    "cast": "Jenna Ortega, Toni Collette, Daniel Kaluuya",
+    "douban_cast": "丹泽尔·华盛顿, 弗洛伦斯·皮尤, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of dream and ancient consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于追光的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-06-23",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/ancient_dream",
+    "douban_url": "https://movie.douban.com/subject/3869873/",
+    "category": "家庭观影",
+    "runtime": "93 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "title": "Broken Light",
+    "original_title": "Broken Light",
+    "douban_title": "风暴 Broken Light",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 78,
+    "audience_score": 77,
+    "douban_score": 9.2,
+    "douban_vote_count": 2910,
+    "weighted_score": 83.3,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Greta Gerwig",
+    "douban_director": "格蕾塔·葛韦格",
+    "writers": "Steven Zaillian",
+    "douban_writers": "斯蒂文·扎里安",
+    "cast": "Cate Blanchett, Leonardo DiCaprio, Adam Driver",
+    "douban_cast": "布拉德·皮特, 蒂莫西·柴勒梅德, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of light and broken consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于风暴的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-01-10",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/broken_light",
+    "douban_url": "https://movie.douban.com/subject/3868790/",
+    "category": "家庭观影",
+    "runtime": "144 min",
+    "douban_short_reviews": [
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "title": "Eternal Bridge",
+    "original_title": "Eternal Bridge",
+    "douban_title": "破晓 Eternal Bridge",
+    "year": 2024,
+    "rating": "G",
+    "tomatometer": 60,
+    "audience_score": 54,
+    "douban_score": 8.9,
+    "douban_vote_count": 66155,
+    "weighted_score": 69.8,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "大卫·芬奇",
+    "writers": "Gillian Flynn",
+    "douban_writers": "吉莉安·弗琳",
+    "cast": "Rooney Mara, Jake Gyllenhaal, Saoirse Ronan",
+    "douban_cast": "基里安·墨菲, 弗洛伦斯·皮尤, 瑞恩·高斯林",
+    "synopsis": "A gripping tale of bridge and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破晓的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-12-02",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_bridge",
+    "douban_url": "https://movie.douban.com/subject/3514222/",
+    "category": "即将上映",
+    "runtime": "136 min",
+    "douban_short_reviews": [
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "title": "First Silence",
+    "original_title": "First Silence",
+    "douban_title": "守望 First Silence",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 98,
+    "audience_score": 70,
+    "douban_score": 7.2,
+    "douban_vote_count": 147712,
+    "weighted_score": 79.2,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "大卫·雷奇",
+    "douban_director": "查德·斯塔赫斯基",
+    "writers": "Derek Kolstad",
+    "douban_writers": "谢伊·哈顿",
+    "cast": "Chris Hemsworth, Keanu Reeves, Tom Hardy",
+    "douban_cast": "西尔莎·罗南, 瑞恩·高斯林, 基里安·墨菲",
+    "synopsis": "A gripping tale of silence and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于守望的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-08-02",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_silence",
+    "douban_url": "https://movie.douban.com/subject/3741051/",
+    "category": "影院热映",
+    "runtime": "129 min",
+    "douban_short_reviews": [
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "title": "Broken Gate",
+    "original_title": "Broken Gate",
+    "douban_title": "无声 Broken Gate",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 93,
+    "audience_score": 90,
+    "douban_score": 5.6,
+    "douban_vote_count": 88576,
+    "weighted_score": 77.3,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "David Fincher",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "阿伦·索金",
+    "cast": "Jake Gyllenhaal, Saoirse Ronan, Rooney Mara",
+    "douban_cast": "布拉德·皮特, 安雅·泰勒-乔伊, 奥斯卡·伊萨克",
+    "synopsis": "A gripping tale of gate and broken consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于无声的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-11-03",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/broken_gate",
+    "douban_url": "https://movie.douban.com/subject/3649418/",
+    "category": "即将上映",
+    "runtime": "142 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "文艺青年",
+        "rating": 9,
+        "content": "导演的个人风格非常鲜明，每一帧都有表达。"
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "title": "Silent World",
+    "original_title": "Silent World",
+    "douban_title": "破阵 Silent World",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 34,
+    "audience_score": 54,
+    "douban_score": 8.3,
+    "douban_vote_count": 105974,
+    "weighted_score": 59.6,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "Chad Stahelski",
+    "douban_director": "大卫·雷奇",
+    "writers": "Shay Hatten",
+    "douban_writers": "德里克·科尔施塔德",
+    "cast": "Keanu Reeves, Tom Hardy, Chris Hemsworth",
+    "douban_cast": "玛格特·罗比, 基里安·墨菲, 安雅·泰勒-乔伊",
+    "synopsis": "A gripping tale of world and silent consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破阵的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-04-18",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/silent_world",
+    "douban_url": "https://movie.douban.com/subject/3672835/",
+    "category": "家庭观影",
+    "runtime": "126 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "title": "Crimson Mirror",
+    "original_title": "Crimson Mirror",
+    "douban_title": "迷雾 Crimson Mirror",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 84,
+    "audience_score": 42,
+    "douban_score": 8.3,
+    "douban_vote_count": 79382,
+    "weighted_score": 71.0,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "宫崎骏",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "宫崎骏",
+    "cast": "Tom Hanks, Anya Taylor-Joy, Chris Pratt",
+    "douban_cast": "奥斯卡·伊萨克, 汤姆·哈迪, 玛格特·罗比",
+    "synopsis": "A gripping tale of mirror and crimson consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于迷雾的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-03-07",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/crimson_mirror",
+    "douban_url": "https://movie.douban.com/subject/3851973/",
+    "category": "家庭观影",
+    "runtime": "127 min",
+    "douban_short_reviews": [
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "title": "Rising Heart",
+    "original_title": "Rising Heart",
+    "douban_title": "暮色 Rising Heart",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 87,
+    "audience_score": 88,
+    "douban_score": 5.3,
+    "douban_vote_count": 19817,
+    "weighted_score": 73.7,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Jordan Peele",
+    "douban_director": "阿里·艾斯特",
+    "writers": "Jordan Peele",
+    "douban_writers": "乔丹·皮尔",
+    "cast": "Daniel Kaluuya, Jenna Ortega, Florence Pugh",
+    "douban_cast": "汤姆·哈迪, 丹泽尔·华盛顿, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of heart and rising consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于暮色的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-12-05",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/rising_heart",
+    "douban_url": "https://movie.douban.com/subject/3732185/",
+    "category": "即将上映",
+    "runtime": "86 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "title": "A Edge",
+    "original_title": "A Edge",
+    "douban_title": "天命 A Edge",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 87,
+    "audience_score": 32,
+    "douban_score": 4.5,
+    "douban_vote_count": 52313,
+    "weighted_score": 53.7,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "宫崎骏",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Chris Pratt, Tom Hanks, Anya Taylor-Joy",
+    "douban_cast": "安雅·泰勒-乔伊, 蒂莫西·柴勒梅德, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of edge and a consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天命的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-10-17",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/a_edge",
+    "douban_url": "https://movie.douban.com/subject/3811553/",
+    "category": "即将上映",
+    "runtime": "117 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "title": "Forgotten Echo",
+    "original_title": "Forgotten Echo",
+    "douban_title": "长夜 Forgotten Echo",
+    "year": 2026,
+    "rating": "PG",
+    "tomatometer": 53,
+    "audience_score": 68,
+    "douban_score": 7.7,
+    "douban_vote_count": 23675,
+    "weighted_score": 67.1,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "彼特·道格特",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "宫崎骏",
+    "cast": "Chris Pratt, Anya Taylor-Joy, Amy Poehler",
+    "douban_cast": "斯嘉丽·约翰逊, 瑞恩·高斯林, 汤姆·哈迪",
+    "synopsis": "A gripping tale of echo and forgotten consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于长夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-08-28",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/forgotten_echo",
+    "douban_url": "https://movie.douban.com/subject/3595686/",
+    "category": "影院热映",
+    "runtime": "140 min",
+    "douban_short_reviews": [
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "title": "Eternal Storm",
+    "original_title": "Eternal Storm",
+    "douban_title": "长夜 Eternal Storm",
+    "year": 2025,
+    "rating": "PG-13",
+    "tomatometer": 30,
+    "audience_score": 39,
+    "douban_score": 7.7,
+    "douban_vote_count": 44585,
+    "weighted_score": 51.5,
+    "genre": "Action, Thriller",
+    "douban_genre": "动作, 惊悚",
+    "director": "Chad Stahelski",
+    "douban_director": "查德·斯塔赫斯基",
+    "writers": "Shay Hatten",
+    "douban_writers": "德里克·科尔施塔德",
+    "cast": "Keanu Reeves, Chris Hemsworth, Tom Hardy",
+    "douban_cast": "布拉德·皮特, 基里安·墨菲, 斯嘉丽·约翰逊",
+    "synopsis": "A gripping tale of storm and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于长夜的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-10-08",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_storm",
+    "douban_url": "https://movie.douban.com/subject/3781176/",
+    "category": "即将上映",
+    "runtime": "157 min",
+    "douban_short_reviews": [
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "title": "First Signal",
+    "original_title": "First Signal",
+    "douban_title": "寂灭 First Signal",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 31,
+    "audience_score": 42,
+    "douban_score": 6.6,
+    "douban_vote_count": 50690,
+    "weighted_score": 48.3,
+    "genre": "Thriller, Crime",
+    "douban_genre": "惊悚, 犯罪",
+    "director": "Denis Villeneuve",
+    "douban_director": "丹尼斯·维伦纽瓦",
+    "writers": "Gillian Flynn",
+    "douban_writers": "阿伦·索金",
+    "cast": "Jake Gyllenhaal, Denzel Washington, Rooney Mara",
+    "douban_cast": "艾玛·斯通, 蒂莫西·柴勒梅德, 丹泽尔·华盛顿",
+    "synopsis": "A gripping tale of signal and first consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寂灭的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-11-19",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/first_signal",
+    "douban_url": "https://movie.douban.com/subject/3554642/",
+    "category": "家庭观影",
+    "runtime": "169 min",
+    "douban_short_reviews": [
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "温柔治愈",
+        "rating": 9,
+        "content": "看完心里暖暖的，需要这样的电影。"
+      },
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "title": "Beyond Signal",
+    "original_title": "Beyond Signal",
+    "douban_title": "天际 Beyond Signal",
+    "year": 2025,
+    "rating": "R",
+    "tomatometer": 44,
+    "audience_score": 79,
+    "douban_score": 6.0,
+    "douban_vote_count": 148010,
+    "weighted_score": 60.9,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Jordan Peele",
+    "douban_director": "阿里·艾斯特",
+    "writers": "Scott Beck",
+    "douban_writers": "斯科特·贝克",
+    "cast": "Florence Pugh, Daniel Kaluuya, Jenna Ortega",
+    "douban_cast": "克里斯·埃文斯, 玛格特·罗比, 丹泽尔·华盛顿",
+    "synopsis": "A gripping tale of signal and beyond consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天际的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-09-17",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/beyond_signal",
+    "douban_url": "https://movie.douban.com/subject/3521995/",
+    "category": "影院热映",
+    "runtime": "137 min",
+    "douban_short_reviews": [
+      {
+        "user": "影迷一号",
+        "rating": 8,
+        "content": "剧情紧凑，演技在线，值得一看。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "title": "Final Signal",
+    "original_title": "Final Signal",
+    "douban_title": "破阵 Final Signal",
+    "year": 2025,
+    "rating": "G",
+    "tomatometer": 74,
+    "audience_score": 31,
+    "douban_score": 5.9,
+    "douban_vote_count": 45832,
+    "weighted_score": 55.1,
+    "genre": "Animation, Family",
+    "douban_genre": "动画, 家庭",
+    "director": "Pete Docter",
+    "douban_director": "彼特·道格特",
+    "writers": "Hayao Miyazaki",
+    "douban_writers": "迈克尔·阿恩特",
+    "cast": "Amy Poehler, Chris Pratt, Anya Taylor-Joy",
+    "douban_cast": "蒂莫西·柴勒梅德, 赞达亚, 克里斯·埃文斯",
+    "synopsis": "A gripping tale of signal and final consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破阵的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-07-09",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/final_signal",
+    "douban_url": "https://movie.douban.com/subject/3821101/",
+    "category": "家庭观影",
+    "runtime": "138 min",
+    "douban_short_reviews": [
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      },
+      {
+        "user": "冷眼旁观",
+        "rating": 6,
+        "content": "开场不错但后半段有点崩，浪费了好题材。"
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "title": "Eternal Dream",
+    "original_title": "Eternal Dream",
+    "douban_title": "破阵 Eternal Dream",
+    "year": 2024,
+    "rating": "PG",
+    "tomatometer": 83,
+    "audience_score": 43,
+    "douban_score": 5.1,
+    "douban_vote_count": 127569,
+    "weighted_score": 58.2,
+    "genre": "Drama",
+    "douban_genre": "剧情",
+    "director": "Greta Gerwig",
+    "douban_director": "格蕾塔·葛韦格",
+    "writers": "Noah Baumbach",
+    "douban_writers": "诺亚·鲍姆巴赫",
+    "cast": "Cate Blanchett, Meryl Streep, Leonardo DiCaprio",
+    "douban_cast": "弗洛伦斯·皮尤, 西尔莎·罗南, 玛格特·罗比",
+    "synopsis": "A gripping tale of dream and eternal consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于破阵的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2024-06-06",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/eternal_dream",
+    "douban_url": "https://movie.douban.com/subject/3561864/",
+    "category": "家庭观影",
+    "runtime": "135 min",
+    "douban_short_reviews": [
+      {
+        "user": "暴走萝莉",
+        "rating": 7,
+        "content": "有点意思但没到惊艳的程度，中规中矩。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "原著党",
+        "rating": 7,
+        "content": "改编得还行，保留了原著精髓但有些细节遗憾。"
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "title": "Shadow World",
+    "original_title": "Shadow World",
+    "douban_title": "天际 Shadow World",
+    "year": 2025,
+    "rating": "PG",
+    "tomatometer": 39,
+    "audience_score": 55,
+    "douban_score": 7.3,
+    "douban_vote_count": 168025,
+    "weighted_score": 57.4,
+    "genre": "Horror, Mystery",
+    "douban_genre": "恐怖, 悬疑",
+    "director": "Jordan Peele",
+    "douban_director": "阿里·艾斯特",
+    "writers": "Jordan Peele",
+    "douban_writers": "斯科特·贝克",
+    "cast": "Florence Pugh, Jenna Ortega, Daniel Kaluuya",
+    "douban_cast": "凯特·布兰切特, 瑞恩·高斯林, 赞达亚",
+    "synopsis": "A gripping tale of world and shadow consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于天际的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2025-05-08",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/shadow_world",
+    "douban_url": "https://movie.douban.com/subject/3699353/",
+    "category": "即将上映",
+    "runtime": "117 min",
+    "douban_short_reviews": [
+      {
+        "user": "普通观众",
+        "rating": 8,
+        "content": "很好看，推荐！节奏舒服，不拖沓。"
+      },
+      {
+        "user": "周末观影",
+        "rating": 8,
+        "content": "娱乐性满分，不用动脑，就是享受。"
+      },
+      {
+        "user": "细节控",
+        "rating": 8,
+        "content": "埋了很多伏笔，二刷才能发现全部细节。"
+      },
+      {
+        "user": "资深影评",
+        "rating": 7,
+        "content": "视听语言出色，但剧本有瑕疵。"
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "title": "New Dream",
+    "original_title": "New Dream",
+    "douban_title": "寒星 New Dream",
+    "year": 2026,
+    "rating": "R",
+    "tomatometer": 89,
+    "audience_score": 83,
+    "douban_score": 7.1,
+    "douban_vote_count": 29772,
+    "weighted_score": 80.0,
+    "genre": "Romance, Drama",
+    "douban_genre": "爱情, 剧情",
+    "director": "Barry Jenkins",
+    "douban_director": "巴里·詹金斯",
+    "writers": "Tarell Alvin McCraney",
+    "douban_writers": "伊桑·霍克",
+    "cast": "Joan Chen, Michelle Yeoh, Simu Liu",
+    "douban_cast": "布拉德·皮特, 玛格特·罗比, 西尔莎·罗南",
+    "synopsis": "A gripping tale of dream and new consequences, where the boundaries between truth and illusion blur in unexpected ways.",
+    "douban_synopsis": "一个关于寒星的故事，当真相与幻象的边界在意外中模糊，命运的齿轮开始转动。",
+    "critics_consensus": "",
+    "release_date": "2026-01-04",
+    "poster_url": "",
+    "douban_poster": "",
+    "rt_url": "https://www.rottentomatoes.com/m/new_dream",
+    "douban_url": "https://movie.douban.com/subject/3780373/",
+    "category": "即将上映",
+    "runtime": "118 min",
+    "douban_short_reviews": [
+      {
+        "user": "毒舌影评",
+        "rating": 5,
+        "content": "特效堆砌，剧情空洞，又是大制作小故事。"
+      },
+      {
+        "user": "老司机",
+        "rating": 7,
+        "content": "套路是套路，但执行得不错，看得爽。"
       }
     ]
   }
