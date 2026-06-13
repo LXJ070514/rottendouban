@@ -53,7 +53,7 @@ jobs:
         env:
           CRAWLER_HEADLESS: true
           CI_ENV: true
-          RT_MAX_MOVIES: 20
+          RT_MAX_MOVIES: 50
           DOUBAN_PER_MOVIE_TIMEOUT: 60
         run: |
           # 启动虚拟显示器
