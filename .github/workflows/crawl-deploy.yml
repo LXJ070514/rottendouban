@@ -1,4 +1,4 @@
-name: Crawl and Deploy
+name: Crawl and Deploy v4
 
 on:
   # 每周一和周四凌晨4点(UTC)自动运行，对应北京时间12点
