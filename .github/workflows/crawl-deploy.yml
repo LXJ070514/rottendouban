@@ -60,12 +60,20 @@ jobs:
           Xvfb :99 -screen 0 1920x1080x24 &
           export DISPLAY=:99
           # 运行爬虫 (含SIGTERM信号处理，超时时自动保存部分数据)
-          python run.py || true
-          # 检查是否产生了数据文件
+          python run.py 2>&1 || echo "Crawler exited with error, checking for partial data..."
+          # 检查数据库和电影数量
           if [ -f "crawler/data/movies.db" ]; then
-            echo "crawl_result=success" >> $GITHUB_OUTPUT
+            MOVIE_COUNT=$(python -c "import sys; sys.path.insert(0, '.'); from crawler.database import Database; db=Database(); c=db.conn.execute('SELECT COUNT(*) FROM movies'); print(c.fetchone()[0]); db.close()")
+            echo "Database exists with $MOVIE_COUNT movies"
+            if [ "$MOVIE_COUNT" -gt "0" ]; then
+              echo "crawl_result=success" >> $GITHUB_OUTPUT
+            else
+              echo "crawl_result=no_data" >> $GITHUB_OUTPUT
+              echo "Database has 0 movies, skipping deploy"
+            fi
           else
             echo "crawl_result=no_data" >> $GITHUB_OUTPUT
+            echo "No database file found"
           fi
 
       - name: Fix data format and generate site data
