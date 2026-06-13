@@ -20,7 +20,7 @@ concurrency:
 jobs:
   crawl-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -35,36 +35,20 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Chrome and dependencies
-        run: |
-          # 安装 Chrome 浏览器
-          wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt-get install -y /tmp/chrome.deb
-          # 安装 xvfb 虚拟显示器
-          sudo apt-get install -y xvfb
-          # 验证 Chrome 安装
-          echo "=== Chrome version ==="
-          google-chrome --version
-
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      # ==================== 步骤1: 爬取烂番茄 + 豆瓣匹配 ====================
+      # ==================== 步骤1: 运行爬虫 (Algolia API, 无需Chrome) ====================
       - name: Run crawler
         id: crawl
         continue-on-error: true
         env:
-          CRAWLER_HEADLESS: true
           CI_ENV: true
           CRAWLER_MODE: full
           RT_MAX_MOVIES: 50
           DOUBAN_PER_MOVIE_TIMEOUT: 60
         run: |
-          # 启动虚拟显示器
-          Xvfb :99 -screen 0 1920x1080x24 &
-          export DISPLAY=:99
-          # 运行爬虫 (完整模式: RT爬取 + 豆瓣匹配 + 生成网站)
-          echo "=== Starting crawler ==="
+          echo "=== Starting crawler (Algolia API mode, no Chrome needed) ==="
           python run.py 2>&1 ; CRAWLER_EXIT=$?
           echo "=== Crawler exit code: $CRAWLER_EXIT ==="
           # 显示爬虫日志
@@ -74,17 +58,18 @@ jobs:
           else
             echo "No crawler.log found"
           fi
-          # 检查数据库和电影数量
+          # 检查数据库电影数量
           if [ -f "crawler/data/movies.db" ]; then
-            MOVIE_COUNT=$(python -c "
-            import sys; sys.path.insert(0, '.')
-            from crawler.database import Database
-            db=Database()
-            c=db.conn.execute('SELECT COUNT(*) FROM movies')
-            print(c.fetchone()[0])
-            db.close()
-            ")
-            echo "Database exists with $MOVIE_COUNT movies"
+            MOVIE_COUNT=$(python3 -c "
+import sys
+sys.path.insert(0, '.')
+from crawler.database import Database
+db = Database()
+c = db.conn.execute('SELECT COUNT(*) FROM movies')
+print(c.fetchone()[0])
+db.close()
+")
+            echo "Database: $MOVIE_COUNT movies"
             if [ "$MOVIE_COUNT" -gt "0" ]; then
               echo "crawl_result=success" >> $GITHUB_OUTPUT
             else
@@ -93,126 +78,129 @@ jobs:
           else
             echo "crawl_result=no_data" >> $GITHUB_OUTPUT
           fi
-          # 显示豆瓣缓存状态
+          # 显示豆瓣缓存
           if [ -f "crawler/data/douban_cache.json" ]; then
-            CACHE_COUNT=$(python -c "
-            import json
-            with open('crawler/data/douban_cache.json','r') as f:
-              d=json.load(f)
-            print(len(d))
-            ")
+            CACHE_COUNT=$(python3 -c "
+import json
+with open('crawler/data/douban_cache.json','r') as f:
+    d = json.load(f)
+print(len(d))
+")
             echo "Douban cache: $CACHE_COUNT entries"
           fi
 
-      # ==================== 步骤2: 如果爬取成功, 更新网站数据 ====================
+      # ==================== 步骤2: 更新网站数据 ====================
       - name: Update site data
         if: steps.crawl.outputs.crawl_result == 'success'
         run: |
-          python -c "
-          import os, sys, json, shutil
-          sys.path.insert(0, os.getcwd())
+          python3 -c "
+import os, sys, json, shutil
+sys.path.insert(0, os.getcwd())
+from crawler.database import Database
+from crawler.config import POSTERS_DIR, SITE_DIR
+from crawler.main import generate_site_data
 
-          from crawler.database import Database
-          from crawler.config import POSTERS_DIR, SITE_DIR
+db = Database()
 
-          db = Database()
+def normalize_score(value, default=-1):
+    if value is None or value == '' or value == 'None':
+        return default
+    raw = str(value).replace('%', '').strip()
+    try:
+        num = float(raw)
+        return int(num) if num > 10 else round(num, 1)
+    except:
+        return default
 
-          # 修复数据库中的评分格式
-          def normalize_score(value, default=-1):
-              if value is None or value == '' or value == 'None':
-                  return default
-              raw = str(value).replace('%', '').strip()
-              try:
-                  num = float(raw)
-                  return int(num) if num > 10 else round(num, 1)
-              except:
-                  return default
+# 修复评分格式
+cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score, poster_local, douban_vote_count FROM movies')
+for row in cursor:
+    t = normalize_score(row['tomatometer'])
+    a = normalize_score(row['audience_score'])
+    d = normalize_score(row['douban_score'])
+    w = normalize_score(row['weighted_score'])
+    vc = 0
+    try:
+        vc = int(str(row['douban_vote_count'] or '0').replace(',', ''))
+    except:
+        vc = 0
+    poster = row['poster_local']
+    if poster and not poster.startswith('posters/'):
+        poster = 'posters/' + poster
+    db.conn.execute('UPDATE movies SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=?, poster_local=?, douban_vote_count=? WHERE id=?',
+                   (t, a, d, w, poster, vc, row['id']))
 
-          cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score, poster_local, douban_vote_count FROM movies')
-          for row in cursor:
-              t = normalize_score(row['tomatometer'])
-              a = normalize_score(row['audience_score'])
-              d = normalize_score(row['douban_score'])
-              w = normalize_score(row['weighted_score'])
-              vc = 0
-              try:
-                  vc = int(str(row['douban_vote_count'] or '0').replace(',', ''))
-              except:
-                  vc = 0
-              poster = row['poster_local']
-              if poster and not poster.startswith('posters/'):
-                  poster = f'posters/{poster}'
-              db.conn.execute('UPDATE movies SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=?, poster_local=?, douban_vote_count=? WHERE id=?',
-                             (t, a, d, w, poster, vc, row['id']))
+cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score FROM score_history')
+for row in cursor:
+    t = normalize_score(row['tomatometer'])
+    a = normalize_score(row['audience_score'])
+    d = normalize_score(row['douban_score'])
+    w = normalize_score(row['weighted_score'])
+    db.conn.execute('UPDATE score_history SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=? WHERE id=?',
+                   (t, a, d, w, row['id']))
+db.conn.commit()
 
-          cursor = db.conn.execute('SELECT id, tomatometer, audience_score, douban_score, weighted_score FROM score_history')
-          for row in cursor:
-              t = normalize_score(row['tomatometer'])
-              a = normalize_score(row['audience_score'])
-              d = normalize_score(row['douban_score'])
-              w = normalize_score(row['weighted_score'])
-              db.conn.execute('UPDATE score_history SET tomatometer=?, audience_score=?, douban_score=?, weighted_score=? WHERE id=?',
-                             (t, a, d, w, row['id']))
-          db.conn.commit()
+# 生成网站数据
+generate_site_data(db, 'site')
 
-          # 生成网站数据
-          from crawler.main import generate_site_data
-          generate_site_data(db, 'site')
+# 同步海报
+for src_dir in ['crawler/site/posters', 'crawler/data/posters']:
+    if os.path.exists(src_dir):
+        dst_dir = os.path.join('site', 'posters')
+        os.makedirs(dst_dir, exist_ok=True)
+        for f in os.listdir(src_dir):
+            if f.lower().endswith(('jpg','jpeg','png','webp')):
+                shutil.copy2(os.path.join(src_dir, f), os.path.join(dst_dir, f))
 
-          # 同步海报
-          for src_dir in ['crawler/site/posters', 'crawler/data/posters']:
-              if os.path.exists(src_dir):
-                  dst_dir = os.path.join('site', 'posters')
-                  os.makedirs(dst_dir, exist_ok=True)
-                  for f in os.listdir(src_dir):
-                      if f.lower().endswith(('jpg','jpeg','png','webp')):
-                          shutil.copy2(os.path.join(src_dir, f), os.path.join(dst_dir, f))
-
-          db.close()
-          print('Site data updated successfully')
-          "
+db.close()
+print('Site data updated successfully')
+"
 
       # ==================== 步骤3: 验证网站数据 ====================
       - name: Verify site data
         run: |
-          python -c "
-          import json
-          try:
-              with open('site/data/movies.json', 'r', encoding='utf-8') as f:
-                  data = json.load(f)
-              print(f'Movies count: {len(data)}')
-              douban_matched = [m for m in data if m.get('douban_score', -1) > 0]
-              print(f'Douban matched: {len(douban_matched)}')
-              for m in data[:3]:
-                  print(f'  {m.get(\"title\",\"?\")}: tomato={m.get(\"tomatometer\",\"-\")} audience={m.get(\"audience_score\",\"-\")} douban={m.get(\"douban_score\",\"-\")} weighted={m.get(\"weighted_score\",\"-\")}')
-          except Exception as e:
-              print(f'Error reading movies.json: {e}')
-          "
+          python3 -c "
+import json
+try:
+    with open('site/data/movies.json', 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    print(f'Movies count: {len(data)}')
+    douban_matched = [m for m in data if m.get('douban_score', -1) > 0]
+    print(f'Douban matched: {len(douban_matched)}')
+    for m in data[:3]:
+        title = m.get('title', '?')
+        tomato = m.get('tomatometer', '-')
+        audience = m.get('audience_score', '-')
+        douban = m.get('douban_score', '-')
+        weighted = m.get('weighted_score', '-')
+        print(f'  {title}: tomato={tomato} audience={audience} douban={douban} weighted={weighted}')
+except Exception as e:
+    print(f'Error: {e}')
+"
 
-      # ==================== 步骤4: 保存豆瓣缓存到仓库 ====================
+      # ==================== 步骤4: 保存豆瓣缓存 ====================
       - name: Save Douban cache to repo
         if: steps.crawl.outputs.crawl_result == 'success'
         run: |
           if [ -f "crawler/data/douban_cache.json" ]; then
-            CACHE_COUNT=$(python -c "
-            import json
-            with open('crawler/data/douban_cache.json','r') as f:
-              d=json.load(f)
-            print(len(d))
-            ")
-            echo "Saving Douban cache: $CACHE_COUNT entries"
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add crawler/data/douban_cache.json
             if git diff --cached --quiet; then
-              echo "No cache changes to commit"
+              echo "No cache changes"
             else
+              CACHE_COUNT=$(python3 -c "
+import json
+with open('crawler/data/douban_cache.json','r') as f:
+    d = json.load(f)
+print(len(d))
+")
               git commit -m "Update Douban cache: $CACHE_COUNT entries [skip ci]"
               git push
             fi
           fi
 
-      # ==================== 步骤5: 部署到 GitHub Pages (始终部署) ====================
+      # ==================== 步骤5: 部署 ====================
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

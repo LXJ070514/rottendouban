@@ -313,7 +313,7 @@ def generate_site_data(db, output_dir):
 
 # ==================== 烂番茄爬取 (独立步骤) ====================
 def crawl_rotten_tomatoes(db, logger):
-    """爬取烂番茄数据 — 独立步骤, 失败时返回已有数据库中的电影"""
+    """爬取烂番茄数据 — Algolia API优先 (无需浏览器), Selenium回退"""
     from crawler.rotten_tomatoes import RottenTomatoesCrawler
 
     global _rt_crawler_instance
@@ -322,18 +322,21 @@ def crawl_rotten_tomatoes(db, logger):
     movies_list = []
 
     try:
-        rt_crawler = RottenTomatoesCrawler()
+        # CI环境: 只用API (无需Chrome)
+        # 本地: API优先, Selenium回退
+        ci_env = os.environ.get("CI_ENV", "").lower() in ("true", "1", "yes")
+        use_selenium = not ci_env  # 本地允许Selenium回退
+        rt_crawler = RottenTomatoesCrawler(use_selenium_fallback=use_selenium)
         _rt_crawler_instance = rt_crawler
-        logger.info("烂番茄爬虫初始化完成")
+        logger.info(f"烂番茄爬虫初始化完成 (Selenium回退: {use_selenium})")
 
         logger.info("===== 开始爬取烂番茄 =====")
         movies_list = rt_crawler.crawl_all()
         logger.info(f"烂番茄数据收集完成: {len(movies_list)} 部电影")
 
-        # 关闭浏览器 (RT爬取完成后就不需要了)
+        # 关闭资源 (如果开了浏览器)
         rt_crawler.close()
         _rt_crawler_instance = None
-        logger.info("烂番茄浏览器已关闭")
 
     except Exception as e:
         logger.error(f"烂番茄爬取失败: {e}")
