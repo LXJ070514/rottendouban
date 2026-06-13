@@ -17,6 +17,7 @@ import random
 import logging
 import urllib.parse
 import urllib.request
+import urllib.error
 
 from crawler.config import (
     RT_BASE_URL, RT_CATEGORIES, RT_MAX_MOVIES,
@@ -24,11 +25,18 @@ from crawler.config import (
 
 logger = logging.getLogger("rotten_tomatoes")
 
+# 模块级 SSL context 单例 (复用，避免重复创建)
+# 注意: 禁用验证是因为某些环境下烂番茄/Algolia 的证书链不完整
+# 且爬虫场景下不涉及敏感数据传输
+_SSL_CTX = ssl.create_default_context()
+_SSL_CTX.check_hostname = False
+_SSL_CTX.verify_mode = ssl.CERT_NONE
+
 # ==================== Algolia 搜索 API ====================
 # RT 使用 Algolia 作为内部搜索引擎, 凭证嵌入在网站JS中
-ALGOLIA_APP_ID = "79FRDP12PN"
-ALGOLIA_API_KEY = "175588f6e5f8319b27702e4cc4013561"
-ALGOLIA_INDEX = "content"
+ALGOLIA_APP_ID = os.environ.get("ALGOLIA_APP_ID", "79FRDP12PN")
+ALGOLIA_API_KEY = os.environ.get("ALGOLIA_API_KEY", "175588f6e5f8319b27702e4cc4013561")
+ALGOLIA_INDEX = os.environ.get("ALGOLIA_INDEX", "content")
 ALGOLIA_URL = f"https://{ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/{ALGOLIA_INDEX}/query"
 
 ALGOLIA_HEADERS = {
@@ -77,25 +85,39 @@ def _clean_name_list(text):
     return ', '.join(cleaned)
 
 
-def _ssl_context():
-    """创建 SSL context (解决 ASN1 NOT_ENOUGH_DATA)"""
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    return ctx
+def _fetch_url_with_retry(url: str, headers: dict = None, timeout: int = 15,
+                          max_retries: int = 3, backoff_factor: float = 1.0) -> str:
+    """带指数退避重试的 URL 获取"""
+    headers = headers or PAGE_HEADERS
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=timeout, context=_SSL_CTX) as resp:
+                return resp.read().decode('utf-8', errors='replace')
+        except urllib.error.HTTPError as e:
+            last_error = e
+            if e.code in (403, 429):  # Rate limited or forbidden
+                wait = backoff_factor * (2 ** attempt) + random.uniform(0, 1)
+                logger.warning(f"HTTP {e.code}, 重试 {attempt+1}/{max_retries}, 等待 {wait:.1f}s")
+                time.sleep(wait)
+            else:
+                logger.debug(f"HTTP错误 {e.code}: {url[:60]}")
+                break
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                wait = backoff_factor * (2 ** attempt)
+                logger.debug(f"网络错误, 重试 {attempt+1}/{max_retries}: {e}")
+                time.sleep(wait)
+
+    logger.debug(f"URL获取最终失败 [{url[:60]}]: {last_error}")
+    return ''
 
 
 def _fetch_url(url, headers=None, timeout=15):
-    """安全获取 URL 内容"""
-    headers = headers or PAGE_HEADERS
-    try:
-        req = urllib.request.Request(url, headers=headers)
-        ctx = _ssl_context()
-        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
-            return resp.read().decode('utf-8', errors='replace')
-    except Exception as e:
-        logger.debug(f"URL获取失败 [{url[:50]}]: {e}")
-        return ''
+    """安全获取 URL 内容 (带重试)"""
+    return _fetch_url_with_retry(url, headers=headers, timeout=timeout)
 
 
 # ==================== Algolia API 方式 ====================
@@ -108,17 +130,29 @@ def _algolia_search(query, filters="type:movie", hits_per_page=20, page=0):
         "page": page,
     })
 
-    try:
-        req = urllib.request.Request(ALGOLIA_URL, data=body.encode('utf-8'),
-                                     headers=ALGOLIA_HEADERS)
-        ctx = _ssl_context()
-        with urllib.request.urlopen(req, timeout=10, context=ctx) as resp:
-            data = json.loads(resp.read().decode('utf-8'))
-        hits = data.get('hits', [])
-        return hits
-    except Exception as e:
-        logger.error(f"Algolia搜索失败 [{query[:30]}]: {e}")
-        return []
+    last_error = None
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(ALGOLIA_URL, data=body.encode('utf-8'),
+                                         headers=ALGOLIA_HEADERS)
+            with urllib.request.urlopen(req, timeout=10, context=_SSL_CTX) as resp:
+                data = json.loads(resp.read().decode('utf-8'))
+            return data.get('hits', [])
+        except urllib.error.HTTPError as e:
+            last_error = e
+            if e.code == 429:
+                time.sleep(2 ** attempt)
+                continue
+            break
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+            last_error = e
+            if attempt < 2:
+                time.sleep(1)
+                continue
+            break
+
+    logger.error(f"Algolia搜索失败 [{query[:30]}]: {last_error}")
+    return []
 
 
 def _algolia_browse_movies(category_url, max_movies=50):
@@ -293,7 +327,10 @@ def _basic_movie_data(browse_info):
 
 # ==================== JSON-LD 提取 ====================
 def _extract_json_ld_movies(html):
-    """从页面 HTML 中提取 JSON-LD 数据 (电影列表)"""
+    """从页面 HTML 中提取 JSON-LD 数据 (电影列表)
+    RT 的 JSON-LD 格式可能变化: itemListElement 的元素有时是字符串(URL),
+    有时是嵌套字典(ListItem → Movie), 需要健壮处理
+    """
     movies = []
 
     # 方法1: 找 <script type="application/ld+json"> 标签
@@ -309,17 +346,44 @@ def _extract_json_ld_movies(html):
         # JSON-LD 可能是单个对象或数组
         items = data if isinstance(data, list) else [data]
         for item in items:
+            if not isinstance(item, dict):
+                continue
             if item.get('@type') == 'ItemList':
                 # ItemList 包含多个电影
                 for elem in item.get('itemListElement', []):
-                    movie = elem.get('item', {})
-                    if movie.get('@type') == 'Movie':
+                    # elem 可能是: 字典(ListItem) / 字典(Movie) / 字符串(URL)
+                    if isinstance(elem, str):
+                        # 直接是 URL 字符串
+                        slug = elem.rstrip('/').split('/m/')[-1]
+                        name = slug.replace('_', ' ').replace('-', ' ').title()
                         movies.append({
-                            'name': movie.get('name', ''),
-                            'url': movie.get('url', ''),
-                            'image': movie.get('image', ''),
-                            'dateCreated': movie.get('dateCreated', ''),
+                            'name': name,
+                            'url': elem if elem.startswith('http') else f"https://www.rottentomatoes.com/m/{slug}",
+                            'image': '',
+                            'dateCreated': '',
                         })
+                    elif isinstance(elem, dict):
+                        # ListItem 包含 item 字段, 或者直接是 Movie 对象
+                        movie_obj = elem.get('item', elem)
+                        if isinstance(movie_obj, str):
+                            # item 字段是 URL 字符串
+                            slug = movie_obj.rstrip('/').split('/m/')[-1]
+                            name = slug.replace('_', ' ').replace('-', ' ').title()
+                            movies.append({
+                                'name': name,
+                                'url': movie_obj if movie_obj.startswith('http') else f"https://www.rottentomatoes.com/m/{slug}",
+                                'image': '',
+                                'dateCreated': '',
+                            })
+                        elif isinstance(movie_obj, dict):
+                            # 标准 Movie 对象
+                            if movie_obj.get('@type') == 'Movie' or movie_obj.get('name'):
+                                movies.append({
+                                    'name': movie_obj.get('name', ''),
+                                    'url': movie_obj.get('url', ''),
+                                    'image': movie_obj.get('image', ''),
+                                    'dateCreated': movie_obj.get('dateCreated', ''),
+                                })
             elif item.get('@type') == 'Movie':
                 movies.append({
                     'name': item.get('name', ''),

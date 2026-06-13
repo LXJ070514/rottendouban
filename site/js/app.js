@@ -4,9 +4,34 @@
 (function() {
     'use strict';
 
+    // ===== Utility =====
+    function debounce(fn, delay) {
+        let timer = null;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+
+    function sanitizeUrl(url) {
+        if (!url) return '';
+        try {
+            const parsed = new URL(url, window.location.origin);
+            if (['http:', 'https:'].includes(parsed.protocol)) {
+                return parsed.href;
+            }
+        } catch(e) {}
+        return '';
+    }
+
     // ===== Data Store =====
     let movies = [];
     let currentPanel = 'home';
+
+    // ===== Pagination =====
+    const PAGE_SIZE = 30;
+    let currentPage = 1;
+    let totalPages = 1;
 
     // ===== Pinyin Search Helper =====
     const pinyinMap = {
@@ -144,9 +169,18 @@
         const filtered = filterAndSort(list);
         if (!filtered.length) {
             grid.innerHTML = '<div class="no-data">没有找到匹配的电影</div>';
+            renderPagination(0);
             return;
         }
-        grid.innerHTML = filtered.map(m => renderCard(m)).join('');
+
+        // 分页计算
+        totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+        if (currentPage > totalPages) currentPage = 1;
+        const start = (currentPage - 1) * PAGE_SIZE;
+        const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+        grid.innerHTML = pageItems.map(m => renderCard(m)).join('');
+
         // Bind card click events
         grid.querySelectorAll('.movie-card').forEach(card => {
             card.addEventListener('click', (e) => {
@@ -165,10 +199,50 @@
                 if (movie) showShareModal(movie);
             });
         });
+
+        renderPagination(filtered.length);
+    }
+
+    function renderPagination(totalItems) {
+        let paginationEl = document.getElementById('pagination');
+        if (!paginationEl) {
+            paginationEl = document.createElement('div');
+            paginationEl.id = 'pagination';
+            paginationEl.className = 'pagination';
+            document.getElementById('movie-grid').after(paginationEl);
+        }
+
+        if (totalItems <= PAGE_SIZE) {
+            paginationEl.innerHTML = '';
+            return;
+        }
+
+        let html = '';
+        html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">上一页</button>`;
+
+        // 页码按钮 (最多显示 5 个)
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, startPage + 4);
+        for (let i = startPage; i <= endPage; i++) {
+            html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+        }
+
+        html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">下一页</button>`;
+        html += `<span class="page-info">${currentPage}/${totalPages} 页 (共${totalItems}部)</span>`;
+
+        paginationEl.innerHTML = html;
+        paginationEl.querySelectorAll('.page-btn:not([disabled])').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentPage = parseInt(btn.dataset.page);
+                const q = document.getElementById('search-input').value;
+                renderMovies(q ? searchMovies(q) : movies);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
     }
 
     function renderCard(m) {
-        const poster = m.poster_local || m.poster_url || m.douban_poster;
+        const poster = sanitizeUrl(m.poster_local || m.poster_url || m.douban_poster);
         const posterHtml = poster ?
             `<img class="card-poster" src="${poster}" alt="${esc(m.title)}" loading="lazy" onerror="this.outerHTML='<div class=card-poster-placeholder>🎬</div>'">` :
             '<div class="card-poster-placeholder">🎬</div>';
@@ -184,8 +258,8 @@
         const genre = m.genre || m.douban_genre || '';
 
         const links = [];
-        if (m.rt_url) links.push(`<a class="card-link" href="${m.rt_url}" target="_blank">烂番茄</a>`);
-        if (m.douban_url) links.push(`<a class="card-link" href="${m.douban_url}" target="_blank">豆瓣</a>`);
+        if (m.rt_url) links.push(`<a class="card-link" href="${sanitizeUrl(m.rt_url)}" target="_blank" rel="noopener noreferrer">烂番茄</a>`);
+        if (m.douban_url) links.push(`<a class="card-link" href="${sanitizeUrl(m.douban_url)}" target="_blank" rel="noopener noreferrer">豆瓣</a>`);
 
         return `<div class="movie-card" data-id="${m.id}">
             <button class="share-btn-card" title="分享">📤</button>
@@ -214,7 +288,7 @@
         const overlay = document.getElementById('modal-overlay');
         const body = document.getElementById('modal-body');
 
-        const poster = m.poster_local || m.poster_url || m.douban_poster;
+        const poster = sanitizeUrl(m.poster_local || m.poster_url || m.douban_poster);
         const posterHtml = poster ?
             `<img class="detail-poster" src="${poster}" alt="${esc(m.title)}" onerror="this.outerHTML='<div class=detail-poster-placeholder>🎬</div>'">` :
             '<div class="detail-poster-placeholder">🎬</div>';
@@ -254,8 +328,8 @@
 
         // Links
         const links = [];
-        if (m.rt_url) links.push(`<a class="detail-link rt-link" href="${m.rt_url}" target="_blank">查看烂番茄 →</a>`);
-        if (m.douban_url) links.push(`<a class="detail-link douban-link" href="${m.douban_url}" target="_blank">查看豆瓣 →</a>`);
+        if (m.rt_url) links.push(`<a class="detail-link rt-link" href="${sanitizeUrl(m.rt_url)}" target="_blank" rel="noopener noreferrer">查看烂番茄 →</a>`);
+        if (m.douban_url) links.push(`<a class="detail-link douban-link" href="${sanitizeUrl(m.douban_url)}" target="_blank" rel="noopener noreferrer">查看豆瓣 →</a>`);
 
         body.innerHTML = `
             <div class="detail-header">
@@ -495,10 +569,14 @@
             document.getElementById('movie-grid').style.display = '';
             document.getElementById('stats-bar').style.display = '';
             document.getElementById('filter-bar').style.display = '';
+            const paginationEl = document.getElementById('pagination');
+            if (paginationEl) paginationEl.style.display = '';
         } else {
             document.getElementById('movie-grid').style.display = 'none';
             document.getElementById('stats-bar').style.display = 'none';
             document.getElementById('filter-bar').style.display = 'none';
+            const paginationEl = document.getElementById('pagination');
+            if (paginationEl) paginationEl.style.display = 'none';
             document.getElementById(`${panel}-panel`).style.display = '';
 
             if (panel === 'compare') showCompare();
@@ -512,22 +590,31 @@
         // Theme toggle
         document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
-        // Search
+        // Search with debounce
+        const debouncedSearch = debounce((query) => {
+            currentPage = 1;
+            renderMovies(query ? searchMovies(query) : movies);
+        }, 300);
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            debouncedSearch(e.target.value);
+        });
         document.getElementById('search-btn').addEventListener('click', () => {
             const q = document.getElementById('search-input').value;
+            currentPage = 1;
             renderMovies(searchMovies(q));
         });
         document.getElementById('search-input').addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
+                currentPage = 1;
                 renderMovies(searchMovies(e.target.value));
-            } else if (!e.target.value) {
-                renderMovies(movies);
             }
         });
 
         // Filters
         ['filter-category', 'filter-genre', 'filter-sort'].forEach(id => {
             document.getElementById(id).addEventListener('change', () => {
+                currentPage = 1;  // 重置到第一页
                 renderMovies(movies);
             });
         });

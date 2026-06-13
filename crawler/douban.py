@@ -16,6 +16,8 @@ import logging
 import ssl
 import urllib.parse
 import urllib.request
+import urllib.error
+from typing import Optional, List, Dict
 
 from crawler.config import (
     DOUBAN_BASE_URL, DOUBAN_SEARCH_URL,
@@ -24,6 +26,11 @@ from crawler.config import (
 )
 
 logger = logging.getLogger("douban")
+
+# 模块级 SSL context 单例
+_SSL_CTX = ssl.create_default_context()
+_SSL_CTX.check_hostname = False
+_SSL_CTX.verify_mode = ssl.CERT_NONE
 
 # 豆瓣缓存文件路径 (存储已匹配的豆瓣数据, 只爬一次)
 DOUBAN_CACHE_PATH = os.path.join(DATA_DIR, "douban_cache.json")
@@ -160,20 +167,16 @@ class DoubanMatcher:
         except json.JSONDecodeError:
             return None
 
-    def _api_search(self, title):
+    def _api_search(self, title: str) -> List[Dict]:
         """使用豆瓣搜索 API 获取电影数据 (无需 Selenium)"""
         search_url = (f'https://search.douban.com/movie/subject_search?'
                       f'search_text={urllib.parse.quote(title.strip())}')
 
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-
         try:
             req = urllib.request.Request(search_url, headers=_SEARCH_HEADERS)
-            with urllib.request.urlopen(req, timeout=10, context=ctx) as resp:
+            with urllib.request.urlopen(req, timeout=10, context=_SSL_CTX) as resp:
                 content = resp.read().decode('utf-8', errors='replace')
-        except Exception as e:
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError) as e:
             logger.debug(f"豆瓣搜索API请求失败 [{title[:30]}]: {e}")
             return []
 
@@ -228,7 +231,7 @@ class DoubanMatcher:
         filtered = [g for g in genres if g in genre_keywords]
         return ', '.join(filtered) if filtered else ', '.join(genres[:3])
 
-    def _best_match(self, results, search_title):
+    def _best_match(self, results: List[Dict], search_title: str) -> Dict:
         """从搜索结果中选择最佳匹配 — 取第一个包含搜索词的结果"""
         if not results:
             return {}
@@ -362,7 +365,7 @@ class DoubanMatcher:
 
     # ==================== 对外接口 ====================
 
-    def find_movie(self, title, release_date=''):
+    def find_movie(self, title: str, release_date: str = '') -> Dict:
         """匹配豆瓣电影 — 缓存优先, 搜索API次之, Selenium回退"""
         # 1. 先查缓存 (豆瓣只爬一次)
         cached = self._check_cache(title)
@@ -389,7 +392,7 @@ class DoubanMatcher:
         self._update_cache(title, result)
         return result
 
-    def match_and_fetch(self, title, original_title=None, timeout=60):
+    def match_and_fetch(self, title: str, original_title: Optional[str] = None, timeout: int = 60) -> Dict:
         """自动匹配豆瓣并抓取完整数据 (适配 main.py)
         搜索API模式下 timeout 参数主要影响重试次数
         缓存优先: 如果已有数据直接返回, 不再重复爬取

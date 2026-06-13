@@ -47,8 +47,7 @@ jobs:
           DOUBAN_PER_MOVIE_TIMEOUT: 60
         run: |
           echo "=== Starting crawler (Algolia API + Douban API, no browser) ==="
-          python run.py 2>&1 ; CRAWLER_EXIT=$?
-          echo "=== Crawler exit code: $CRAWLER_EXIT ==="
+          python run.py 2>&1
           echo "=== Crawler log (last 80 lines) ==="
           if [ -f "crawler/data/crawler.log" ]; then
             tail -80 crawler/data/crawler.log
@@ -78,13 +77,14 @@ jobs:
         if: steps.crawl.outputs.crawl_result == 'success'
         run: |
           if [ -f "crawler/data/douban_cache.json" ]; then
+            CACHE_COUNT=$(python scripts/check_cache.py)
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add crawler/data/douban_cache.json
             if git diff --cached --quiet; then
-              echo "No cache changes"
+              echo "No cache changes ($CACHE_COUNT entries)"
             else
-              git commit -m "Update Douban cache [skip ci]"
+              git commit -m "Update Douban cache: $CACHE_COUNT entries [skip ci]"
               git push
             fi
           fi

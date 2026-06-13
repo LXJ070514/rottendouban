@@ -11,25 +11,12 @@
 """
 import os
 import sys
-import re
-import ssl
-import json
-import csv
-import io
-import shutil
 import logging
 import signal
 import time
 import traceback
-import urllib.request
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
-try:
-    import requests as _requests_lib
-    REQUESTS_AVAILABLE = True
-except ImportError:
-    REQUESTS_AVAILABLE = False
+from typing import Optional, Dict, List, Tuple
 
 from crawler.config import (
     PROJECT_DIR, DATA_DIR, POSTERS_DIR, SITE_DIR,
@@ -40,6 +27,8 @@ from crawler.config import (
     LOG_LEVEL, LOG_FILE, LOG_FORMAT, LOG_DATE_FORMAT,
 )
 from crawler.database import Database
+from crawler.downloader import download_image, download_posters_concurrent
+from crawler.site_generator import generate_site_data
 
 
 def setup_logging():
@@ -80,9 +69,10 @@ def setup_logging():
 
 
 # ==================== SIGTERM 信号处理 (CI超时保存部分数据) ====================
-_partial_movies = []
+_partial_movies: List[Dict] = []
 _db_instance = None
 _rt_crawler_instance = None
+
 
 def _sigterm_handler(signum, frame):
     """收到 SIGTERM 时保存已有数据 (GitHub Actions 超时前约10秒触发)"""
@@ -92,36 +82,13 @@ def _sigterm_handler(signum, frame):
     global _db_instance, _rt_crawler_instance
     if _partial_movies and _db_instance:
         try:
-            # 计算加权评分
-            for movie in _partial_movies:
-                ws = calc_weighted_score(
-                    movie.get("tomatometer", ""),
-                    movie.get("audience_score", ""),
-                    movie.get("douban_score", ""),
-                )
-                movie["weighted_score"] = f"{ws:.2f}" if ws is not None else ""
-
-            # 下载海报
-            poster_results = download_posters_concurrent(_partial_movies)
-            for movie in _partial_movies:
-                title = movie.get("title", "")
-                if title in poster_results:
-                    _, filename = poster_results[title]
-                    movie["poster_local"] = filename
-                else:
-                    movie["poster_local"] = ""
-
-            # 入库
-            success_count = _db_instance.batch_insert_movies(_partial_movies)
-            logger.warning(f"部分数据入库完成: {success_count}/{len(_partial_movies)}")
-
-            # 生成网站数据
+            process_movies_pipeline(_partial_movies, _db_instance, logger, skip_posters=True)
             generate_site_data(_db_instance, SITE_DIR)
-            logger.warning("部分数据网站生成完成!")
+            logger.warning("部分数据保存完成!")
         except Exception as e:
             logger.error(f"保存部分数据失败: {e}")
 
-    # 关闭浏览器
+    # 关闭资源
     if _rt_crawler_instance:
         try:
             _rt_crawler_instance.close()
@@ -136,6 +103,7 @@ def _sigterm_handler(signum, frame):
     logger.warning("SIGTERM 处理完成, 退出")
     sys.exit(0)
 
+
 # 注册信号处理
 try:
     signal.signal(signal.SIGTERM, _sigterm_handler)
@@ -144,7 +112,7 @@ except (OSError, ValueError):
 
 
 # ==================== 加权评分 ====================
-def _parse_score(value):
+def _parse_score(value: str) -> Optional[float]:
     """
     解析评分字符串为 0-1 标准化浮点数
     - "85%" → 0.85
@@ -165,7 +133,7 @@ def _parse_score(value):
         return num / 100.0
 
 
-def calc_weighted_score(tomato_raw, audience_raw, douban_raw):
+def calc_weighted_score(tomato_raw: str, audience_raw: str, douban_raw: str) -> Optional[float]:
     """计算加权评分 (0-100), 权重: 番茄0.3 + 观众0.3 + 豆瓣0.4"""
     scores = {
         'tomatometer': _parse_score(tomato_raw),
@@ -183,132 +151,33 @@ def calc_weighted_score(tomato_raw, audience_raw, douban_raw):
     return round(weighted * 100, 2)
 
 
-# ==================== 图片下载 ====================
-def download_image(url, filename, retries=None):
-    """带指数退避重试的图片下载"""
-    if not url:
-        return
-    if retries is None:
-        retries = IMAGE_RETRY_MAX
-    filepath = os.path.join(POSTERS_DIR, filename)
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-
-    if os.path.exists(filepath):
-        return filepath
-
-    for attempt in range(retries):
-        try:
-            if REQUESTS_AVAILABLE:
-                resp = _requests_lib.get(
-                    url, timeout=IMAGE_DOWNLOAD_TIMEOUT,
-                    allow_redirects=True, verify=False
-                )
-                resp.raise_for_status()
-                with open(filepath, 'wb') as f:
-                    f.write(resp.content)
-                logging.getLogger("main").info(f"图片下载成功: {filename}")
-                return filepath
-
-            ssl_ctx = ssl.create_default_context()
-            ssl_ctx.check_hostname = False
-            ssl_ctx.verify_mode = ssl.CERT_NONE
-            req = urllib.request.Request(url)
-            data = urllib.request.urlopen(
-                req, timeout=IMAGE_DOWNLOAD_TIMEOUT, context=ssl_ctx
-            ).read()
-            with open(filepath, 'wb') as f:
-                f.write(data)
-            logging.getLogger("main").info(f"图片下载成功: {filename}")
-            return filepath
-
-        except Exception as err:
-            if attempt < retries - 1:
-                wait = 2 ** attempt
-                logging.getLogger("main").warning(
-                    f"图片重试 {attempt+1}/{retries}: {filename}, 等待{wait}s")
-                time.sleep(wait)
-            else:
-                logging.getLogger("main").error(
-                    f"图片下载最终失败 {filename}: {err}")
-    return None
-
-
-def download_posters_concurrent(movies_list):
-    """线程池并发下载海报"""
-    logger = logging.getLogger("main")
-    logger.info(f"开始并发下载海报: {len(movies_list)} 部电影")
-    executor = ThreadPoolExecutor(max_workers=IMAGE_THREAD_POOL_SIZE)
-    results = {}
-
-    futures = {}
+# ==================== 通用电影处理流水线 ====================
+def process_movies_pipeline(movies_list: List[Dict], db, logger, skip_posters: bool = False) -> int:
+    """通用电影处理流水线: 评分计算 → 海报下载 → 批量入库"""
+    # 1. 计算加权评分
     for movie in movies_list:
-        poster_url = movie.get("poster_url") or movie.get("douban_poster")
-        if poster_url:
-            title = movie.get("title", "unknown")
-            idx = movies_list.index(movie) + 1
-            no_str = str(idx).zfill(6)
-            ext = '.jpg'
-            if poster_url:
-                match = re.search(r'\.(jpg|jpeg|png|webp)(?:\?|$)', poster_url, re.I)
-                if match:
-                    ext = match.group(0).split('?')[0]
-            filename = f"{no_str}{ext}"
-            future = executor.submit(download_image, poster_url, filename)
-            futures[future] = (title, filename)
+        ws = calc_weighted_score(
+            movie.get("tomatometer", ""),
+            movie.get("audience_score", ""),
+            movie.get("douban_score", ""),
+        )
+        movie["weighted_score"] = f"{ws:.2f}" if ws is not None else ""
 
-    for future in as_completed(futures):
-        title, filename = futures[future]
-        try:
-            local_path = future.result()
-            if local_path:
-                results[title] = (local_path, filename)
-        except Exception as e:
-            logger.error(f"海报下载线程异常: {title} - {e}")
+    # 2. 并发下载海报 (SIGTERM时可跳过)
+    if not skip_posters:
+        poster_results = download_posters_concurrent(movies_list)
+        for movie in movies_list:
+            title = movie.get("title", "")
+            if title in poster_results:
+                _, filename = poster_results[title]
+                movie["poster_local"] = filename
+            else:
+                movie["poster_local"] = ""
 
-    executor.shutdown(wait=True)
-    logger.info(f"海报下载完成: 成功 {len(results)}/{len(movies_list)}")
-    return results
-
-
-# ==================== 网站数据生成 ====================
-def generate_site_data(db, output_dir):
-    """生成网站所需的 JSON 和 CSV 数据文件"""
-    logger = logging.getLogger("main")
-
-    json_data = db.export_json()
-    json_dir = os.path.join(output_dir, "data")
-    os.makedirs(json_dir, exist_ok=True)
-    json_path = os.path.join(json_dir, "movies.json")
-    with open(json_path, 'w', encoding='utf-8') as f:
-        f.write(json_data)
-    logger.info(f"JSON 数据导出完成: {json_path}")
-
-    csv_data = db.export_csv()
-    csv_path = os.path.join(json_dir, "movies.csv")
-    with open(csv_path, 'w', encoding='utf-8', newline='') as f:
-        f.write(csv_data)
-    logger.info(f"CSV 数据导出完成: {csv_path}")
-
-    stats = db.get_statistics()
-    stats_path = os.path.join(json_dir, "stats.json")
-    with open(stats_path, 'w', encoding='utf-8') as f:
-        json.dump(stats, f, ensure_ascii=False, indent=2)
-    logger.info(f"统计数据导出完成: {stats_path}")
-
-    # 复制海报到网站目录
-    poster_src = POSTERS_DIR
-    poster_dst = os.path.join(output_dir, "posters")
-    if os.path.exists(poster_src):
-        os.makedirs(poster_dst, exist_ok=True)
-        for f_name in os.listdir(poster_src):
-            src = os.path.join(poster_src, f_name)
-            dst = os.path.join(poster_dst, f_name)
-            if os.path.isfile(src) and f_name.lower().endswith(
-                ('.jpg', '.jpeg', '.png', '.webp')):
-                shutil.copy2(src, dst)
-        logger.info(f"海报复制到网站目录: {poster_dst}")
-
-    return json_path
+    # 3. 批量入库
+    success_count = db.batch_insert_movies(movies_list)
+    logger.info(f"入库完成: 成功 {success_count}/{len(movies_list)}")
+    return success_count
 
 
 # ==================== 烂番茄爬取 (独立步骤) ====================
@@ -366,6 +235,8 @@ def crawl_rotten_tomatoes(db, logger):
 def match_douban(movies_list, db, logger):
     """豆瓣匹配 — 独立步骤, 使用API+缓存, 不依赖浏览器"""
     from crawler.douban import DoubanMatcher
+
+    global _partial_movies
 
     # CI环境下不传driver (只用API, 不需要浏览器)
     ci_env = os.environ.get("CI_ENV", "").lower() in ("true", "1", "yes")
@@ -445,31 +316,8 @@ def douban_only_mode(db, logger):
 
     movies_list = match_douban(movies_list, db, logger)
 
-    # 计算加权评分
-    for movie in movies_list:
-        ws = calc_weighted_score(
-            movie.get("tomatometer", ""),
-            movie.get("audience_score", ""),
-            movie.get("douban_score", ""),
-        )
-        if ws is not None:
-            movie["weighted_score"] = f"{ws:.2f}"
-        else:
-            movie["weighted_score"] = ""
-
-    # 下载海报
-    poster_results = download_posters_concurrent(movies_list)
-    for movie in movies_list:
-        title = movie.get("title", "")
-        if title in poster_results:
-            _, filename = poster_results[title]
-            movie["poster_local"] = filename
-        else:
-            movie["poster_local"] = ""
-
-    # 更新数据库
-    success_count = db.batch_insert_movies(movies_list)
-    logger.info(f"豆瓣匹配数据入库完成: {success_count}/{len(movies_list)}")
+    # 统一调用处理流水线
+    process_movies_pipeline(movies_list, db, logger)
 
     return True
 
@@ -523,36 +371,11 @@ def main():
             # 2. 豆瓣匹配 (独立步骤, 不依赖浏览器)
             movies_list = match_douban(movies_list, db, logger)
 
-            # 3. 计算加权评分
-            logger.info("===== 计算加权评分 =====")
-            for movie in movies_list:
-                ws = calc_weighted_score(
-                    movie.get("tomatometer", ""),
-                    movie.get("audience_score", ""),
-                    movie.get("douban_score", ""),
-                )
-                if ws is not None:
-                    movie["weighted_score"] = f"{ws:.2f}"
-                else:
-                    movie["weighted_score"] = ""
+            # 3. 处理流水线: 评分计算 + 海报下载 + 入库
+            logger.info("===== 处理流水线: 评分 + 海报 + 入库 =====")
+            process_movies_pipeline(movies_list, db, logger)
 
-            # 4. 并发下载海报
-            logger.info("===== 并发下载海报 =====")
-            poster_results = download_posters_concurrent(movies_list)
-            for movie in movies_list:
-                title = movie.get("title", "")
-                if title in poster_results:
-                    _, filename = poster_results[title]
-                    movie["poster_local"] = filename
-                else:
-                    movie["poster_local"] = ""
-
-            # 5. 批量入库
-            logger.info("===== 批量入库 =====")
-            success_count = db.batch_insert_movies(movies_list)
-            logger.info(f"入库完成: 成功 {success_count}/{len(movies_list)}")
-
-            # 6. 记录评分历史
+            # 4. 记录评分历史
             if SCORE_HISTORY_ENABLED:
                 logger.info("===== 记录评分历史 =====")
                 for movie in movies_list:
@@ -566,7 +389,7 @@ def main():
                             movie.get("weighted_score", -1),
                         )
 
-            # 7. 生成网站数据
+            # 5. 生成网站数据
             logger.info("===== 生成网站数据 =====")
             generate_site_data(db, SITE_DIR)
 

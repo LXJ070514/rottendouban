@@ -3,6 +3,7 @@ import sqlite3
 import logging
 import os
 from datetime import datetime
+from typing import Optional, List, Dict, Any
 from crawler.config import DB_PATH, DB_BATCH_SIZE, MAX_DIRECTOR_LENGTH, MAX_CAST_LENGTH, MAX_SYNOPSIS_LENGTH
 
 logger = logging.getLogger("database")
@@ -125,16 +126,6 @@ class Database:
                 except sqlite3.OperationalError as e:
                     logger.warning(f"迁移失败 {col_name}: {e}")
 
-        # 扩宽字段
-        for col_name, max_len in [("director", MAX_DIRECTOR_LENGTH),
-                                   ("cast", MAX_CAST_LENGTH),
-                                   ("synopsis", MAX_SYNOPSIS_LENGTH)]:
-            if col_name in existing_columns:
-                try:
-                    self.conn.execute(f"ALTER TABLE movies ALTER COLUMN {col_name} TYPE TEXT")
-                except Exception:
-                    pass  # SQLite 不支持 ALTER COLUMN TYPE，用截断策略代替
-
         self.conn.commit()
         logger.info("数据库迁移完成")
 
@@ -160,8 +151,8 @@ class Database:
         except (ValueError, TypeError):
             return default
 
-    def insert_movie(self, movie_data):
-        """插入或更新单条电影记录"""
+    def _insert_movie_no_commit(self, movie_data: dict) -> bool:
+        """插入或更新单条电影记录（不提交事务，供批量操作使用）"""
         # 标准化评分字段为数字
         for score_field in ["tomatometer", "audience_score"]:
             movie_data[score_field] = self._normalize_score(movie_data.get(score_field), -1)
@@ -212,27 +203,45 @@ class Database:
             VALUES ({','.join(['?'] * len(columns))})
             ON CONFLICT(rt_url) DO UPDATE SET {update_clause}
         """
+        self.conn.execute(sql, values)
+        logger.info(f"入库成功: {movie_data.get('title')}")
+        return True
+
+    def insert_movie(self, movie_data: dict) -> bool:
+        """插入或更新单条电影记录（自动提交）"""
         try:
-            self.conn.execute(sql, values)
-            self.conn.commit()
-            logger.info(f"入库成功: {movie_data.get('title')}")
-            return True
+            result = self._insert_movie_no_commit(movie_data)
+            if result:
+                self.conn.commit()
+            return result
         except sqlite3.Error as e:
             logger.error(f"入库失败: {movie_data.get('title')} - {e}")
             self.log_error(movie_data.get("rt_url", ""), "db_insert", str(e))
             return False
 
-    def batch_insert_movies(self, movies_list):
-        """批量插入电影记录（逐条 try/except，一条失败不影响其余）"""
+    def batch_insert_movies(self, movies_list: list) -> int:
+        """批量插入电影记录（使用事务，一条失败不影响其余）"""
         success_count = 0
-        for movie_data in movies_list:
+        failed = []
+        try:
+            for movie_data in movies_list:
+                try:
+                    if self._insert_movie_no_commit(movie_data):
+                        success_count += 1
+                except Exception as e:
+                    logger.error(f"批量插入单条失败: {movie_data.get('title')} - {e}")
+                    self.log_error(movie_data.get("rt_url", ""), "batch_insert", str(e))
+                    failed.append(movie_data.get('title'))
+            self.conn.commit()
+        except Exception as e:
+            logger.error(f"批量插入事务失败: {e}")
             try:
-                if self.insert_movie(movie_data):
-                    success_count += 1
-            except Exception as e:
-                logger.error(f"批量插入单条失败: {movie_data.get('title')} - {e}")
-                self.log_error(movie_data.get("rt_url", ""), "batch_insert", str(e))
+                self.conn.rollback()
+            except Exception:
+                pass
         logger.info(f"批量入库完成: 成功 {success_count}/{len(movies_list)}")
+        if failed:
+            logger.warning(f"失败列表: {failed[:5]}...")
         return success_count
 
     def record_score_history(self, movie_id, tomatometer, audience_score, douban_score, weighted_score):
@@ -299,16 +308,28 @@ class Database:
         """, (f"%{genre}%",))
         return cursor.fetchall()
 
+    def _get_all_score_histories(self) -> Dict[int, List[Dict[str, Any]]]:
+        """批量获取所有电影的评分历史，返回 {movie_id: [history_records]}"""
+        cursor = self.conn.execute("""
+            SELECT * FROM score_history ORDER BY movie_id, recorded_at ASC
+        """)
+        history_map = {}
+        for row in cursor:
+            movie_id = row['movie_id']
+            if movie_id not in history_map:
+                history_map[movie_id] = []
+            history_map[movie_id].append(dict(row))
+        return history_map
+
     def export_json(self):
         """导出所有数据为 JSON 格式"""
         import json
         movies = self.get_all_movies()
+        history_map = self._get_all_score_histories()
         result = []
         for m in movies:
             movie_dict = dict(m)
-            # 获取评分历史
-            history = self.get_score_history(m["id"])
-            movie_dict["score_history"] = [dict(h) for h in history]
+            movie_dict["score_history"] = history_map.get(m["id"], [])
             result.append(movie_dict)
         return json.dumps(result, ensure_ascii=False, indent=2)
 
