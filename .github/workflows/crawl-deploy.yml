@@ -59,8 +59,15 @@ jobs:
           # 启动虚拟显示器
           Xvfb :99 -screen 0 1920x1080x24 &
           export DISPLAY=:99
-          # 运行爬虫 (含SIGTERM信号处理，超时时自动保存部分数据)
-          python run.py 2>&1 || echo "Crawler exited with error, checking for partial data..."
+          # 运行爬虫
+          python run.py 2>&1 || echo "CRAWLER_EXITED_WITH_ERROR"
+          # 显示爬虫日志
+          echo "=== Crawler log ==="
+          if [ -f "crawler/data/crawler.log" ]; then
+            cat crawler/data/crawler.log
+          else
+            echo "No crawler.log found"
+          fi
           # 检查数据库和电影数量
           if [ -f "crawler/data/movies.db" ]; then
             MOVIE_COUNT=$(python -c "import sys; sys.path.insert(0, '.'); from crawler.database import Database; db=Database(); c=db.conn.execute('SELECT COUNT(*) FROM movies'); print(c.fetchone()[0]); db.close()")
