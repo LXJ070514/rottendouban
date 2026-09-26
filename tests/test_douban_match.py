@@ -87,12 +87,74 @@ def test_legacy_key_accepted_when_entry_has_no_year(matcher):
     assert matcher._check_cache("教父", 1972) is not None
 
 
-def test_blocked_after_consecutive_shell_pages(matcher, monkeypatch):
-    """豆瓣软封返回 200 + 无 window.__DATA__，不能和"真没搜到"混为一谈。"""
-    monkeypatch.setattr(matcher, "_api_search", lambda t: [])
+def test_blocked_needs_enough_samples(matcher):
+    """样本太少就判限流会把"确实查无此片"误当成封禁。"""
+    matcher.live_lookups = 5
+    matcher.empty_lookups = 5
     assert matcher.blocked is False
-    matcher.empty_page_streak = 8
+
+
+def test_blocked_on_empty_result_ratio(matcher):
+    """实测形态：豆瓣返回 200 + 合法 __DATA__ 但 items 为空（95 次里 87 次）。"""
+    matcher.live_lookups = 95
+    matcher.empty_lookups = 87
     assert matcher.blocked is True
+
+
+def test_not_blocked_when_mostly_answered(matcher):
+    matcher.live_lookups = 40
+    matcher.empty_lookups = 6
+    assert matcher.blocked is False
+
+
+class _FakeResponse:
+    def __init__(self, body):
+        self._body = body
+
+    def read(self):
+        return self._body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+
+def _serve(monkeypatch, body):
+    monkeypatch.setattr(
+        douban_mod.urllib.request, "urlopen",
+        lambda *a, **k: _FakeResponse(body))
+
+
+def test_api_search_counts_empty_items(monkeypatch, tmp_path):
+    """豆瓣最常见的软封形态：200 + 合法 __DATA__ + items 为空。"""
+    monkeypatch.setattr(douban_mod, "DOUBAN_CACHE_PATH", str(tmp_path / "absent.json"))
+    m = DoubanMatcher(use_cache=True)
+    _serve(monkeypatch, b'<script>window.__DATA__ = {"items": []}</script>')
+    assert m._api_search("教父2") == []
+    assert (m.live_lookups, m.empty_lookups) == (1, 1)
+
+
+def test_api_search_counts_shell_page(monkeypatch, tmp_path):
+    """第二种形态：返回登录/验证页，连 __DATA__ 都没有。"""
+    monkeypatch.setattr(douban_mod, "DOUBAN_CACHE_PATH", str(tmp_path / "absent.json"))
+    m = DoubanMatcher(use_cache=True)
+    _serve(monkeypatch, b"<html>please login</html>")
+    assert m._api_search("教父2") == []
+    assert (m.live_lookups, m.empty_lookups) == (1, 1)
+
+
+def test_api_search_real_results_not_counted_as_empty(monkeypatch, tmp_path):
+    monkeypatch.setattr(douban_mod, "DOUBAN_CACHE_PATH", str(tmp_path / "absent.json"))
+    m = DoubanMatcher(use_cache=True)
+    _serve(monkeypatch,
+           b'window.__DATA__ = {"items":[{"title":"\xe6\x95\x99\xe7\x88\xb6 (1972)",'
+           b'"url":"https://movie.douban.com/subject/1291841/",'
+           b'"rating":{"value":9.3,"count":900000}}]}')
+    results = m._api_search("教父")
+    assert len(results) == 1
+    assert (m.live_lookups, m.empty_lookups) == (1, 0)
 
 
 def test_cached_only_does_not_hit_the_network(matcher):

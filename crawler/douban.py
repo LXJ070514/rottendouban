@@ -24,6 +24,10 @@ _SSL_CTX = build_ssl_context()
 # 缓存文件路径
 DOUBAN_CACHE_PATH = os.path.join(DATA_DIR, "douban_cache.json")
 
+# 软封判定：至少这么多实时样本，且空结果占比达到该阈值
+BLOCK_MIN_SAMPLES = int(os.environ.get("DOUBAN_BLOCK_MIN_SAMPLES", 12))
+BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
+
 
 def _as_int(value, default=0):
     try:
@@ -47,15 +51,24 @@ class DoubanMatcher:
     def __init__(self, use_cache=True):
         self._use_cache = use_cache
         self._cache = {}
-        # 连续拿到"无 window.__DATA__ 页面"的次数，用于识别软封后提前收手
-        self.empty_page_streak = 0
+        # 实时检索的空结果统计，用于识别豆瓣对数据中心 IP 的软封
+        self.live_lookups = 0
+        self.empty_lookups = 0
         if self._use_cache:
             self._load_cache()
 
     @property
     def blocked(self) -> bool:
-        """连续多次拿到无数据页面 —— 判定为被限流，上层应停止实时检索。"""
-        return self.empty_page_streak >= int(os.environ.get("DOUBAN_BLOCK_THRESHOLD", 8))
+        """样本足够且几乎全是空结果 —— 判定为被限流，上层应停止实时检索。
+
+        豆瓣的软封有两种表现，且都返回 HTTP 200：页面里没有 window.__DATA__，
+        或有 __DATA__ 而 items 为空。CI 实测后者才是主流（95 次检索 87 次空），
+        所以按空结果比例判，而不是只看页面结构。片单里的《教父2》《美丽人生》
+        不可能真的查无此片。
+        """
+        if self.live_lookups < BLOCK_MIN_SAMPLES:
+            return False
+        return self.empty_lookups / self.live_lookups >= BLOCK_EMPTY_RATIO
 
     # ==================== 缓存 ====================
 
@@ -153,28 +166,28 @@ class DoubanMatcher:
     def _api_search(self, title: str) -> List[Dict]:
         """使用豆瓣搜索 API
 
-        区分两种"没结果"：页面里根本没有 window.__DATA__ 是软封信号（豆瓣对数据中心
-        IP 会返回 200 + 登录/验证页），累加 streak 供上层熔断；页面正常但无命中条目
-        是真的查无此片，属正常结果。
+        豆瓣对数据中心 IP 的软封一律返回 HTTP 200，有两种形态：页面里没有
+        window.__DATA__，或有 __DATA__ 而 items 为空。两者都计入空结果统计，
+        由 blocked 按比例判定后让上层熔断，避免整轮白敲。
         """
         url = f'{DOUBAN_SEARCH_URL}?search_text={urllib.parse.quote(title.strip())}'
+        self.live_lookups += 1
+
         try:
             req = urllib.request.Request(url, headers=_SEARCH_HEADERS)
             with urllib.request.urlopen(req, timeout=10, context=_SSL_CTX) as resp:
                 content = resp.read().decode('utf-8', errors='replace')
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError) as e:
             logger.warning(f"搜索API失败 [{title[:30]}]: {e}")
+            self.empty_lookups += 1
             return []
 
         data = self._extract_json_from_html(content)
         if data is None:
-            self.empty_page_streak += 1
-            logger.warning(
-                f"页面无 window.__DATA__ [{title[:30]}]，"
-                f"连续 {self.empty_page_streak} 次（疑似被限流）")
+            self.empty_lookups += 1
+            logger.warning(f"页面无 window.__DATA__ [{title[:30]}]")
             return []
 
-        self.empty_page_streak = 0
         results = []
         for item in data.get('items', []):
             rating = item.get('rating', {})
@@ -191,6 +204,8 @@ class DoubanMatcher:
                     'poster': item.get('cover_url', ''),
                 })
 
+        if not results:
+            self.empty_lookups += 1
         logger.info(f"  豆瓣搜索: {title[:25]} -> {len(results)}条")
         return results
 

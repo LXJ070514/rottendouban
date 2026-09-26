@@ -207,7 +207,7 @@ def match_douban(movies_list, logger):
                 if matcher.blocked:
                     cache_only = True
                     logger.warning(
-                        f"  连续 {matcher.empty_page_streak} 次拿到空壳页面，"
+                        f"  {matcher.live_lookups} 次实时检索中 {matcher.empty_lookups} 次空结果，"
                         f"判定豆瓣已限流；剩余 {len(movies_list) - i - 1} 部只读缓存")
         except Exception as e:
             logger.error(f"豆瓣匹配失败: {movie.get('title')} - {e}")
