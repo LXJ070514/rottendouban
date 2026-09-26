@@ -1,31 +1,27 @@
 name: Fetch Data and Deploy
 
+# 拆成 fetch / deploy 两个 job 是修 bug，不是排版偏好：
+# environment: github-pages 会让 job 一启动就登记一个 Pages deployment，
+# 爬虫 job 中途失败会把这个 deployment 永久留在 queued，后续所有 run 排在它后面
+# 直到被 GitHub 取消（历史上 4 个 deployment 各占位约 30 天，数据因此停更）。
 on:
   schedule:
     - cron: '0 4 * * 1,4'  # 每周一、四 04:00 UTC
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths-ignore:
-      - 'site/**'
-      - 'README.md'
 
 permissions:
-  contents: write
+  contents: write   # 回传 douban_cache.json 与 movies.json
   pages: write
-  id-token: write
+  id-token: write   # actions/deploy-pages 需要
 
 concurrency:
-  group: "pages"
+  group: rottendouban-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  fetch-and-deploy:
+  fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 25
 
     steps:
       - name: Checkout repository
@@ -35,67 +31,68 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      # 爬虫只用标准库（urllib + sqlite3），无需 pip install
+
+      - name: Record previous movie count
+        id: before
+        run: |
+          COUNT=$(python -c "import json;print(len(json.load(open('site/data/movies.json'))))" 2>/dev/null || echo 0)
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "仓库中现有 $COUNT 部电影"
 
       - name: Fetch movie data
-        id: fetch
-        continue-on-error: true
         env:
           CRAWLER_MODE: full
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-        run: |
-          echo "=== Fetching data (Algolia API + Douban API, no browser) ==="
-          python -m crawler.main 2>&1 || true
-          echo "=== Crawler log ==="
-          if [ -f "crawler/data/crawler.log" ]; then
-            tail -50 crawler/data/crawler.log
-          fi
-          # Check result
-          if [ -f "site/data/movies.json" ]; then
-            COUNT=$(python -c "import json; print(len(json.load(open('site/data/movies.json'))))")
-            echo "Movies: $COUNT"
-            if [ "$COUNT" -gt "0" ]; then
-              echo "result=success" >> $GITHUB_OUTPUT
-            else
-              echo "result=no_data" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "result=no_data" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Update site data from DB
-        if: steps.fetch.outputs.result == 'success'
-        run: python scripts/update_site.py
+        run: python -m crawler.main
+        # 不再用 `|| true` / continue-on-error：上游抖动时 crawler 会因低于
+        # MIN_MOVIES_TO_PUBLISH 而非零退出，此处让它如实失败并保留线上旧数据
 
       - name: Verify site data
+        id: after
         run: |
-          if [ -f "site/data/movies.json" ]; then
-            echo "✅ Site data exists"
-            COUNT=$(python -c "import json; print(len(json.load(open('site/data/movies.json'))))" 2>/dev/null || echo "0")
-            echo "Movies count: $COUNT"
-          else
-            echo "⚠️ No site data, will deploy with existing static data"
+          COUNT=$(python -c "import json;print(len(json.load(open('site/data/movies.json'))))")
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "本次生成 $COUNT 部电影"
+          python scripts/verify_site.py
+          if [ "$COUNT" -lt "${{ steps.before.outputs.count }}" ]; then
+            echo "新数据比仓库中的少（$COUNT < ${{ steps.before.outputs.count }}），不覆盖线上" >&2
+            exit 1
           fi
 
-      - name: Save Douban cache
-        if: steps.fetch.outputs.result == 'success'
+      - name: Commit refreshed data
         run: |
-          if [ -f "crawler/data/douban_cache.json" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add -f crawler/data/douban_cache.json
-            if git diff --cached --quiet; then
-              echo "No cache changes"
-            else
-              CACHE_COUNT=$(python -c "import json; print(len(json.load(open('crawler/data/douban_cache.json'))))" 2>/dev/null || echo "0")
-              git commit -m "Update Douban cache: $CACHE_COUNT entries [skip ci]"
-              git pull --rebase origin main || true
-              git push || true
-            fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f crawler/data/douban_cache.json site/data/movies.json
+          if git diff --cached --quiet; then
+            echo "无数据变化"
+          else
+            git commit -m "Refresh data: ${{ steps.after.outputs.count }} movies [skip ci]"
+            git push
           fi
+
+      - name: Summary
+        run: |
+          {
+            echo "## 数据抓取结果"
+            echo ""
+            echo "- 电影数：${{ steps.after.outputs.count }}"
+            echo "- 抓取前：${{ steps.before.outputs.count }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    needs: fetch
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

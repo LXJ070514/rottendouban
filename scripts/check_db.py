@@ -1,4 +1,4 @@
-"""CI 环境下检查数据库电影数量的脚本"""
+"""查看本地 movies.db 概况。"""
 import os
 import sys
 
@@ -6,8 +6,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from crawler.database import Database
 
-db = Database()
-c = db.conn.execute('SELECT COUNT(*) FROM movies')
-count = c.fetchone()[0]
-print(count)
-db.close()
+
+def main():
+    db = Database()
+    try:
+        for key, value in db.get_statistics().items():
+            print(f"{key}: {value}")
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    main()

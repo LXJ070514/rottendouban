@@ -1,0 +1,31 @@
+name: CI
+
+# 离线检查：单元测试 + workflow 语法。与抓取/部署解耦，
+# 定时任务不必因为一个测试红掉而停掉数据更新。
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test deps
+        run: pip install pytest pyyaml
+
+      # tests/ 全部离线：只喂构造数据给匹配与评分逻辑，不碰豆瓣 / RT 网络
+      # 其中 test_workflows.py 会解析 .github/workflows/*.yml，语法错误在这里就拦住
+      - name: Run tests
+        run: python -m pytest -q

@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rottendouban"
-version = "5.0.0"
+version = "6.1.0"
 description = "RottenDouban - 烂番茄豆瓣聚合评分，聚合 Rotten Tomatoes 与豆瓣评分"
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
     {name = "RottenDouban Contributors"},
 ]
@@ -20,9 +20,12 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Entertainment :: Movies",
 ]
+# 运行时只用标准库
+dependencies = []
 
-dependencies = [
-    "requests>=2.31.0",
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
 ]
 
 [project.urls]
@@ -31,3 +34,6 @@ Repository = "https://github.com/LXJ070514/rottendouban"
 
 [tool.setuptools.packages.find]
 include = ["crawler*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

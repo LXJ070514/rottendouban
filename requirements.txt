@@ -1,2 +1,2 @@
-# 核心依赖 (纯API模式，无浏览器依赖)
-requests>=2.31.0
+# 运行时零第三方依赖：爬虫只用标准库（urllib + sqlite3）。
+# 开发依赖见 pyproject.toml 的 [project.optional-dependencies]。

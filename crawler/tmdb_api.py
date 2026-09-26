@@ -6,9 +6,7 @@ TMDB API 数据获取模块
 - 环境变量 TMDB_API_KEY 或 TMDB_BEARER_TOKEN
 """
 import os
-import re
 import json
-import ssl
 import time
 import random
 import logging
@@ -16,18 +14,22 @@ import urllib.parse
 import urllib.request
 import urllib.error
 
+from crawler.config import build_ssl_context
+
 logger = logging.getLogger("tmdb")
 
-# SSL context
-_SSL_CTX = ssl.create_default_context()
-_SSL_CTX.check_hostname = False
-_SSL_CTX.verify_mode = ssl.CERT_NONE
+_SSL_CTX = build_ssl_context()
 
-# TMDB API 配置
-TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "")
-TMDB_BEARER_TOKEN = os.environ.get("TMDB_BEARER_TOKEN", "")
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500"
+
+# 密钥走 getter 而非模块常量：常量会在 import 时固化成空串，
+# 让 run.py / 测试里后设的环境变量静默失效。
+
+
+def _credentials():
+    return os.environ.get("TMDB_API_KEY", ""), os.environ.get("TMDB_BEARER_TOKEN", "")
+
 
 # 速率控制: TMDB 限制 40 requests / 10 seconds
 _MIN_REQUEST_INTERVAL = 0.3  # seconds between requests
@@ -45,21 +47,23 @@ def _rate_limit():
 
 def _tmdb_request(endpoint, params=None, timeout=10):
     """发送 TMDB API 请求"""
-    if not TMDB_API_KEY and not TMDB_BEARER_TOKEN:
+    api_key, bearer_token = _credentials()
+    if not api_key and not bearer_token:
         return None
 
     _rate_limit()
 
     url = f"{TMDB_BASE_URL}{endpoint}"
-    params = params or {}
+    params = dict(params or {})
 
-    if TMDB_BEARER_TOKEN:
+    if bearer_token:
         headers = {
-            "Authorization": f"Bearer {TMDB_BEARER_TOKEN}",
+            "Authorization": f"Bearer {bearer_token}",
             "Content-Type": "application/json",
         }
     else:
-        params["api_key"] = TMDB_API_KEY
+        # v3 只认 query 里的 api_key；密钥因此会出现在 URL 中，优先用 bearer_token
+        params["api_key"] = api_key
         headers = {"Content-Type": "application/json"}
 
     if params:
@@ -92,8 +96,8 @@ def _tmdb_request(endpoint, params=None, timeout=10):
 
 
 def is_available():
-    """TMDB API 是否可用"""
-    return bool(TMDB_API_KEY or TMDB_BEARER_TOKEN)
+    """TMDB API 是否配置了密钥"""
+    return any(_credentials())
 
 
 def search_movie(title, year=None):
@@ -142,7 +146,7 @@ def get_movie_details(movie_id):
     """获取电影详情 + credits"""
     data = _tmdb_request(
         f"/movie/{movie_id}",
-        {"language": "en-US", "append_to_response": "credits"}
+        {"language": "en-US", "append_to_response": "credits,release_dates"}
     )
     return data
 
@@ -221,7 +225,6 @@ def search_and_get_details(title, year=None):
         "cast": ", ".join(cast_list),
         "synopsis": data.get("overview", ""),
         "poster_url": poster_url,
-        "poster_local": "",
         "runtime": runtime_str,
         "release_date": release_date,
         "category": "豆瓣Top250",

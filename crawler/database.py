@@ -5,7 +5,9 @@ import os
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 
-from crawler.config import DB_PATH, DB_BATCH_SIZE, MAX_DIRECTOR_LENGTH, MAX_CAST_LENGTH, MAX_SYNOPSIS_LENGTH
+from crawler.config import (
+    DB_PATH, MAX_DIRECTOR_LENGTH, MAX_CAST_LENGTH, MAX_SYNOPSIS_LENGTH,
+)
 
 logger = logging.getLogger("database")
 
@@ -32,7 +34,8 @@ class Database:
         self.conn.executescript("""
             CREATE TABLE IF NOT EXISTS movies (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                rt_url TEXT UNIQUE NOT NULL,
+                slug TEXT UNIQUE NOT NULL,
+                rt_url TEXT,
                 title TEXT NOT NULL,
                 original_title TEXT,
                 year INTEGER,
@@ -48,7 +51,6 @@ class Database:
                 release_date TEXT,
                 runtime TEXT,
                 poster_url TEXT,
-                poster_local TEXT,
                 douban_id TEXT,
                 douban_url TEXT,
                 douban_score REAL DEFAULT -1,
@@ -77,15 +79,6 @@ class Database:
                 FOREIGN KEY (movie_id) REFERENCES movies(id)
             );
 
-            CREATE TABLE IF NOT EXISTS error_log (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                movie_url TEXT,
-                error_type TEXT,
-                error_message TEXT,
-                stack_trace TEXT,
-                occurred_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-
             CREATE INDEX IF NOT EXISTS idx_movies_title ON movies(title);
             CREATE INDEX IF NOT EXISTS idx_movies_weighted ON movies(weighted_score);
             CREATE INDEX IF NOT EXISTS idx_movies_douban_id ON movies(douban_id);
@@ -95,9 +88,19 @@ class Database:
         self.conn.commit()
 
     def _migrate(self):
-        existing = set()
-        for row in self.conn.execute("PRAGMA table_info(movies)"):
-            existing.add(row[1])
+        existing = {row[1] for row in self.conn.execute("PRAGMA table_info(movies)")}
+        if not existing:
+            return
+
+        # slug 之前的库以 rt_url 作唯一键：RT 时有时无会让同一部片裂成两行。
+        # movies.db 是 gitignore 的一次性缓存，结构不合就重建，不做数据搬迁。
+        if "slug" not in existing:
+            logger.info("检测到旧版 movies.db（无 slug 列），重建")
+            self.conn.close()
+            os.remove(self.db_path)
+            self._connect()
+            self._init_tables()
+            return
 
         migrations = [
             ("douban_id", "TEXT"), ("douban_url", "TEXT"),
@@ -117,47 +120,68 @@ class Database:
                     pass
         self.conn.commit()
 
-    def truncate_field(self, value, max_len):
+    @staticmethod
+    def make_slug(title, year):
+        """片名 + 年份构成跨抓取稳定的唯一键，不依赖 RT 是否匹配成功。"""
+        return f"{(title or '').strip().lower()}-{year or 0}"
+
+    @staticmethod
+    def truncate_field(value, max_len):
         if value and len(str(value)) > max_len:
             return str(value)[:max_len]
         return value
 
-    def _normalize_score(self, value, default=-1):
-        if value is None or value == '':
+    # 三套评分量纲不同，混用同一个 normalizer 会把 88.7 分截成 88
+    _SCORE_SCALES = {
+        "tomatometer": "percent",
+        "audience_score": "percent",
+        "weighted_score": "percent",
+        "douban_score": "out_of_ten",
+    }
+
+    @classmethod
+    def _normalize_score(cls, field, value, default=-1):
+        """统一评分：百分制保留一位小数并夹在 0–100，豆瓣夹在 0–10。"""
+        if value is None or value == "":
             return default
-        raw = str(value).replace('%', '').strip()
+        raw = str(value).replace("%", "").strip()
         try:
             num = float(raw)
-            return round(num, 1) if num <= 10 else int(num)
         except (ValueError, TypeError):
             return default
+        if cls._SCORE_SCALES[field] == "out_of_ten":
+            return round(max(0.0, min(num, 10.0)), 1)
+        return round(max(0.0, min(num, 100.0)), 1)
 
     def _insert_movie_no_commit(self, movie_data: dict) -> bool:
-        for sf in ["tomatometer", "audience_score"]:
-            movie_data[sf] = self._normalize_score(movie_data.get(sf), -1)
-        movie_data["douban_score"] = self._normalize_score(movie_data.get("douban_score"), -1)
-        movie_data["weighted_score"] = self._normalize_score(movie_data.get("weighted_score"), -1)
+        for field in self._SCORE_SCALES:
+            movie_data[field] = self._normalize_score(field, movie_data.get(field))
+
         try:
-            movie_data["year"] = int(movie_data.get("year", 0) or 0) if movie_data.get("year") else None
+            movie_data["year"] = int(str(movie_data.get("year")).strip() or 0) or None
         except (ValueError, TypeError):
             movie_data["year"] = None
+
+        raw_votes = str(movie_data.get("douban_vote_count") or "0").replace(",", "")
         try:
-            movie_data["douban_vote_count"] = int(str(movie_data.get("douban_vote_count", "0")).replace(",", "")) if movie_data.get("douban_vote_count") else 0
-        except (ValueError, TypeError):
+            movie_data["douban_vote_count"] = int(raw_votes)
+        except ValueError:
             movie_data["douban_vote_count"] = 0
 
         movie_data["director"] = self.truncate_field(movie_data.get("director"), MAX_DIRECTOR_LENGTH)
         movie_data["cast"] = self.truncate_field(movie_data.get("cast"), MAX_CAST_LENGTH)
         movie_data["synopsis"] = self.truncate_field(movie_data.get("synopsis"), MAX_SYNOPSIS_LENGTH)
-        movie_data["douban_director"] = self.truncate_field(movie_data.get("douban_director"), MAX_DIRECTOR_LENGTH)
-        movie_data["douban_cast"] = self.truncate_field(movie_data.get("douban_cast"), MAX_CAST_LENGTH)
-        movie_data["douban_synopsis"] = self.truncate_field(movie_data.get("douban_synopsis"), MAX_SYNOPSIS_LENGTH)
+
+        movie_data["slug"] = self.make_slug(
+            movie_data.get("original_title") or movie_data.get("title"),
+            movie_data.get("year"),
+        )
 
         columns = [
-            "rt_url", "title", "original_title", "year", "rating",
+            "slug", "rt_url", "title", "original_title", "year", "rating",
             "tomatometer", "audience_score", "genre", "director", "writers", "cast",
             "critics_consensus", "synopsis", "release_date", "runtime",
-            "poster_url", "poster_local", "douban_id", "douban_url",
+            "poster_url", "douban_id", "douban_url",
             "douban_score", "douban_vote_count", "douban_title", "douban_genre",
             "douban_director", "douban_writers", "douban_cast", "douban_synopsis", "douban_poster",
             "weighted_score", "category", "updated_at"
@@ -169,11 +193,11 @@ class Database:
                 v = datetime.now().isoformat()
             values.append(v)
 
-        update_clause = ", ".join(f"{col}=EXCLUDED.{col}" for col in columns if col != "rt_url")
+        update_clause = ", ".join(f"{col}=EXCLUDED.{col}" for col in columns if col != "slug")
         sql = f"""
             INSERT INTO movies ({','.join(columns)})
             VALUES ({','.join(['?'] * len(columns))})
-            ON CONFLICT(rt_url) DO UPDATE SET {update_clause}
+            ON CONFLICT(slug) DO UPDATE SET {update_clause}
         """
         self.conn.execute(sql, values)
         return True
@@ -206,30 +230,25 @@ class Database:
                 pass
         return success
 
-    def record_score_history(self, movie_id, tomatometer, audience_score, douban_score, weighted_score):
+    def record_score_history(self, movie_id, scores):
+        """记录一次抓取的评分快照。scores 为 movies 行中的四个评分字段。"""
         if not movie_id:
             return
         try:
             self.conn.execute("""
-                INSERT INTO score_history (movie_id, tomatometer, audience_score, douban_score, weighted_score)
+                INSERT INTO score_history
+                    (movie_id, tomatometer, audience_score, douban_score, weighted_score)
                 VALUES (?, ?, ?, ?, ?)
-            """, (movie_id, tomatometer, audience_score, douban_score, weighted_score))
-            self.conn.commit()
+            """, (
+                movie_id,
+                scores["tomatometer"], scores["audience_score"],
+                scores["douban_score"], scores["weighted_score"],
+            ))
         except sqlite3.Error as e:
             logger.error(f"评分历史记录失败: {e}")
 
-    def log_error(self, movie_url, error_type, error_message, stack_trace=None):
-        try:
-            self.conn.execute("""
-                INSERT INTO error_log (movie_url, error_type, error_message, stack_trace)
-                VALUES (?, ?, ?, ?)
-            """, (movie_url, error_type, error_message, stack_trace))
-            self.conn.commit()
-        except sqlite3.Error:
-            pass
-
-    def get_movie_by_rt_url(self, rt_url):
-        return self.conn.execute("SELECT * FROM movies WHERE rt_url=?", (rt_url,)).fetchone()
+    def get_movie_by_slug(self, slug):
+        return self.conn.execute("SELECT * FROM movies WHERE slug=?", (slug,)).fetchone()
 
     def get_all_movies(self):
         return self.conn.execute("SELECT * FROM movies ORDER BY weighted_score DESC").fetchall()

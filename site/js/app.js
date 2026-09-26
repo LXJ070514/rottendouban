@@ -4,10 +4,12 @@
 (function() {
     'use strict';
 
+    // 转义必须覆盖引号：这些值来自豆瓣 / RT，且大量被插进 value="..." 这类属性里，
+    // 用 div.innerHTML 的老写法只转义 &<>，一个双引号就能逃出属性
+    const ESC_MAP = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+
     function esc(str) {
-        const d = document.createElement('div');
-        d.textContent = str || '';
-        return d.innerHTML;
+        return String(str ?? '').replace(/[&<>"']/g, c => ESC_MAP[c]);
     }
 
     function sanitizeUrl(url) {
@@ -50,15 +52,21 @@
             const resp = await fetch('data/movies.json');
             if (!resp.ok) throw new Error('数据加载失败');
             movies = await resp.json();
-            populateGenreFilter();
+            populateFilters();
             renderMovies();
         } catch(e) {
             grid.innerHTML = '<div class="no-data">数据加载失败，请稍后重试</div>';
         }
     }
 
-    // ===== Genre Filter =====
-    function populateGenreFilter() {
+    // ===== Filters =====
+    function fillSelect(id, values, allLabel) {
+        const sel = document.getElementById(id);
+        sel.innerHTML = `<option value="">${allLabel}</option>` +
+            values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
+    }
+
+    function populateFilters() {
         const genres = new Set();
         movies.forEach(m => {
             (m.douban_genre || m.genre || '').split(/[,\/]/).forEach(g => {
@@ -66,11 +74,12 @@
                 if (t) genres.add(t);
             });
         });
-        const sel = document.getElementById('filter-genre');
-        sel.innerHTML = '<option value="">全部类型</option>';
-        [...genres].sort().forEach(g => {
-            sel.innerHTML += `<option value="${esc(g)}">${esc(g)}</option>`;
-        });
+        fillSelect('filter-genre', [...genres].sort(), '全部类型');
+
+        // 分类必须来自数据本身：此前是硬编码的，数据换源后选项与真实 category 对不上，
+        // 选唯一的那一项会筛出空列表
+        const categories = [...new Set(movies.map(m => m.category).filter(Boolean))].sort();
+        fillSelect('filter-category', categories, '全部分类');
     }
 
     // ===== Search =====
@@ -90,24 +99,18 @@
 
     // ===== Filter & Sort =====
     function filterAndSort(list) {
-        let filtered = list;
         const category = document.getElementById('filter-category').value;
         const genre = document.getElementById('filter-genre').value;
         const sort = document.getElementById('filter-sort').value;
 
+        // 复制后再排序：直接 sort 会打乱全局 movies 的顺序
+        let filtered = list.slice();
         if (category) filtered = filtered.filter(m => m.category === category);
         if (genre) filtered = filtered.filter(m =>
             (m.douban_genre || '').includes(genre) || (m.genre || '').includes(genre)
         );
 
-        filtered.sort((a, b) => {
-            let va = a[sort], vb = b[sort];
-            if (sort === 'douban_score') {
-                va = va > 0 ? va : -1;
-                vb = vb > 0 ? vb : -1;
-            }
-            return (vb || -1) - (va || -1);
-        });
+        filtered.sort((a, b) => (b[sort] > 0 ? b[sort] : -1) - (a[sort] > 0 ? a[sort] : -1));
         return filtered;
     }
 
@@ -173,7 +176,10 @@
         const metaHtml = metaParts.join('<span class="card-meta-sep">·</span>');
 
         const catHtml = m.category ? `<span class="card-category">${esc(m.category)}</span>` : '';
-        const wsHtml = m.weighted_score > 0 ? `<span class="card-weighted">${m.weighted_score.toFixed(1)}</span>` : '';
+        // 加权分是 0–100，与豆瓣的 0–10 并排展示时容易被误读，用 title 标明量纲
+        const wsHtml = m.weighted_score > 0
+            ? `<span class="card-weighted" title="综合加权分（满分 100）">${m.weighted_score.toFixed(1)}</span>`
+            : '';
 
         return `<div class="movie-card" data-id="${m.id}">
             ${catHtml}${wsHtml}
@@ -210,7 +216,7 @@
             circles.push(`<div class="score-circle db-c"><div class="score-circle-val">${m.douban_score}</div><div class="score-circle-lbl">豆瓣</div></div>`);
         }
         if (m.weighted_score > 0) {
-            circles.push(`<div class="score-circle ws-c"><div class="score-circle-val">${m.weighted_score.toFixed(1)}</div><div class="score-circle-lbl">加权</div></div>`);
+            circles.push(`<div class="score-circle ws-c"><div class="score-circle-val">${m.weighted_score.toFixed(1)}</div><div class="score-circle-lbl">加权 /100</div></div>`);
         }
 
         // ====== 烂番茄信息区 ======

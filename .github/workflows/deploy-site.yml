@@ -1,0 +1,46 @@
+name: Deploy Site
+
+# 只改了前端（site/ 下的 html/css/js）时走这条，不重新抓取数据。
+# 数据抓取由 crawl-deploy.yml 的定时任务负责。
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'site/data/**'      # 爬虫自己提交的数据刷新
+      - 'crawler/data/**'   # douban_cache.json 回传
+      - 'README.md'
+      - '说明.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: rottendouban-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
