@@ -238,5 +238,85 @@
     "chinese_title": "这个杀手不太冷 Léon‎ (1994)",
     "genre": "剧情, 动作, 犯罪",
     "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2913554676.jpg"
+  },
+  "低俗小说|1994": {
+    "url": "https://movie.douban.com/subject/1291832/",
+    "id": 1291832,
+    "title": "低俗小说 Pulp Fiction‎ (1994)",
+    "score": "8.9",
+    "vote_count": "976361",
+    "chinese_title": "低俗小说 Pulp Fiction‎ (1994)",
+    "genre": "剧情, 喜剧, 犯罪",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1910902213.jpg"
+  },
+  "黑客帝国|1999": {
+    "url": "https://movie.douban.com/subject/1291843/",
+    "id": 1291843,
+    "title": "黑客帝国 The Matrix‎ (1999)",
+    "score": "9.1",
+    "vote_count": "966342",
+    "chinese_title": "黑客帝国 The Matrix‎ (1999)",
+    "genre": "动作, 科幻",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p451926968.jpg"
+  },
+  "星际穿越|2014": {
+    "url": "https://movie.douban.com/subject/1889243/",
+    "id": 1889243,
+    "title": "星际穿越 Interstellar‎ (2014)",
+    "score": "9.4",
+    "vote_count": "2228860",
+    "chinese_title": "星际穿越 Interstellar‎ (2014)",
+    "genre": "剧情, 科幻, 冒险",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2614988097.jpg"
+  },
+  "盗梦空间|2010": {
+    "url": "https://movie.douban.com/subject/3541415/",
+    "id": 3541415,
+    "title": "盗梦空间 Inception‎ (2010)",
+    "score": "9.4",
+    "vote_count": "2359571",
+    "chinese_title": "盗梦空间 Inception‎ (2010)",
+    "genre": "剧情, 科幻, 悬疑, 冒险",
+    "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p513344864.jpg"
+  },
+  "银翼杀手|1982": {
+    "url": "https://movie.douban.com/subject/1291839/",
+    "id": 1291839,
+    "title": "银翼杀手 Blade Runner‎ (1982)",
+    "score": "8.6",
+    "vote_count": "315485",
+    "chinese_title": "银翼杀手 Blade Runner‎ (1982)",
+    "genre": "科幻, 惊悚",
+    "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p868550285.jpg"
+  },
+  "2001太空漫游|1968": {
+    "url": "https://movie.douban.com/subject/1292226/",
+    "id": 1292226,
+    "title": "2001太空漫游 2001: A Space Odyssey‎ (1968)",
+    "score": "8.9",
+    "vote_count": "408177",
+    "chinese_title": "2001太空漫游 2001: A Space Odyssey‎ (1968)",
+    "genre": "科幻, 惊悚, 冒险",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2926647970.jpg"
+  },
+  "发条橙|1971": {
+    "url": "https://movie.douban.com/subject/1292233/",
+    "id": 1292233,
+    "title": "发条橙 A Clockwork Orange‎ (1971)",
+    "score": "8.6",
+    "vote_count": "422332",
+    "chinese_title": "发条橙 A Clockwork Orange‎ (1971)",
+    "genre": "犯罪, 剧情, 科幻",
+    "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p529908155.jpg"
+  },
+  "闪灵|1980": {
+    "url": "https://movie.douban.com/subject/1292225/",
+    "id": 1292225,
+    "title": "闪灵 The Shining‎ (1980)",
+    "score": "8.3",
+    "vote_count": "648737",
+    "chinese_title": "闪灵 The Shining‎ (1980)",
+    "genre": "恐怖",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2928985187.jpg"
   }
 }

@@ -1,51 +1,5 @@
 [
   {
-    "id": 11,
-    "slug": "12 angry men-1957",
-    "rt_url": "https://www.rottentomatoes.com/m/1000013_12_angry_men",
-    "title": "12 Angry Men",
-    "original_title": "12 Angry Men",
-    "year": 1957,
-    "rating": "NR",
-    "tomatometer": 100,
-    "audience_score": 97,
-    "genre": "Drama",
-    "director": "Sidney Lumet",
-    "writers": "Reginald Rose",
-    "cast": "Henry Fonda, Lee J. Cobb, Ed Begley, E.G. Marshall, Jack Klugman, Martin Balsam, John Fiedler, Joseph Sweeney",
-    "critics_consensus": null,
-    "synopsis": "Following the closing arguments in a murder trial, the 12 members of the jury must deliberate, with a guilty verdict meaning death for the accused, an inner-city teen. As the dozen men try to reach a unanimous decision while sequestered in a room, one juror (Henry Fonda) casts considerable doubt on elements of the case. Personal issues soon rise to the surface, and conflict threatens to derail the delicate process that will decide one boy's fate.",
-    "release_date": "1957-04-10",
-    "runtime": "95 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p2084_p_v8_ar.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "十二怒汉",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 98.5,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528561",
-    "score_history": [
-      {
-        "id": 1,
-        "movie_id": 11,
-        "tomatometer": 100,
-        "audience_score": 97,
-        "douban_score": -1.0,
-        "weighted_score": 98.5,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
     "id": 96,
     "slug": "top gun: maverick-2022",
     "rt_url": "https://www.rottentomatoes.com/m/top_gun_maverick",
@@ -77,17 +31,17 @@
     "douban_poster": null,
     "weighted_score": 97.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530793",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154606",
     "score_history": [
       {
-        "id": 2,
+        "id": 1,
         "movie_id": 96,
         "tomatometer": 96,
         "audience_score": 99,
         "douban_score": -1.0,
         "weighted_score": 97.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -123,63 +77,63 @@
     "douban_poster": null,
     "weighted_score": 97.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530094",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154007",
     "score_history": [
       {
-        "id": 3,
+        "id": 2,
         "movie_id": 71,
         "tomatometer": 100,
         "audience_score": 95,
         "douban_score": -1.0,
         "weighted_score": 97.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
   {
-    "id": 9,
-    "slug": "the godfather-1972",
-    "rt_url": "https://www.rottentomatoes.com/m/the_godfather",
-    "title": "The Godfather",
-    "original_title": "The Godfather",
-    "year": 1972,
-    "rating": "R",
-    "tomatometer": 97,
-    "audience_score": 98,
-    "genre": "Crime, Drama",
-    "director": "Francis Ford Coppola",
-    "writers": "Mario Puzo",
-    "cast": "Marlon Brando, Al Pacino, James Caan, Richard Castellano, Robert Duvall, Sterling Hayden, John Marley, Richard Conte",
+    "id": 11,
+    "slug": "12 angry men-1957",
+    "rt_url": "https://www.rottentomatoes.com/m/1000013_12_angry_men",
+    "title": "12 Angry Men",
+    "original_title": "12 Angry Men",
+    "year": 1957,
+    "rating": "NR",
+    "tomatometer": 100,
+    "audience_score": 97,
+    "genre": "Drama",
+    "director": "Sidney Lumet",
+    "writers": "Reginald Rose",
+    "cast": "Henry Fonda, Lee J. Cobb, Ed Begley, E.G. Marshall, Jack Klugman, Martin Balsam, John Fiedler, Joseph Sweeney",
     "critics_consensus": null,
-    "synopsis": "Widely regarded as one of the greatest films of all time, this mob drama, based on Mario Puzo's novel of the same name, focuses on the powerful Italian-American crime family of Don Vito Corleone (Marlon Brando). When the don's youngest son, Michael (Al Pacino), reluctantly joins the Mafia, he becomes involved in the inevitable cycle of violence and betrayal. Although Michael tries to maintain a normal relationship with his wife, Kay (Diane Keaton), he is drawn deeper into the family business.",
-    "release_date": "1972-03-14",
-    "runtime": "177 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p6326_p_v12_be.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "教父",
-    "douban_genre": null,
+    "synopsis": "Following the closing arguments in a murder trial, the 12 members of the jury must deliberate, with a guilty verdict meaning death for the accused, an inner-city teen. As the dozen men try to reach a unanimous decision while sequestered in a room, one juror (Henry Fonda) casts considerable doubt on elements of the case. Personal issues soon rise to the surface, and conflict threatens to derail the delicate process that will decide one boy's fate.",
+    "release_date": "1957-04-10",
+    "runtime": "95 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p2084_p_v8_ar.jpg",
+    "douban_id": "1293182",
+    "douban_url": "https://movie.douban.com/subject/1293182/",
+    "douban_score": 9.4,
+    "douban_vote_count": 581667,
+    "douban_title": "十二怒汉 12 Angry Men‎ (1957)",
+    "douban_genre": "剧情",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 97.5,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2173577632.jpg",
+    "weighted_score": 96.7,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528507",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152359",
     "score_history": [
       {
-        "id": 4,
-        "movie_id": 9,
-        "tomatometer": 97,
-        "audience_score": 98,
-        "douban_score": -1.0,
-        "weighted_score": 97.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "id": 3,
+        "movie_id": 11,
+        "tomatometer": 100,
+        "audience_score": 97,
+        "douban_score": 9.4,
+        "weighted_score": 96.7,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -202,76 +156,30 @@
     "release_date": "1993-12-15",
     "runtime": "195 minutes",
     "poster_url": "https://resizing.flixster.com/P3NTptLJcIlWlLQwZMTWcITYaoY=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzlmMTBiZGYxLTFjZTctNGZiZS05OGU4LTAxNGIzNGZmNTVlMy5qcGc=",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "辛德勒的名单",
-    "douban_genre": null,
+    "douban_id": "1295124",
+    "douban_url": "https://movie.douban.com/subject/1295124/",
+    "douban_score": 9.5,
+    "douban_vote_count": 1250545,
+    "douban_title": "辛德勒的名单 Schindler's List‎ (1993)",
+    "douban_genre": "剧情, 历史, 战争",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 97.5,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p492406163.jpg",
+    "weighted_score": 96.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528477",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152279",
     "score_history": [
       {
-        "id": 5,
+        "id": 4,
         "movie_id": 8,
         "tomatometer": 98,
         "audience_score": 97,
-        "douban_score": -1.0,
-        "weighted_score": 97.5,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 10,
-    "slug": "the godfather part ii-1974",
-    "rt_url": "https://www.rottentomatoes.com/m/the_godfather_part_ii",
-    "title": "The Godfather Part II",
-    "original_title": "The Godfather Part II",
-    "year": 1974,
-    "rating": "R",
-    "tomatometer": 96,
-    "audience_score": 97,
-    "genre": "Crime, Drama",
-    "director": "Francis Ford Coppola",
-    "writers": "Mario Puzo, Francis Ford Coppola",
-    "cast": "Al Pacino, Robert Duvall, Diane Keaton, Robert De Niro, John Cazale, Talia Shire, Lee Strasberg, Michael V. Gazzo",
-    "critics_consensus": null,
-    "synopsis": "The compelling sequel to \"The Godfather,\" contrasting the life of Corleone father and son. Traces the problems of Michael Corleone (Al Pacino) in 1958 and that of a young immigrant Vito Corleone (Robert De Niro) in 1917's Hell's Kitchen. Michael survives many misfortunes and Vito is introduced to a life of crime.",
-    "release_date": "1974-12-20",
-    "runtime": "202 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p6319_p_v8_bc.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "教父2",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 96.5,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528535",
-    "score_history": [
-      {
-        "id": 6,
-        "movie_id": 10,
-        "tomatometer": 96,
-        "audience_score": 97,
-        "douban_score": -1.0,
+        "douban_score": 9.5,
         "weighted_score": 96.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -307,17 +215,17 @@
     "douban_poster": null,
     "weighted_score": 96.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530069",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153981",
     "score_history": [
       {
-        "id": 7,
+        "id": 5,
         "movie_id": 70,
         "tomatometer": 93,
         "audience_score": 99,
         "douban_score": -1.0,
         "weighted_score": 96.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -353,17 +261,63 @@
     "douban_poster": null,
     "weighted_score": 96.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530045",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153956",
     "score_history": [
       {
-        "id": 8,
+        "id": 6,
         "movie_id": 69,
         "tomatometer": 94,
         "audience_score": 98,
         "douban_score": -1.0,
         "weighted_score": 96.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "the godfather-1972",
+    "rt_url": "https://www.rottentomatoes.com/m/the_godfather",
+    "title": "The Godfather",
+    "original_title": "The Godfather",
+    "year": 1972,
+    "rating": "R",
+    "tomatometer": 97,
+    "audience_score": 98,
+    "genre": "Crime, Drama",
+    "director": "Francis Ford Coppola",
+    "writers": "Mario Puzo",
+    "cast": "Marlon Brando, Al Pacino, James Caan, Richard Castellano, Robert Duvall, Sterling Hayden, John Marley, Richard Conte",
+    "critics_consensus": null,
+    "synopsis": "Widely regarded as one of the greatest films of all time, this mob drama, based on Mario Puzo's novel of the same name, focuses on the powerful Italian-American crime family of Don Vito Corleone (Marlon Brando). When the don's youngest son, Michael (Al Pacino), reluctantly joins the Mafia, he becomes involved in the inevitable cycle of violence and betrayal. Although Michael tries to maintain a normal relationship with his wife, Kay (Diane Keaton), he is drawn deeper into the family business.",
+    "release_date": "1972-03-14",
+    "runtime": "177 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p6326_p_v12_be.jpg",
+    "douban_id": "1291841",
+    "douban_url": "https://movie.douban.com/subject/1291841/",
+    "douban_score": 9.3,
+    "douban_vote_count": 1111492,
+    "douban_title": "教父 The Godfather‎ (1972)",
+    "douban_genre": "剧情, 犯罪",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p616779645.jpg",
+    "weighted_score": 95.7,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152305",
+    "score_history": [
+      {
+        "id": 7,
+        "movie_id": 9,
+        "tomatometer": 97,
+        "audience_score": 98,
+        "douban_score": 9.3,
+        "weighted_score": 95.7,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -399,17 +353,17 @@
     "douban_poster": null,
     "weighted_score": 95.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530336",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154202",
     "score_history": [
       {
-        "id": 9,
+        "id": 8,
         "movie_id": 79,
         "tomatometer": 97,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 95.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -445,17 +399,17 @@
     "douban_poster": null,
     "weighted_score": 95.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529748",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153666",
     "score_history": [
       {
-        "id": 10,
+        "id": 9,
         "movie_id": 57,
         "tomatometer": 97,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 95.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -491,17 +445,17 @@
     "douban_poster": null,
     "weighted_score": 95.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529318",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153239",
     "score_history": [
       {
-        "id": 11,
+        "id": 10,
         "movie_id": 40,
         "tomatometer": 95,
         "audience_score": 96,
         "douban_score": -1.0,
         "weighted_score": 95.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -537,17 +491,17 @@
     "douban_poster": null,
     "weighted_score": 95.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529245",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153191",
     "score_history": [
       {
-        "id": 12,
+        "id": 11,
         "movie_id": 38,
         "tomatometer": 97,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 95.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -583,17 +537,63 @@
     "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2557573348.jpg",
     "weighted_score": 95.2,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528315",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152193",
     "score_history": [
       {
-        "id": 13,
+        "id": 12,
         "movie_id": 5,
         "tomatometer": 96,
         "audience_score": 96,
         "douban_score": 9.4,
         "weighted_score": 95.2,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "slug": "the godfather part ii-1974",
+    "rt_url": "https://www.rottentomatoes.com/m/the_godfather_part_ii",
+    "title": "The Godfather Part II",
+    "original_title": "The Godfather Part II",
+    "year": 1974,
+    "rating": "R",
+    "tomatometer": 96,
+    "audience_score": 97,
+    "genre": "Crime, Drama",
+    "director": "Francis Ford Coppola",
+    "writers": "Mario Puzo, Francis Ford Coppola",
+    "cast": "Al Pacino, Robert Duvall, Diane Keaton, Robert De Niro, John Cazale, Talia Shire, Lee Strasberg, Michael V. Gazzo",
+    "critics_consensus": null,
+    "synopsis": "The compelling sequel to \"The Godfather,\" contrasting the life of Corleone father and son. Traces the problems of Michael Corleone (Al Pacino) in 1958 and that of a young immigrant Vito Corleone (Robert De Niro) in 1917's Hell's Kitchen. Michael survives many misfortunes and Vito is introduced to a life of crime.",
+    "release_date": "1974-12-20",
+    "runtime": "202 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p6319_p_v8_bc.jpg",
+    "douban_id": "1299131",
+    "douban_url": "https://movie.douban.com/subject/1299131/",
+    "douban_score": 9.3,
+    "douban_vote_count": 643382,
+    "douban_title": "教父2 The Godfather: Part II‎ (1974)",
+    "douban_genre": "剧情, 犯罪",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2194138787.jpg",
+    "weighted_score": 95.1,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152330",
+    "score_history": [
+      {
+        "id": 13,
+        "movie_id": 10,
+        "tomatometer": 96,
+        "audience_score": 97,
+        "douban_score": 9.3,
+        "weighted_score": 95.1,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -629,8 +629,8 @@
     "douban_poster": null,
     "weighted_score": 95.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531362",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155002",
     "score_history": [
       {
         "id": 14,
@@ -639,7 +639,7 @@
         "audience_score": 96,
         "douban_score": -1.0,
         "weighted_score": 95.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -675,8 +675,8 @@
     "douban_poster": null,
     "weighted_score": 95.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531238",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154906",
     "score_history": [
       {
         "id": 15,
@@ -685,7 +685,7 @@
         "audience_score": 95,
         "douban_score": -1.0,
         "weighted_score": 95.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -721,8 +721,8 @@
     "douban_poster": null,
     "weighted_score": 95.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530767",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154584",
     "score_history": [
       {
         "id": 16,
@@ -731,7 +731,7 @@
         "audience_score": 97,
         "douban_score": -1.0,
         "weighted_score": 95.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -767,8 +767,8 @@
     "douban_poster": null,
     "weighted_score": 95.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530119",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154034",
     "score_history": [
       {
         "id": 17,
@@ -777,7 +777,7 @@
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 95.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -813,8 +813,8 @@
     "douban_poster": null,
     "weighted_score": 95.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529773",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153698",
     "score_history": [
       {
         "id": 18,
@@ -823,53 +823,7 @@
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 95.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 14,
-    "slug": "the silence of the lambs-1991",
-    "rt_url": "https://www.rottentomatoes.com/m/silence_of_the_lambs",
-    "title": "The Silence of the Lambs",
-    "original_title": "The Silence of the Lambs",
-    "year": 1991,
-    "rating": "R",
-    "tomatometer": 95,
-    "audience_score": 95,
-    "genre": "Mystery & Thriller, Crime, Drama, Horror",
-    "director": "Jonathan Demme",
-    "writers": "Ted Tally",
-    "cast": "Jodie Foster, Anthony Hopkins, Scott Glenn, Ted Levine, Anthony Heald, Brooke Smith, Diane Baker, Kasi Lemmons",
-    "critics_consensus": null,
-    "synopsis": "Jodie Foster stars as Clarice Starling, a top student at the FBI's training academy. Jack Crawford (Scott Glenn) wants Clarice to interview Dr. Hannibal Lecter (Anthony Hopkins), a brilliant psychiatrist who is also a violent psychopath, serving life behind bars for various acts of murder and cannibalism. Crawford believes that Lecter may have insight into a case and that Starling, as an attractive young woman, may be just the bait to draw him out.",
-    "release_date": "1991-02-14",
-    "runtime": "118 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p13013_p_v11_as.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "沉默的羔羊",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 95.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528641",
-    "score_history": [
-      {
-        "id": 19,
-        "movie_id": 14,
-        "tomatometer": 95,
-        "audience_score": 95,
-        "douban_score": -1.0,
-        "weighted_score": 95.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -905,17 +859,17 @@
     "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2934829882.jpg",
     "weighted_score": 94.9,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.527994",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.151904",
     "score_history": [
       {
-        "id": 20,
+        "id": 19,
         "movie_id": 1,
         "tomatometer": 89,
         "audience_score": 98,
         "douban_score": 9.7,
         "weighted_score": 94.9,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -951,17 +905,17 @@
     "douban_poster": null,
     "weighted_score": 94.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531086",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154762",
     "score_history": [
       {
-        "id": 21,
+        "id": 20,
         "movie_id": 101,
         "tomatometer": 97,
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 94.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -997,17 +951,17 @@
     "douban_poster": null,
     "weighted_score": 94.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530535",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154366",
     "score_history": [
       {
-        "id": 22,
+        "id": 21,
         "movie_id": 86,
         "tomatometer": 99,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 94.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1043,63 +997,17 @@
     "douban_poster": null,
     "weighted_score": 94.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530243",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154157",
     "score_history": [
       {
-        "id": 23,
+        "id": 22,
         "movie_id": 77,
         "tomatometer": 94,
         "audience_score": 95,
         "douban_score": -1.0,
         "weighted_score": 94.5,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 17,
-    "slug": "saving private ryan-1998",
-    "rt_url": "https://www.rottentomatoes.com/m/saving_private_ryan",
-    "title": "Saving Private Ryan",
-    "original_title": "Saving Private Ryan",
-    "year": 1998,
-    "rating": "R",
-    "tomatometer": 94,
-    "audience_score": 95,
-    "genre": "War, History, Drama",
-    "director": "Steven Spielberg",
-    "writers": "Robert Rodat",
-    "cast": "Tom Hanks, Edward Burns, Tom Sizemore, Jeremy Davies, Vin Diesel, Adam Goldberg, Barry Pepper, Giovanni Ribisi",
-    "critics_consensus": null,
-    "synopsis": "Captain John Miller (Tom Hanks) takes his men behind enemy lines to find Private James Ryan, whose three brothers have been killed in combat. Surrounded by the brutal realties of war, while searching for Ryan, each man embarks upon a personal journey and discovers their own strength to triumph over an uncertain future with honor, decency and courage.",
-    "release_date": "1998-07-24",
-    "runtime": "169 minutes",
-    "poster_url": "https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "拯救大兵瑞恩",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 94.5,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528715",
-    "score_history": [
-      {
-        "id": 24,
-        "movie_id": 17,
-        "tomatometer": 94,
-        "audience_score": 95,
-        "douban_score": -1.0,
-        "weighted_score": 94.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1135,17 +1043,17 @@
     "douban_poster": null,
     "weighted_score": 94.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531515",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155156",
     "score_history": [
       {
-        "id": 25,
+        "id": 23,
         "movie_id": 117,
         "tomatometer": 92,
         "audience_score": 96,
         "douban_score": -1.0,
         "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1181,17 +1089,17 @@
     "douban_poster": null,
     "weighted_score": 94.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531111",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154786",
     "score_history": [
       {
-        "id": 26,
+        "id": 24,
         "movie_id": 102,
         "tomatometer": 95,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1227,17 +1135,17 @@
     "douban_poster": null,
     "weighted_score": 94.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530561",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154389",
     "score_history": [
       {
-        "id": 27,
+        "id": 25,
         "movie_id": 87,
         "tomatometer": 94,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1273,17 +1181,17 @@
     "douban_poster": null,
     "weighted_score": 94.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529920",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153838",
     "score_history": [
       {
-        "id": 28,
+        "id": 26,
         "movie_id": 64,
         "tomatometer": 98,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1319,109 +1227,17 @@
     "douban_poster": null,
     "weighted_score": 94.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529871",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153791",
     "score_history": [
       {
-        "id": 29,
+        "id": 27,
         "movie_id": 62,
         "tomatometer": 98,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 13,
-    "slug": "pulp fiction-1994",
-    "rt_url": "https://www.rottentomatoes.com/m/pulp_fiction",
-    "title": "Pulp Fiction",
-    "original_title": "Pulp Fiction",
-    "year": 1994,
-    "rating": "R",
-    "tomatometer": 92,
-    "audience_score": 96,
-    "genre": "Crime, Drama, Comedy",
-    "director": "Quentin Tarantino",
-    "writers": "Quentin Tarantino",
-    "cast": "John Travolta, Samuel L. Jackson, Uma Thurman, Harvey Keitel, Tim Roth, Amanda Plummer, Maria de Medeiros, Ving Rhames",
-    "critics_consensus": null,
-    "synopsis": "Vincent Vega and Jules Winnfield are hitmen with a penchant for philosophical discussions. In this ultra-hip, multi-strand crime movie, their storyline is interwoven with those of their boss, gangster Marsellus Wallace; his actress wife, Mia; struggling boxer Butch Coolidge; master fixer The Wolf and a nervous pair of armed robbers, Pumpkin and Honey Bunny.",
-    "release_date": "1994-09-10",
-    "runtime": "154 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15684_p_v8_ai.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "低俗小说",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 94.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528615",
-    "score_history": [
-      {
-        "id": 30,
-        "movie_id": 13,
-        "tomatometer": 92,
-        "audience_score": 96,
-        "douban_score": -1.0,
-        "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 12,
-    "slug": "the dark knight-2008",
-    "rt_url": "https://www.rottentomatoes.com/m/the_dark_knight",
-    "title": "The Dark Knight",
-    "original_title": "The Dark Knight",
-    "year": 2008,
-    "rating": "PG-13",
-    "tomatometer": 94,
-    "audience_score": 94,
-    "genre": "Action, Adventure, Fantasy",
-    "director": "Christopher Nolan",
-    "writers": "Jonathan Nolan",
-    "cast": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine, Maggie Gyllenhaal, Gary Oldman, Morgan Freeman, Monique Gabriela Curnen",
-    "critics_consensus": null,
-    "synopsis": "With the help of allies, Lt. Jim Gordon and DA Harvey Dent, Batman is able to keep a tight lid on crime in Gotham City. But when a young criminal calling himself the Joker suddenly throws the town into chaos, the caped crusader begins to tread a fine line between heroism and vigilantism.",
-    "release_date": "2008-07-16",
-    "runtime": "152 minutes",
-    "poster_url": "https://resizing.flixster.com/Wg25mLoPWxjcxXzNyaSF4VGgGE4=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2ZiNjZiNWFkLWVhNzEtNDRhMC1iNGIwLTFmY2FkNzllNTJlMi5qcGc=",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "蝙蝠侠：黑暗骑士",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 94.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528588",
-    "score_history": [
-      {
-        "id": 31,
-        "movie_id": 12,
-        "tomatometer": 94,
-        "audience_score": 94,
-        "douban_score": -1.0,
-        "weighted_score": 94.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1457,17 +1273,17 @@
     "douban_poster": null,
     "weighted_score": 93.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531439",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155077",
     "score_history": [
       {
-        "id": 32,
+        "id": 28,
         "movie_id": 114,
         "tomatometer": 94,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 93.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1503,17 +1319,17 @@
     "douban_poster": null,
     "weighted_score": 93.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531136",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154809",
     "score_history": [
       {
-        "id": 33,
+        "id": 29,
         "movie_id": 103,
         "tomatometer": 96,
         "audience_score": 91,
         "douban_score": -1.0,
         "weighted_score": 93.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1549,17 +1365,17 @@
     "douban_poster": null,
     "weighted_score": 93.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531008",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154682",
     "score_history": [
       {
-        "id": 34,
+        "id": 30,
         "movie_id": 98,
         "tomatometer": 94,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 93.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1595,17 +1411,17 @@
     "douban_poster": null,
     "weighted_score": 93.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529096",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153042",
     "score_history": [
       {
-        "id": 35,
+        "id": 31,
         "movie_id": 32,
         "tomatometer": 92,
         "audience_score": 95,
         "douban_score": -1.0,
         "weighted_score": 93.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1641,17 +1457,17 @@
     "douban_poster": null,
     "weighted_score": 93.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528969",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152887",
     "score_history": [
       {
-        "id": 36,
+        "id": 32,
         "movie_id": 27,
         "tomatometer": 93,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 93.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1687,17 +1503,17 @@
     "douban_poster": null,
     "weighted_score": 93.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528945",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152845",
     "score_history": [
       {
-        "id": 37,
+        "id": 33,
         "movie_id": 26,
         "tomatometer": 93,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 93.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1733,17 +1549,109 @@
     "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2911205318.jpg",
     "weighted_score": 93.3,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528184",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152091",
     "score_history": [
       {
-        "id": 38,
+        "id": 34,
         "movie_id": 2,
         "tomatometer": 90,
         "audience_score": 93,
         "douban_score": 9.6,
         "weighted_score": 93.3,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "slug": "the dark knight-2008",
+    "rt_url": "https://www.rottentomatoes.com/m/the_dark_knight",
+    "title": "The Dark Knight",
+    "original_title": "The Dark Knight",
+    "year": 2008,
+    "rating": "PG-13",
+    "tomatometer": 94,
+    "audience_score": 94,
+    "genre": "Action, Adventure, Fantasy",
+    "director": "Christopher Nolan",
+    "writers": "Jonathan Nolan",
+    "cast": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine, Maggie Gyllenhaal, Gary Oldman, Morgan Freeman, Monique Gabriela Curnen",
+    "critics_consensus": null,
+    "synopsis": "With the help of allies, Lt. Jim Gordon and DA Harvey Dent, Batman is able to keep a tight lid on crime in Gotham City. But when a young criminal calling himself the Joker suddenly throws the town into chaos, the caped crusader begins to tread a fine line between heroism and vigilantism.",
+    "release_date": "2008-07-16",
+    "runtime": "152 minutes",
+    "poster_url": "https://resizing.flixster.com/Wg25mLoPWxjcxXzNyaSF4VGgGE4=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2ZiNjZiNWFkLWVhNzEtNDRhMC1iNGIwLTFmY2FkNzllNTJlMi5qcGc=",
+    "douban_id": "1851857",
+    "douban_url": "https://movie.douban.com/subject/1851857/",
+    "douban_score": 9.2,
+    "douban_vote_count": 1197002,
+    "douban_title": "蝙蝠侠：黑暗骑士 The Dark Knight‎ (2008)",
+    "douban_genre": "剧情, 动作, 科幻, 犯罪, 惊悚",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p462657443.jpg",
+    "weighted_score": 93.2,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152387",
+    "score_history": [
+      {
+        "id": 35,
+        "movie_id": 12,
+        "tomatometer": 94,
+        "audience_score": 94,
+        "douban_score": 9.2,
+        "weighted_score": 93.2,
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "saving private ryan-1998",
+    "rt_url": "https://www.rottentomatoes.com/m/saving_private_ryan",
+    "title": "Saving Private Ryan",
+    "original_title": "Saving Private Ryan",
+    "year": 1998,
+    "rating": "R",
+    "tomatometer": 94,
+    "audience_score": 95,
+    "genre": "War, History, Drama",
+    "director": "Steven Spielberg",
+    "writers": "Robert Rodat",
+    "cast": "Tom Hanks, Edward Burns, Tom Sizemore, Jeremy Davies, Vin Diesel, Adam Goldberg, Barry Pepper, Giovanni Ribisi",
+    "critics_consensus": null,
+    "synopsis": "Captain John Miller (Tom Hanks) takes his men behind enemy lines to find Private James Ryan, whose three brothers have been killed in combat. Surrounded by the brutal realties of war, while searching for Ryan, each man embarks upon a personal journey and discovers their own strength to triumph over an uncertain future with honor, decency and courage.",
+    "release_date": "1998-07-24",
+    "runtime": "169 minutes",
+    "poster_url": "https://resizing.flixster.com/e4XDrbw7Fd7VYePV7cxB8sQV3eA=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzc1MDczNGJlLWNjN2EtNGIxMS1iOWM5LWJjYTUwODk4MzA5Yy53ZWJw",
+    "douban_id": "1292849",
+    "douban_url": "https://movie.douban.com/subject/1292849/",
+    "douban_score": 9.1,
+    "douban_vote_count": 728415,
+    "douban_title": "拯救大兵瑞恩 Saving Private Ryan‎ (1998)",
+    "douban_genre": "剧情, 战争",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1014542496.jpg",
+    "weighted_score": 93.1,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152510",
+    "score_history": [
+      {
+        "id": 36,
+        "movie_id": 17,
+        "tomatometer": 94,
+        "audience_score": 95,
+        "douban_score": 9.1,
+        "weighted_score": 93.1,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1779,17 +1687,17 @@
     "douban_poster": null,
     "weighted_score": 93.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531541",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155180",
     "score_history": [
       {
-        "id": 39,
+        "id": 37,
         "movie_id": 118,
         "tomatometer": 95,
         "audience_score": 91,
         "douban_score": -1.0,
         "weighted_score": 93.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1825,17 +1733,17 @@
     "douban_poster": null,
     "weighted_score": 93.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531213",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154883",
     "score_history": [
       {
-        "id": 40,
+        "id": 38,
         "movie_id": 106,
         "tomatometer": 91,
         "audience_score": 95,
         "douban_score": -1.0,
         "weighted_score": 93.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1871,17 +1779,17 @@
     "douban_poster": null,
     "weighted_score": 93.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530193",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154109",
     "score_history": [
       {
-        "id": 41,
+        "id": 39,
         "movie_id": 75,
         "tomatometer": 92,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 93.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1917,17 +1825,17 @@
     "douban_poster": null,
     "weighted_score": 93.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530144",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154061",
     "score_history": [
       {
-        "id": 42,
+        "id": 40,
         "movie_id": 73,
         "tomatometer": 96,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 93.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -1963,17 +1871,17 @@
     "douban_poster": null,
     "weighted_score": 93.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529995",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153910",
     "score_history": [
       {
-        "id": 43,
+        "id": 41,
         "movie_id": 67,
         "tomatometer": 96,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 93.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2009,17 +1917,63 @@
     "douban_poster": null,
     "weighted_score": 93.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529349",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153263",
     "score_history": [
       {
-        "id": 44,
+        "id": 42,
         "movie_id": 41,
         "tomatometer": 90,
         "audience_score": 96,
         "douban_score": -1.0,
         "weighted_score": 93.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "the silence of the lambs-1991",
+    "rt_url": "https://www.rottentomatoes.com/m/silence_of_the_lambs",
+    "title": "The Silence of the Lambs",
+    "original_title": "The Silence of the Lambs",
+    "year": 1991,
+    "rating": "R",
+    "tomatometer": 95,
+    "audience_score": 95,
+    "genre": "Mystery & Thriller, Crime, Drama, Horror",
+    "director": "Jonathan Demme",
+    "writers": "Ted Tally",
+    "cast": "Jodie Foster, Anthony Hopkins, Scott Glenn, Ted Levine, Anthony Heald, Brooke Smith, Diane Baker, Kasi Lemmons",
+    "critics_consensus": null,
+    "synopsis": "Jodie Foster stars as Clarice Starling, a top student at the FBI's training academy. Jack Crawford (Scott Glenn) wants Clarice to interview Dr. Hannibal Lecter (Anthony Hopkins), a brilliant psychiatrist who is also a violent psychopath, serving life behind bars for various acts of murder and cannibalism. Crawford believes that Lecter may have insight into a case and that Starling, as an attractive young woman, may be just the bait to draw him out.",
+    "release_date": "1991-02-14",
+    "runtime": "118 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p13013_p_v11_as.jpg",
+    "douban_id": "1293544",
+    "douban_url": "https://movie.douban.com/subject/1293544/",
+    "douban_score": 8.9,
+    "douban_vote_count": 1021087,
+    "douban_title": "沉默的羔羊 The Silence of the Lambs‎ (1991)",
+    "douban_genre": "剧情, 犯罪, 惊悚",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1593414327.jpg",
+    "weighted_score": 92.6,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152438",
+    "score_history": [
+      {
+        "id": 43,
+        "movie_id": 14,
+        "tomatometer": 95,
+        "audience_score": 95,
+        "douban_score": 8.9,
+        "weighted_score": 92.6,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2055,17 +2009,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531489",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155130",
     "score_history": [
       {
-        "id": 45,
+        "id": 44,
         "movie_id": 116,
         "tomatometer": 90,
         "audience_score": 95,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2101,17 +2055,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531414",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155051",
     "score_history": [
       {
-        "id": 46,
+        "id": 45,
         "movie_id": 113,
         "tomatometer": 94,
         "audience_score": 91,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2147,17 +2101,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530219",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154132",
     "score_history": [
       {
-        "id": 47,
+        "id": 46,
         "movie_id": 76,
         "tomatometer": 95,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2193,17 +2147,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529971",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153886",
     "score_history": [
       {
-        "id": 48,
+        "id": 47,
         "movie_id": 66,
         "tomatometer": 92,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2239,17 +2193,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529896",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153815",
     "score_history": [
       {
-        "id": 49,
+        "id": 48,
         "movie_id": 63,
         "tomatometer": 99,
         "audience_score": 86,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2285,17 +2239,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529822",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153743",
     "score_history": [
       {
-        "id": 50,
+        "id": 49,
         "movie_id": 60,
         "tomatometer": 91,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2331,17 +2285,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529499",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153412",
     "score_history": [
       {
-        "id": 51,
+        "id": 50,
         "movie_id": 47,
         "tomatometer": 91,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2377,63 +2331,17 @@
     "douban_poster": null,
     "weighted_score": 92.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529474",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153388",
     "score_history": [
       {
-        "id": 52,
+        "id": 51,
         "movie_id": 46,
         "tomatometer": 96,
         "audience_score": 89,
         "douban_score": -1.0,
         "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 18,
-    "slug": "apocalypse now-1979",
-    "rt_url": "https://www.rottentomatoes.com/m/apocalypse_now",
-    "title": "Apocalypse Now",
-    "original_title": "Apocalypse Now",
-    "year": 1979,
-    "rating": "R",
-    "tomatometer": 91,
-    "audience_score": 94,
-    "genre": "War, Drama",
-    "director": "Francis Ford Coppola",
-    "writers": "Joseph Conrad, John Milius, Michael Herr",
-    "cast": "Marlon Brando, Martin Sheen, Robert Duvall, Frederic Forrest, Albert Hall, Sam Bottoms, Larry Fishburne, Dennis Hopper",
-    "critics_consensus": null,
-    "synopsis": "In Vietnam in 1970, Captain Willard (Martin Sheen) takes a perilous and increasingly hallucinatory journey upriver to find and terminate Colonel Kurtz (Marlon Brando), a once-promising officer who has reportedly gone completely mad. In the company of a Navy patrol boat filled with street-smart kids, a surfing-obsessed Air Cavalry officer (Robert Duvall), and a crazed freelance photographer (Dennis Hopper), Willard travels further and further into the heart of darkness.",
-    "release_date": "1979-05-19",
-    "runtime": "147 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p5545_p_v13_at.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "现代启示录",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 92.5,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528740",
-    "score_history": [
-      {
-        "id": 53,
-        "movie_id": 18,
-        "tomatometer": 91,
-        "audience_score": 94,
-        "douban_score": -1.0,
-        "weighted_score": 92.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2469,17 +2377,17 @@
     "douban_poster": null,
     "weighted_score": 92.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531186",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154856",
     "score_history": [
       {
-        "id": 54,
+        "id": 52,
         "movie_id": 105,
         "tomatometer": 96,
         "audience_score": 88,
         "douban_score": -1.0,
         "weighted_score": 92.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2515,17 +2423,63 @@
     "douban_poster": null,
     "weighted_score": 92.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530742",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154561",
     "score_history": [
       {
-        "id": 55,
+        "id": 53,
         "movie_id": 94,
         "tomatometer": 93,
         "audience_score": 91,
         "douban_score": -1.0,
         "weighted_score": 92.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "slug": "pulp fiction-1994",
+    "rt_url": "https://www.rottentomatoes.com/m/pulp_fiction",
+    "title": "Pulp Fiction",
+    "original_title": "Pulp Fiction",
+    "year": 1994,
+    "rating": "R",
+    "tomatometer": 92,
+    "audience_score": 96,
+    "genre": "Crime, Drama, Comedy",
+    "director": "Quentin Tarantino",
+    "writers": "Quentin Tarantino",
+    "cast": "John Travolta, Samuel L. Jackson, Uma Thurman, Harvey Keitel, Tim Roth, Amanda Plummer, Maria de Medeiros, Ving Rhames",
+    "critics_consensus": null,
+    "synopsis": "Vincent Vega and Jules Winnfield are hitmen with a penchant for philosophical discussions. In this ultra-hip, multi-strand crime movie, their storyline is interwoven with those of their boss, gangster Marsellus Wallace; his actress wife, Mia; struggling boxer Butch Coolidge; master fixer The Wolf and a nervous pair of armed robbers, Pumpkin and Honey Bunny.",
+    "release_date": "1994-09-10",
+    "runtime": "154 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15684_p_v8_ai.jpg",
+    "douban_id": "1291832",
+    "douban_url": "https://movie.douban.com/subject/1291832/",
+    "douban_score": 8.9,
+    "douban_vote_count": 976361,
+    "douban_title": "低俗小说 Pulp Fiction‎ (1994)",
+    "douban_genre": "剧情, 喜剧, 犯罪",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1910902213.jpg",
+    "weighted_score": 92.0,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152412",
+    "score_history": [
+      {
+        "id": 54,
+        "movie_id": 13,
+        "tomatometer": 92,
+        "audience_score": 96,
+        "douban_score": 8.9,
+        "weighted_score": 92.0,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2561,17 +2515,17 @@
     "douban_poster": null,
     "weighted_score": 91.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531388",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155027",
     "score_history": [
       {
-        "id": 56,
+        "id": 55,
         "movie_id": 112,
         "tomatometer": 91,
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 91.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2607,17 +2561,17 @@
     "douban_poster": null,
     "weighted_score": 91.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530409",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154251",
     "score_history": [
       {
-        "id": 57,
+        "id": 56,
         "movie_id": 81,
         "tomatometer": 100,
         "audience_score": 83,
         "douban_score": -1.0,
         "weighted_score": 91.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2653,17 +2607,17 @@
     "douban_poster": null,
     "weighted_score": 91.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529847",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153767",
     "score_history": [
       {
-        "id": 58,
+        "id": 57,
         "movie_id": 61,
         "tomatometer": 95,
         "audience_score": 88,
         "douban_score": -1.0,
         "weighted_score": 91.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2699,17 +2653,17 @@
     "douban_poster": null,
     "weighted_score": 91.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529722",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153625",
     "score_history": [
       {
-        "id": 59,
+        "id": 58,
         "movie_id": 56,
         "tomatometer": 96,
         "audience_score": 87,
         "douban_score": -1.0,
         "weighted_score": 91.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2745,17 +2699,17 @@
     "douban_poster": null,
     "weighted_score": 91.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528996",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152933",
     "score_history": [
       {
-        "id": 60,
+        "id": 59,
         "movie_id": 28,
         "tomatometer": 94,
         "audience_score": 89,
         "douban_score": -1.0,
         "weighted_score": 91.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2791,17 +2745,109 @@
     "douban_poster": null,
     "weighted_score": 91.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530380",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154226",
     "score_history": [
       {
-        "id": 61,
+        "id": 60,
         "movie_id": 80,
         "tomatometer": 89,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 91.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "life is beautiful-1997",
+    "rt_url": "https://www.rottentomatoes.com/m/1084398-life_is_beautiful",
+    "title": "Life Is Beautiful",
+    "original_title": "Life Is Beautiful",
+    "year": 1997,
+    "rating": "PG-13",
+    "tomatometer": 80,
+    "audience_score": 96,
+    "genre": "Comedy, Drama, War",
+    "director": "Roberto Benigni",
+    "writers": "Vincenzo Cerami, Roberto Benigni",
+    "cast": "Roberto Benigni, Nicoletta Braschi, Giorgio Cantarini, Giustino Durano, Sergio Bustric, Marisa Paredes, Amerigo Fontani, Horst Bucholz",
+    "critics_consensus": null,
+    "synopsis": "A gentle Jewish-Italian waiter, Guido Orefice (Roberto Benigni), meets Dora (Nicoletta Braschi), a pretty schoolteacher, and wins her over with his charm and humor. Eventually they marry and have a son, Giosue (Giorgio Cantarini). Their happiness is abruptly halted, however, when Guido and Giosue are separated from Dora and taken to a concentration camp. Determined to shelter his son from the horrors of his surroundings, Guido convinces Giosue that their time in the camp is merely a game.",
+    "release_date": "1997-12-20",
+    "runtime": "122 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p22005_p_v10_ab.jpg",
+    "douban_id": "1292063",
+    "douban_url": "https://movie.douban.com/subject/1292063/",
+    "douban_score": 9.5,
+    "douban_vote_count": 1486507,
+    "douban_title": "美丽人生 La vita è bella‎ (1997)",
+    "douban_genre": "剧情, 喜剧, 爱情, 战争",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2578474613.jpg",
+    "weighted_score": 90.8,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152250",
+    "score_history": [
+      {
+        "id": 61,
+        "movie_id": 7,
+        "tomatometer": 80,
+        "audience_score": 96,
+        "douban_score": 9.5,
+        "weighted_score": 90.8,
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "slug": "inception-2010",
+    "rt_url": "https://www.rottentomatoes.com/m/inception",
+    "title": "Inception",
+    "original_title": "Inception",
+    "year": 2010,
+    "rating": "PG-13",
+    "tomatometer": 86,
+    "audience_score": 91,
+    "genre": "Sci-Fi, Mystery & Thriller, Action",
+    "director": "Christopher Nolan",
+    "writers": "Christopher Nolan",
+    "cast": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy, Ken Watanabe, Dileep Rao, Cillian Murphy, Tom Berenger",
+    "critics_consensus": null,
+    "synopsis": "Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people's dreams and steal their secrets from their subconscious. His skill has made him a hot commodity in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: Plant an idea in someone's mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb's every move.",
+    "release_date": "2010-07-15",
+    "runtime": "148 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p7825626_p_v10_ae.jpg",
+    "douban_id": "3541415",
+    "douban_url": "https://movie.douban.com/subject/3541415/",
+    "douban_score": 9.4,
+    "douban_vote_count": 2359571,
+    "douban_title": "盗梦空间 Inception‎ (2010)",
+    "douban_genre": "剧情, 科幻, 悬疑, 冒险",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p513344864.jpg",
+    "weighted_score": 90.7,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152608",
+    "score_history": [
+      {
+        "id": 62,
+        "movie_id": 21,
+        "tomatometer": 86,
+        "audience_score": 91,
+        "douban_score": 9.4,
+        "weighted_score": 90.7,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2837,17 +2883,17 @@
     "douban_poster": null,
     "weighted_score": 90.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530020",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153933",
     "score_history": [
       {
-        "id": 62,
+        "id": 63,
         "movie_id": 68,
         "tomatometer": 88,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 90.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2883,63 +2929,17 @@
     "douban_poster": null,
     "weighted_score": 90.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531263",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154933",
     "score_history": [
       {
-        "id": 63,
+        "id": 64,
         "movie_id": 108,
         "tomatometer": 94,
         "audience_score": 86,
         "douban_score": -1.0,
         "weighted_score": 90.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 22,
-    "slug": "blade runner-1982",
-    "rt_url": "https://www.rottentomatoes.com/m/blade_runner",
-    "title": "Blade Runner",
-    "original_title": "Blade Runner",
-    "year": 1982,
-    "rating": "R",
-    "tomatometer": 89,
-    "audience_score": 91,
-    "genre": "Sci-Fi, Mystery & Thriller",
-    "director": "Ridley Scott",
-    "writers": "Hampton Fancher, David Webb Peoples",
-    "cast": "Harrison Ford, Rutger Hauer, Sean Young, Edward James Olmos, M. Emmet Walsh, Daryl Hannah, William Sanderson, Brion James",
-    "critics_consensus": null,
-    "synopsis": "Deckard is forced by the police Boss to continue his old job as Replicant Hunter. His assignment: eliminate four escaped Replicants from the colonies who have returned to Earth. Before starting the job, Deckard goes to the Tyrell Corporation, and he meets Rachael, a Replicant girl he falls in love with.",
-    "release_date": "1982-06-25",
-    "runtime": "122 minutes",
-    "poster_url": "https://resizing.flixster.com/M0OhldQuouhJi1khB3dPcj3_7ZU=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2FkZDM0MDZiLWYxMmEtNDFjNS1iNmMzLTQ3NzIzODE1NDc3NS53ZWJw",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "银翼杀手",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 90.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528842",
-    "score_history": [
-      {
-        "id": 64,
-        "movie_id": 22,
-        "tomatometer": 89,
-        "audience_score": 91,
-        "douban_score": -1.0,
-        "weighted_score": 90.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -2975,8 +2975,8 @@
     "douban_poster": null,
     "weighted_score": 89.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530612",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154435",
     "score_history": [
       {
         "id": 65,
@@ -2985,7 +2985,7 @@
         "audience_score": 87,
         "douban_score": -1.0,
         "weighted_score": 89.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3021,8 +3021,8 @@
     "douban_poster": null,
     "weighted_score": 89.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529450",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153361",
     "score_history": [
       {
         "id": 66,
@@ -3031,53 +3031,99 @@
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 89.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
   {
-    "id": 24,
-    "slug": "a clockwork orange-1971",
-    "rt_url": "https://www.rottentomatoes.com/m/clockwork_orange",
-    "title": "A Clockwork Orange",
-    "original_title": "A Clockwork Orange",
-    "year": 1971,
+    "id": 18,
+    "slug": "apocalypse now-1979",
+    "rt_url": "https://www.rottentomatoes.com/m/apocalypse_now",
+    "title": "Apocalypse Now",
+    "original_title": "Apocalypse Now",
+    "year": 1979,
     "rating": "R",
-    "tomatometer": 86,
-    "audience_score": 93,
-    "genre": "Comedy",
-    "director": "Stanley Kubrick",
-    "writers": "Stanley Kubrick",
-    "cast": "Malcolm McDowell, Patrick Magee, Michael Bates, Warren Clarke, John Clive, Adrienne Corri, Carl Duering, Paul Farrell",
+    "tomatometer": 91,
+    "audience_score": 94,
+    "genre": "War, Drama",
+    "director": "Francis Ford Coppola",
+    "writers": "Joseph Conrad, John Milius, Michael Herr",
+    "cast": "Marlon Brando, Martin Sheen, Robert Duvall, Frederic Forrest, Albert Hall, Sam Bottoms, Larry Fishburne, Dennis Hopper",
     "critics_consensus": null,
-    "synopsis": "In an England of the future, Alex and his \"Droogs\" spend their nights getting high at the Korova Milkbar before embarking on \"a little of the old ultraviolence,\" while jauntily warbling \"Singin' in the Rain.\" After he's jailed for bludgeoning the Cat Lady to death, Alex submits to behavior modification technique to earn his freedom; he's conditioned to abhor violence. Returned to the world defenseless, Alex becomes the victim of his prior victims.",
-    "release_date": "1971-10-28",
-    "runtime": "137 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p1587_p_v8_an.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "发条橙",
-    "douban_genre": null,
+    "synopsis": "In Vietnam in 1970, Captain Willard (Martin Sheen) takes a perilous and increasingly hallucinatory journey upriver to find and terminate Colonel Kurtz (Marlon Brando), a once-promising officer who has reportedly gone completely mad. In the company of a Navy patrol boat filled with street-smart kids, a surfing-obsessed Air Cavalry officer (Robert Duvall), and a crazed freelance photographer (Dennis Hopper), Willard travels further and further into the heart of darkness.",
+    "release_date": "1979-05-19",
+    "runtime": "147 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p5545_p_v13_at.jpg",
+    "douban_id": "1292260",
+    "douban_url": "https://movie.douban.com/subject/1292260/",
+    "douban_score": 8.5,
+    "douban_vote_count": 131380,
+    "douban_title": "现代启示录 Apocalypse Now‎ (1979)",
+    "douban_genre": "剧情, 战争",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
+    "douban_poster": "https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2501047088.jpg",
     "weighted_score": 89.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528894",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152535",
     "score_history": [
       {
         "id": 67,
-        "movie_id": 24,
-        "tomatometer": 86,
-        "audience_score": 93,
-        "douban_score": -1.0,
+        "movie_id": 18,
+        "tomatometer": 91,
+        "audience_score": 94,
+        "douban_score": 8.5,
         "weighted_score": 89.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "slug": "fight club-1999",
+    "rt_url": "https://www.rottentomatoes.com/m/fight_club",
+    "title": "Fight Club",
+    "original_title": "Fight Club",
+    "year": 1999,
+    "rating": "R",
+    "tomatometer": 81,
+    "audience_score": 96,
+    "genre": "Mystery & Thriller, Drama",
+    "director": "David Fincher",
+    "writers": "Jim Uhls",
+    "cast": "Brad Pitt, Edward Norton, Helena Bonham Carter, Meat Loaf, Jared Leto, Eion Bailey, Joon B. Kim, Evan Mirand",
+    "critics_consensus": null,
+    "synopsis": "A depressed man suffering from insomnia meets a strange soap salesman named Tyler Durden and soon finds himself living in his squalid house after his perfect apartment is destroyed. The two bored men form an underground club with strict rules and fight other men who are fed up with their mundane lives. Their perfect partnership frays when Marla, a fellow support group crasher, attracts Tyler's attention.",
+    "release_date": "1999-10-15",
+    "runtime": "139 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p23069_p_v12_au.jpg",
+    "douban_id": "1292000",
+    "douban_url": "https://movie.douban.com/subject/1292000/",
+    "douban_score": 9.0,
+    "douban_vote_count": 980872,
+    "douban_title": "搏击俱乐部 Fight Club‎ (1999)",
+    "douban_genre": "剧情, 动作, 悬疑, 惊悚",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1910931622.jpg",
+    "weighted_score": 89.1,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152463",
+    "score_history": [
+      {
+        "id": 68,
+        "movie_id": 15,
+        "tomatometer": 81,
+        "audience_score": 96,
+        "douban_score": 9.0,
+        "weighted_score": 89.1,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3113,17 +3159,17 @@
     "douban_poster": null,
     "weighted_score": 89.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530435",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154275",
     "score_history": [
       {
-        "id": 68,
+        "id": 69,
         "movie_id": 82,
         "tomatometer": 92,
         "audience_score": 86,
         "douban_score": -1.0,
         "weighted_score": 89.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3159,17 +3205,17 @@
     "douban_poster": null,
     "weighted_score": 89.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529121",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153067",
     "score_history": [
       {
-        "id": 69,
+        "id": 70,
         "movie_id": 33,
         "tomatometer": 92,
         "audience_score": 86,
         "douban_score": -1.0,
         "weighted_score": 89.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3192,30 +3238,30 @@
     "release_date": "1968-04-02",
     "runtime": "139 minutes",
     "poster_url": "https://resizing.flixster.com/zjQftmILOxvnVqg3TfgBiStJ5uU=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzU5ZmQyNGYyLTczM2ItNDlkYy1hZTJmLTBkODQ5YzRlZDNiMy5qcGc=",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "2001太空漫游",
-    "douban_genre": null,
+    "douban_id": "1292226",
+    "douban_url": "https://movie.douban.com/subject/1292226/",
+    "douban_score": 8.9,
+    "douban_vote_count": 408177,
+    "douban_title": "2001太空漫游 2001: A Space Odyssey‎ (1968)",
+    "douban_genre": "科幻, 惊悚, 冒险",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2926647970.jpg",
     "weighted_score": 89.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528868",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152684",
     "score_history": [
       {
-        "id": 70,
+        "id": 71,
         "movie_id": 23,
         "tomatometer": 90,
         "audience_score": 88,
-        "douban_score": -1.0,
+        "douban_score": 8.9,
         "weighted_score": 89.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3251,17 +3297,17 @@
     "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p510876253.jpg",
     "weighted_score": 89.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528227",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152132",
     "score_history": [
       {
-        "id": 71,
+        "id": 72,
         "movie_id": 3,
         "tomatometer": 75,
         "audience_score": 95,
         "douban_score": 9.5,
         "weighted_score": 89.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3297,17 +3343,17 @@
     "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2913554676.jpg",
     "weighted_score": 88.9,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528376",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152222",
     "score_history": [
       {
-        "id": 72,
+        "id": 73,
         "movie_id": 6,
         "tomatometer": 76,
         "audience_score": 95,
         "douban_score": 9.4,
         "weighted_score": 88.9,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3343,17 +3389,17 @@
     "douban_poster": null,
     "weighted_score": 88.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531034",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154713",
     "score_history": [
       {
-        "id": 73,
+        "id": 74,
         "movie_id": 99,
         "tomatometer": 93,
         "audience_score": 84,
         "douban_score": -1.0,
         "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3389,17 +3435,17 @@
     "douban_poster": null,
     "weighted_score": 88.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530640",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154460",
     "score_history": [
       {
-        "id": 74,
+        "id": 75,
         "movie_id": 90,
         "tomatometer": 98,
         "audience_score": 79,
         "douban_score": -1.0,
         "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3435,17 +3481,17 @@
     "douban_poster": null,
     "weighted_score": 88.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529145",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153093",
     "score_history": [
       {
-        "id": 75,
+        "id": 76,
         "movie_id": 34,
         "tomatometer": 95,
         "audience_score": 82,
         "douban_score": -1.0,
         "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3481,155 +3527,109 @@
     "douban_poster": null,
     "weighted_score": 88.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529045",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152993",
     "score_history": [
       {
-        "id": 76,
+        "id": 77,
         "movie_id": 30,
         "tomatometer": 94,
         "audience_score": 83,
         "douban_score": -1.0,
         "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
   {
-    "id": 25,
-    "slug": "the shining-1980",
-    "rt_url": "https://www.rottentomatoes.com/m/shining",
-    "title": "The Shining",
-    "original_title": "The Shining",
-    "year": 1980,
+    "id": 22,
+    "slug": "blade runner-1982",
+    "rt_url": "https://www.rottentomatoes.com/m/blade_runner",
+    "title": "Blade Runner",
+    "original_title": "Blade Runner",
+    "year": 1982,
     "rating": "R",
-    "tomatometer": 84,
-    "audience_score": 93,
-    "genre": "Horror, Mystery & Thriller",
-    "director": "Stanley Kubrick",
-    "writers": "Stanley Kubrick, Diane Johnson",
-    "cast": "Jack Nicholson, Shelley Duvall, Danny Lloyd, Scatman Crothers, Barry Nelson, Philip Stone, Joseph Turkel, Anne Jackson",
-    "critics_consensus": null,
-    "synopsis": "Jack Torrance (Jack Nicholson) becomes winter caretaker at the isolated Overlook Hotel in Colorado, hoping to cure his writer's block. He settles in along with his wife, Wendy (Shelley Duvall), and his son, Danny (Danny Lloyd), who is plagued by psychic premonitions. As Jack's writing goes nowhere and Danny's visions become more disturbing, Jack discovers the hotel's dark secrets and begins to unravel into a homicidal maniac hell-bent on terrorizing his family.",
-    "release_date": "1980-05-23",
-    "runtime": "143 minutes",
-    "poster_url": "https://resizing.flixster.com/5E5qZzbrG8KdvlmDKFjnun2HBog=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzA3ZGFkNTA3LTEwZjEtNDM2Yy1hYmQxLWMyMjI4ZjY1ZjBkNy5qcGc=",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "闪灵",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 88.5,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528919",
-    "score_history": [
-      {
-        "id": 77,
-        "movie_id": 25,
-        "tomatometer": 84,
-        "audience_score": 93,
-        "douban_score": -1.0,
-        "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 21,
-    "slug": "inception-2010",
-    "rt_url": "https://www.rottentomatoes.com/m/inception",
-    "title": "Inception",
-    "original_title": "Inception",
-    "year": 2010,
-    "rating": "PG-13",
-    "tomatometer": 86,
+    "tomatometer": 89,
     "audience_score": 91,
-    "genre": "Sci-Fi, Mystery & Thriller, Action",
-    "director": "Christopher Nolan",
-    "writers": "Christopher Nolan",
-    "cast": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy, Ken Watanabe, Dileep Rao, Cillian Murphy, Tom Berenger",
+    "genre": "Sci-Fi, Mystery & Thriller",
+    "director": "Ridley Scott",
+    "writers": "Hampton Fancher, David Webb Peoples",
+    "cast": "Harrison Ford, Rutger Hauer, Sean Young, Edward James Olmos, M. Emmet Walsh, Daryl Hannah, William Sanderson, Brion James",
     "critics_consensus": null,
-    "synopsis": "Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people's dreams and steal their secrets from their subconscious. His skill has made him a hot commodity in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: Plant an idea in someone's mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb's every move.",
-    "release_date": "2010-07-15",
-    "runtime": "148 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p7825626_p_v10_ae.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "盗梦空间",
-    "douban_genre": null,
+    "synopsis": "Deckard is forced by the police Boss to continue his old job as Replicant Hunter. His assignment: eliminate four escaped Replicants from the colonies who have returned to Earth. Before starting the job, Deckard goes to the Tyrell Corporation, and he meets Rachael, a Replicant girl he falls in love with.",
+    "release_date": "1982-06-25",
+    "runtime": "122 minutes",
+    "poster_url": "https://resizing.flixster.com/M0OhldQuouhJi1khB3dPcj3_7ZU=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2FkZDM0MDZiLWYxMmEtNDFjNS1iNmMzLTQ3NzIzODE1NDc3NS53ZWJw",
+    "douban_id": "1291839",
+    "douban_url": "https://movie.douban.com/subject/1291839/",
+    "douban_score": 8.6,
+    "douban_vote_count": 315485,
+    "douban_title": "银翼杀手 Blade Runner‎ (1982)",
+    "douban_genre": "科幻, 惊悚",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 88.5,
+    "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p868550285.jpg",
+    "weighted_score": 88.4,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528818",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152631",
     "score_history": [
       {
         "id": 78,
-        "movie_id": 21,
-        "tomatometer": 86,
+        "movie_id": 22,
+        "tomatometer": 89,
         "audience_score": 91,
-        "douban_score": -1.0,
-        "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "douban_score": 8.6,
+        "weighted_score": 88.4,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
   {
-    "id": 15,
-    "slug": "fight club-1999",
-    "rt_url": "https://www.rottentomatoes.com/m/fight_club",
-    "title": "Fight Club",
-    "original_title": "Fight Club",
-    "year": 1999,
+    "id": 24,
+    "slug": "a clockwork orange-1971",
+    "rt_url": "https://www.rottentomatoes.com/m/clockwork_orange",
+    "title": "A Clockwork Orange",
+    "original_title": "A Clockwork Orange",
+    "year": 1971,
     "rating": "R",
-    "tomatometer": 81,
-    "audience_score": 96,
-    "genre": "Mystery & Thriller, Drama",
-    "director": "David Fincher",
-    "writers": "Jim Uhls",
-    "cast": "Brad Pitt, Edward Norton, Helena Bonham Carter, Meat Loaf, Jared Leto, Eion Bailey, Joon B. Kim, Evan Mirand",
+    "tomatometer": 86,
+    "audience_score": 93,
+    "genre": "Comedy",
+    "director": "Stanley Kubrick",
+    "writers": "Stanley Kubrick",
+    "cast": "Malcolm McDowell, Patrick Magee, Michael Bates, Warren Clarke, John Clive, Adrienne Corri, Carl Duering, Paul Farrell",
     "critics_consensus": null,
-    "synopsis": "A depressed man suffering from insomnia meets a strange soap salesman named Tyler Durden and soon finds himself living in his squalid house after his perfect apartment is destroyed. The two bored men form an underground club with strict rules and fight other men who are fed up with their mundane lives. Their perfect partnership frays when Marla, a fellow support group crasher, attracts Tyler's attention.",
-    "release_date": "1999-10-15",
-    "runtime": "139 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p23069_p_v12_au.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "搏击俱乐部",
-    "douban_genre": null,
+    "synopsis": "In an England of the future, Alex and his \"Droogs\" spend their nights getting high at the Korova Milkbar before embarking on \"a little of the old ultraviolence,\" while jauntily warbling \"Singin' in the Rain.\" After he's jailed for bludgeoning the Cat Lady to death, Alex submits to behavior modification technique to earn his freedom; he's conditioned to abhor violence. Returned to the world defenseless, Alex becomes the victim of his prior victims.",
+    "release_date": "1971-10-28",
+    "runtime": "137 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p1587_p_v8_an.jpg",
+    "douban_id": "1292233",
+    "douban_url": "https://movie.douban.com/subject/1292233/",
+    "douban_score": 8.6,
+    "douban_vote_count": 422332,
+    "douban_title": "发条橙 A Clockwork Orange‎ (1971)",
+    "douban_genre": "犯罪, 剧情, 科幻",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 88.5,
+    "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p529908155.jpg",
+    "weighted_score": 88.1,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528666",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152749",
     "score_history": [
       {
         "id": 79,
-        "movie_id": 15,
-        "tomatometer": 81,
-        "audience_score": 96,
-        "douban_score": -1.0,
-        "weighted_score": 88.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "movie_id": 24,
+        "tomatometer": 86,
+        "audience_score": 93,
+        "douban_score": 8.6,
+        "weighted_score": 88.1,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3665,8 +3665,8 @@
     "douban_poster": null,
     "weighted_score": 88.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531565",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155203",
     "score_history": [
       {
         "id": 80,
@@ -3675,53 +3675,53 @@
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 88.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
   {
-    "id": 7,
-    "slug": "life is beautiful-1997",
-    "rt_url": "https://www.rottentomatoes.com/m/1084398-life_is_beautiful",
-    "title": "Life Is Beautiful",
-    "original_title": "Life Is Beautiful",
-    "year": 1997,
-    "rating": "PG-13",
-    "tomatometer": 80,
-    "audience_score": 96,
-    "genre": "Comedy, Drama, War",
-    "director": "Roberto Benigni",
-    "writers": "Vincenzo Cerami, Roberto Benigni",
-    "cast": "Roberto Benigni, Nicoletta Braschi, Giorgio Cantarini, Giustino Durano, Sergio Bustric, Marisa Paredes, Amerigo Fontani, Horst Bucholz",
+    "id": 16,
+    "slug": "se7en-1995",
+    "rt_url": "",
+    "title": "Se7en",
+    "original_title": "Se7en",
+    "year": 1995,
+    "rating": "R",
+    "tomatometer": -1,
+    "audience_score": -1,
+    "genre": "Crime, Mystery, Thriller",
+    "director": "David Fincher",
+    "writers": "Andrew Kevin Walker",
+    "cast": "Morgan Freeman, Brad Pitt, Gwyneth Paltrow, John Cassini, Peter Crombie, Reg E. Cathey, R. Lee Ermey, Daniel Zacapa",
     "critics_consensus": null,
-    "synopsis": "A gentle Jewish-Italian waiter, Guido Orefice (Roberto Benigni), meets Dora (Nicoletta Braschi), a pretty schoolteacher, and wins her over with his charm and humor. Eventually they marry and have a son, Giosue (Giorgio Cantarini). Their happiness is abruptly halted, however, when Guido and Giosue are separated from Dora and taken to a concentration camp. Determined to shelter his son from the horrors of his surroundings, Guido convinces Giosue that their time in the camp is merely a game.",
-    "release_date": "1997-12-20",
-    "runtime": "122 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p22005_p_v10_ab.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "美丽人生",
-    "douban_genre": null,
+    "synopsis": "Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Somerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.",
+    "release_date": "1995-09-22",
+    "runtime": "127 minutes",
+    "poster_url": "https://image.tmdb.org/t/p/w500/191nKfP0ehp3uIvWqgPbFmI4lv9.jpg",
+    "douban_id": "1292223",
+    "douban_url": "https://movie.douban.com/subject/1292223/",
+    "douban_score": 8.8,
+    "douban_vote_count": 1068408,
+    "douban_title": "七宗罪 Se7en‎ (1995)",
+    "douban_genre": "剧情, 犯罪, 悬疑, 惊悚",
     "douban_director": null,
     "douban_writers": null,
     "douban_cast": null,
     "douban_synopsis": null,
-    "douban_poster": null,
+    "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2219586434.jpg",
     "weighted_score": 88.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528436",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152485",
     "score_history": [
       {
         "id": 81,
-        "movie_id": 7,
-        "tomatometer": 80,
-        "audience_score": 96,
-        "douban_score": -1.0,
+        "movie_id": 16,
+        "tomatometer": -1,
+        "audience_score": -1,
+        "douban_score": 8.8,
         "weighted_score": 88.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3757,8 +3757,8 @@
     "douban_poster": null,
     "weighted_score": 87.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530690",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154506",
     "score_history": [
       {
         "id": 82,
@@ -3767,7 +3767,7 @@
         "audience_score": 82,
         "douban_score": -1.0,
         "weighted_score": 87.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3803,8 +3803,8 @@
     "douban_poster": null,
     "weighted_score": 87.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530484",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154320",
     "score_history": [
       {
         "id": 83,
@@ -3813,7 +3813,7 @@
         "audience_score": 89,
         "douban_score": -1.0,
         "weighted_score": 87.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3849,8 +3849,8 @@
     "douban_poster": null,
     "weighted_score": 87.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529170",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153118",
     "score_history": [
       {
         "id": 84,
@@ -3859,7 +3859,7 @@
         "audience_score": 79,
         "douban_score": -1.0,
         "weighted_score": 87.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3895,8 +3895,8 @@
     "douban_poster": null,
     "weighted_score": 87.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529946",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153861",
     "score_history": [
       {
         "id": 85,
@@ -3905,7 +3905,7 @@
         "audience_score": 85,
         "douban_score": -1.0,
         "weighted_score": 87.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3941,8 +3941,8 @@
     "douban_poster": null,
     "weighted_score": 87.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529672",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153576",
     "score_history": [
       {
         "id": 86,
@@ -3951,7 +3951,53 @@
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 87.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "slug": "the matrix-1999",
+    "rt_url": "https://www.rottentomatoes.com/m/matrix",
+    "title": "The Matrix",
+    "original_title": "The Matrix",
+    "year": 1999,
+    "rating": "R",
+    "tomatometer": 83,
+    "audience_score": 85,
+    "genre": "Sci-Fi, Action, Mystery & Thriller",
+    "director": "Andy Wachowski, Larry Wachowski",
+    "writers": "Lana Wachowski, Lilly Wachowski",
+    "cast": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, Joe Pantoliano, Gloria Foster, Marcus Chong, Paul Goddard",
+    "critics_consensus": null,
+    "synopsis": "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive, can answer his question -- What is the Matrix? Neo is contacted by Trinity, a beautiful stranger who leads him into an underworld where he meets Morpheus. They fight a brutal battle for their lives against a cadre of viciously intelligent secret agents. It is a truth that could cost Neo something more precious than his life.",
+    "release_date": "1999-03-31",
+    "runtime": "136 minutes",
+    "poster_url": "https://resizing.flixster.com/hTz9Ap43sCkvDiFvCkjmb1IWkUg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2EwMGEwNmQxLTE1MGYtNGQwYS04ZDhlLWQ0MzYwOTQ5M2JlMC5qcGc=",
+    "douban_id": "1291843",
+    "douban_url": "https://movie.douban.com/subject/1291843/",
+    "douban_score": 9.1,
+    "douban_vote_count": 966342,
+    "douban_title": "黑客帝国 The Matrix‎ (1999)",
+    "douban_genre": "动作, 科幻",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p451926968.jpg",
+    "weighted_score": 86.8,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152558",
+    "score_history": [
+      {
+        "id": 87,
+        "movie_id": 19,
+        "tomatometer": 83,
+        "audience_score": 85,
+        "douban_score": 9.1,
+        "weighted_score": 86.8,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -3987,17 +4033,17 @@
     "douban_poster": null,
     "weighted_score": 86.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530587",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154412",
     "score_history": [
       {
-        "id": 87,
+        "id": 88,
         "movie_id": 88,
         "tomatometer": 91,
         "audience_score": 82,
         "douban_score": -1.0,
         "weighted_score": 86.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4033,17 +4079,63 @@
     "douban_poster": null,
     "weighted_score": 86.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529070",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153018",
     "score_history": [
       {
-        "id": 88,
+        "id": 89,
         "movie_id": 31,
         "tomatometer": 83,
         "audience_score": 90,
         "douban_score": -1.0,
         "weighted_score": 86.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "slug": "the shining-1980",
+    "rt_url": "https://www.rottentomatoes.com/m/shining",
+    "title": "The Shining",
+    "original_title": "The Shining",
+    "year": 1980,
+    "rating": "R",
+    "tomatometer": 84,
+    "audience_score": 93,
+    "genre": "Horror, Mystery & Thriller",
+    "director": "Stanley Kubrick",
+    "writers": "Stanley Kubrick, Diane Johnson",
+    "cast": "Jack Nicholson, Shelley Duvall, Danny Lloyd, Scatman Crothers, Barry Nelson, Philip Stone, Joseph Turkel, Anne Jackson",
+    "critics_consensus": null,
+    "synopsis": "Jack Torrance (Jack Nicholson) becomes winter caretaker at the isolated Overlook Hotel in Colorado, hoping to cure his writer's block. He settles in along with his wife, Wendy (Shelley Duvall), and his son, Danny (Danny Lloyd), who is plagued by psychic premonitions. As Jack's writing goes nowhere and Danny's visions become more disturbing, Jack discovers the hotel's dark secrets and begins to unravel into a homicidal maniac hell-bent on terrorizing his family.",
+    "release_date": "1980-05-23",
+    "runtime": "143 minutes",
+    "poster_url": "https://resizing.flixster.com/5E5qZzbrG8KdvlmDKFjnun2HBog=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzA3ZGFkNTA3LTEwZjEtNDM2Yy1hYmQxLWMyMjI4ZjY1ZjBkNy5qcGc=",
+    "douban_id": "1292225",
+    "douban_url": "https://movie.douban.com/subject/1292225/",
+    "douban_score": 8.3,
+    "douban_vote_count": 648737,
+    "douban_title": "闪灵 The Shining‎ (1980)",
+    "douban_genre": "恐怖",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2928985187.jpg",
+    "weighted_score": 86.3,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152799",
+    "score_history": [
+      {
+        "id": 90,
+        "movie_id": 25,
+        "tomatometer": 84,
+        "audience_score": 93,
+        "douban_score": 8.3,
+        "weighted_score": 86.3,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4079,17 +4171,17 @@
     "douban_poster": null,
     "weighted_score": 86.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531161",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154832",
     "score_history": [
       {
-        "id": 89,
+        "id": 91,
         "movie_id": 104,
         "tomatometer": 92,
         "audience_score": 80,
         "douban_score": -1.0,
         "weighted_score": 86.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4125,17 +4217,17 @@
     "douban_poster": null,
     "weighted_score": 86.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530980",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154632",
     "score_history": [
       {
-        "id": 90,
+        "id": 92,
         "movie_id": 97,
         "tomatometer": 85,
         "audience_score": 87,
         "douban_score": -1.0,
         "weighted_score": 86.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4171,17 +4263,17 @@
     "douban_poster": null,
     "weighted_score": 86.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530715",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154537",
     "score_history": [
       {
-        "id": 91,
+        "id": 93,
         "movie_id": 93,
         "tomatometer": 93,
         "audience_score": 79,
         "douban_score": -1.0,
         "weighted_score": 86.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4217,17 +4309,63 @@
     "douban_poster": null,
     "weighted_score": 86.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529196",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153143",
     "score_history": [
       {
-        "id": 92,
+        "id": 94,
         "movie_id": 36,
         "tomatometer": 78,
         "audience_score": 94,
         "douban_score": -1.0,
         "weighted_score": 86.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "slug": "interstellar-2014",
+    "rt_url": "https://www.rottentomatoes.com/m/interstellar_2014",
+    "title": "Interstellar",
+    "original_title": "Interstellar",
+    "year": 2014,
+    "rating": "PG-13",
+    "tomatometer": 73,
+    "audience_score": 87,
+    "genre": "Sci-Fi, Adventure, Action",
+    "director": "Christopher Nolan",
+    "writers": "Jonathan Nolan",
+    "cast": "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine, Bill Irwin, Ellen Burstyn, Mackenzie Foy, Timothée Chalamet",
+    "critics_consensus": null,
+    "synopsis": "In Earth's future, a global crop blight and second Dust Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a brilliant NASA physicist, is working on plans to save mankind by transporting Earth's population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind's new home.",
+    "release_date": "2014-11-05",
+    "runtime": "165 minutes",
+    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p10543523_p_v8_as.jpg",
+    "douban_id": "1889243",
+    "douban_url": "https://movie.douban.com/subject/1889243/",
+    "douban_score": 9.4,
+    "douban_vote_count": 2228860,
+    "douban_title": "星际穿越 Interstellar‎ (2014)",
+    "douban_genre": "剧情, 科幻, 冒险",
+    "douban_director": null,
+    "douban_writers": null,
+    "douban_cast": null,
+    "douban_synopsis": null,
+    "douban_poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2614988097.jpg",
+    "weighted_score": 85.6,
+    "category": "豆瓣Top250",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152584",
+    "score_history": [
+      {
+        "id": 95,
+        "movie_id": 20,
+        "tomatometer": 73,
+        "audience_score": 87,
+        "douban_score": 9.4,
+        "weighted_score": 85.6,
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4263,17 +4401,17 @@
     "douban_poster": null,
     "weighted_score": 85.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531060",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154737",
     "score_history": [
       {
-        "id": 93,
+        "id": 96,
         "movie_id": 100,
         "tomatometer": 88,
         "audience_score": 83,
         "douban_score": -1.0,
         "weighted_score": 85.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4309,17 +4447,17 @@
     "douban_poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p457760035.jpg",
     "weighted_score": 85.1,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528260",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152162",
     "score_history": [
       {
-        "id": 94,
+        "id": 97,
         "movie_id": 4,
         "tomatometer": 88,
         "audience_score": 69,
         "douban_score": 9.5,
         "weighted_score": 85.1,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4355,17 +4493,17 @@
     "douban_poster": null,
     "weighted_score": 84.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529647",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153552",
     "score_history": [
       {
-        "id": 95,
+        "id": 98,
         "movie_id": 53,
         "tomatometer": 77,
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 84.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4401,17 +4539,17 @@
     "douban_poster": null,
     "weighted_score": 84.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529020",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.152965",
     "score_history": [
       {
-        "id": 96,
+        "id": 99,
         "movie_id": 29,
         "tomatometer": 77,
         "audience_score": 92,
         "douban_score": -1.0,
         "weighted_score": 84.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4447,63 +4585,17 @@
     "douban_poster": null,
     "weighted_score": 84.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529425",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153337",
     "score_history": [
       {
-        "id": 97,
+        "id": 100,
         "movie_id": 44,
         "tomatometer": 75,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 84.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 19,
-    "slug": "the matrix-1999",
-    "rt_url": "https://www.rottentomatoes.com/m/matrix",
-    "title": "The Matrix",
-    "original_title": "The Matrix",
-    "year": 1999,
-    "rating": "R",
-    "tomatometer": 83,
-    "audience_score": 85,
-    "genre": "Sci-Fi, Action, Mystery & Thriller",
-    "director": "Andy Wachowski, Larry Wachowski",
-    "writers": "Lana Wachowski, Lilly Wachowski",
-    "cast": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, Joe Pantoliano, Gloria Foster, Marcus Chong, Paul Goddard",
-    "critics_consensus": null,
-    "synopsis": "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive, can answer his question -- What is the Matrix? Neo is contacted by Trinity, a beautiful stranger who leads him into an underworld where he meets Morpheus. They fight a brutal battle for their lives against a cadre of viciously intelligent secret agents. It is a truth that could cost Neo something more precious than his life.",
-    "release_date": "1999-03-31",
-    "runtime": "136 minutes",
-    "poster_url": "https://resizing.flixster.com/hTz9Ap43sCkvDiFvCkjmb1IWkUg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2EwMGEwNmQxLTE1MGYtNGQwYS04ZDhlLWQ0MzYwOTQ5M2JlMC5qcGc=",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "黑客帝国",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 84.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528766",
-    "score_history": [
-      {
-        "id": 98,
-        "movie_id": 19,
-        "tomatometer": 83,
-        "audience_score": 85,
-        "douban_score": -1.0,
-        "weighted_score": 84.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4539,17 +4631,17 @@
     "douban_poster": null,
     "weighted_score": 83.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529524",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153435",
     "score_history": [
       {
-        "id": 99,
+        "id": 101,
         "movie_id": 48,
         "tomatometer": 80,
         "audience_score": 87,
         "douban_score": -1.0,
         "weighted_score": 83.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4585,17 +4677,17 @@
     "douban_poster": null,
     "weighted_score": 83.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529270",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153215",
     "score_history": [
       {
-        "id": 100,
+        "id": 102,
         "movie_id": 39,
         "tomatometer": 74,
         "audience_score": 93,
         "douban_score": -1.0,
         "weighted_score": 83.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4631,17 +4723,17 @@
     "douban_poster": null,
     "weighted_score": 82.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530666",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154483",
     "score_history": [
       {
-        "id": 101,
+        "id": 103,
         "movie_id": 91,
         "tomatometer": 92,
         "audience_score": 73,
         "douban_score": -1.0,
         "weighted_score": 82.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4677,63 +4769,17 @@
     "douban_poster": null,
     "weighted_score": 81.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531288",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154958",
     "score_history": [
       {
-        "id": 102,
+        "id": 104,
         "movie_id": 109,
         "tomatometer": 80,
         "audience_score": 82,
         "douban_score": -1.0,
         "weighted_score": 81.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 20,
-    "slug": "interstellar-2014",
-    "rt_url": "https://www.rottentomatoes.com/m/interstellar_2014",
-    "title": "Interstellar",
-    "original_title": "Interstellar",
-    "year": 2014,
-    "rating": "PG-13",
-    "tomatometer": 73,
-    "audience_score": 87,
-    "genre": "Sci-Fi, Adventure, Action",
-    "director": "Christopher Nolan",
-    "writers": "Jonathan Nolan",
-    "cast": "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine, Bill Irwin, Ellen Burstyn, Mackenzie Foy, Timothée Chalamet",
-    "critics_consensus": null,
-    "synopsis": "In Earth's future, a global crop blight and second Dust Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a brilliant NASA physicist, is working on plans to save mankind by transporting Earth's population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind's new home.",
-    "release_date": "2014-11-05",
-    "runtime": "165 minutes",
-    "poster_url": "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p10543523_p_v8_as.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "星际穿越",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": 80.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528793",
-    "score_history": [
-      {
-        "id": 103,
-        "movie_id": 20,
-        "tomatometer": 73,
-        "audience_score": 87,
-        "douban_score": -1.0,
-        "weighted_score": 80.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4769,17 +4815,17 @@
     "douban_poster": null,
     "weighted_score": 77.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529220",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153166",
     "score_history": [
       {
-        "id": 104,
+        "id": 105,
         "movie_id": 37,
         "tomatometer": 67,
         "audience_score": 87,
         "douban_score": -1.0,
         "weighted_score": 77.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4815,17 +4861,17 @@
     "douban_poster": null,
     "weighted_score": 76.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529597",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153506",
     "score_history": [
       {
-        "id": 105,
+        "id": 106,
         "movie_id": 51,
         "tomatometer": 70,
         "audience_score": 82,
         "douban_score": -1.0,
         "weighted_score": 76.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4861,17 +4907,17 @@
     "douban_poster": null,
     "weighted_score": 76.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529548",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153458",
     "score_history": [
       {
-        "id": 106,
+        "id": 107,
         "movie_id": 49,
         "tomatometer": 72,
         "audience_score": 80,
         "douban_score": -1.0,
         "weighted_score": 76.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4907,17 +4953,17 @@
     "douban_poster": null,
     "weighted_score": 74.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529399",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153313",
     "score_history": [
       {
-        "id": 107,
+        "id": 108,
         "movie_id": 43,
         "tomatometer": 64,
         "audience_score": 85,
         "douban_score": -1.0,
         "weighted_score": 74.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4953,17 +4999,17 @@
     "douban_poster": null,
     "weighted_score": 74.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529374",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153288",
     "score_history": [
       {
-        "id": 108,
+        "id": 109,
         "movie_id": 42,
         "tomatometer": 58,
         "audience_score": 91,
         "douban_score": -1.0,
         "weighted_score": 74.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -4999,17 +5045,17 @@
     "douban_poster": null,
     "weighted_score": 73.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530460",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154297",
     "score_history": [
       {
-        "id": 109,
+        "id": 110,
         "movie_id": 83,
         "tomatometer": 75,
         "audience_score": 72,
         "douban_score": -1.0,
         "weighted_score": 73.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5045,17 +5091,17 @@
     "douban_poster": null,
     "weighted_score": 66.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529573",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153483",
     "score_history": [
       {
-        "id": 110,
+        "id": 111,
         "movie_id": 50,
         "tomatometer": 54,
         "audience_score": 79,
         "douban_score": -1.0,
         "weighted_score": 66.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5091,17 +5137,17 @@
     "douban_poster": null,
     "weighted_score": 61.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529623",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153529",
     "score_history": [
       {
-        "id": 111,
+        "id": 112,
         "movie_id": 52,
         "tomatometer": 52,
         "audience_score": 71,
         "douban_score": -1.0,
         "weighted_score": 61.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5137,17 +5183,17 @@
     "douban_poster": null,
     "weighted_score": 60.5,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530510",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154342",
     "score_history": [
       {
-        "id": 112,
+        "id": 113,
         "movie_id": 85,
         "tomatometer": 70,
         "audience_score": 51,
         "douban_score": -1.0,
         "weighted_score": 60.5,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5183,17 +5229,17 @@
     "douban_poster": null,
     "weighted_score": -1.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531462",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.155102",
     "score_history": [
       {
-        "id": 113,
+        "id": 114,
         "movie_id": 115,
         "tomatometer": -1,
         "audience_score": -1,
         "douban_score": -1.0,
         "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5229,17 +5275,17 @@
     "douban_poster": null,
     "weighted_score": -1.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.531335",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154979",
     "score_history": [
       {
-        "id": 114,
+        "id": 115,
         "movie_id": 110,
         "tomatometer": -1,
         "audience_score": -1,
         "douban_score": -1.0,
         "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5275,17 +5321,17 @@
     "douban_poster": null,
     "weighted_score": -1.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530266",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154178",
     "score_history": [
       {
-        "id": 115,
+        "id": 116,
         "movie_id": 78,
         "tomatometer": -1,
         "audience_score": -1,
         "douban_score": -1.0,
         "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5321,17 +5367,17 @@
     "douban_poster": null,
     "weighted_score": -1.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.530168",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.154084",
     "score_history": [
       {
-        "id": 116,
+        "id": 117,
         "movie_id": 74,
         "tomatometer": -1,
         "audience_score": -1,
         "douban_score": -1.0,
         "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5367,17 +5413,17 @@
     "douban_poster": null,
     "weighted_score": -1.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529796",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153720",
     "score_history": [
       {
-        "id": 117,
+        "id": 118,
         "movie_id": 59,
         "tomatometer": -1,
         "audience_score": -1,
         "douban_score": -1.0,
         "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   },
@@ -5413,63 +5459,17 @@
     "douban_poster": null,
     "weighted_score": -1.0,
     "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.529695",
+    "created_at": "2026-09-26 14:46:19",
+    "updated_at": "2026-09-26T14:46:19.153598",
     "score_history": [
       {
-        "id": 118,
+        "id": 119,
         "movie_id": 55,
         "tomatometer": -1,
         "audience_score": -1,
         "douban_score": -1.0,
         "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
-      }
-    ]
-  },
-  {
-    "id": 16,
-    "slug": "se7en-1995",
-    "rt_url": "",
-    "title": "Se7en",
-    "original_title": "Se7en",
-    "year": 1995,
-    "rating": "R",
-    "tomatometer": -1,
-    "audience_score": -1,
-    "genre": "Crime, Mystery, Thriller",
-    "director": "David Fincher",
-    "writers": "Andrew Kevin Walker",
-    "cast": "Morgan Freeman, Brad Pitt, Gwyneth Paltrow, John Cassini, Peter Crombie, Reg E. Cathey, R. Lee Ermey, Daniel Zacapa",
-    "critics_consensus": null,
-    "synopsis": "Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Somerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.",
-    "release_date": "1995-09-22",
-    "runtime": "127 minutes",
-    "poster_url": "https://image.tmdb.org/t/p/w500/191nKfP0ehp3uIvWqgPbFmI4lv9.jpg",
-    "douban_id": null,
-    "douban_url": null,
-    "douban_score": -1.0,
-    "douban_vote_count": 0,
-    "douban_title": "七宗罪",
-    "douban_genre": null,
-    "douban_director": null,
-    "douban_writers": null,
-    "douban_cast": null,
-    "douban_synopsis": null,
-    "douban_poster": null,
-    "weighted_score": -1.0,
-    "category": "豆瓣Top250",
-    "created_at": "2026-09-26 14:29:56",
-    "updated_at": "2026-09-26T14:29:56.528689",
-    "score_history": [
-      {
-        "id": 119,
-        "movie_id": 16,
-        "tomatometer": -1,
-        "audience_score": -1,
-        "douban_score": -1.0,
-        "weighted_score": -1.0,
-        "recorded_at": "2026-09-26 14:29:56"
+        "recorded_at": "2026-09-26 14:46:19"
       }
     ]
   }
