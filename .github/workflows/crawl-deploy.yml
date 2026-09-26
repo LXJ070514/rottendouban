@@ -6,7 +6,10 @@ name: Fetch Data and Deploy
 # 直到被 GitHub 取消（历史上 4 个 deployment 各占位约 30 天，数据因此停更）。
 on:
   schedule:
-    - cron: '0 4 * * 1,4'  # 每周一、四 04:00 UTC
+    # 每月 1 号、16 号 04:17 UTC（每半月一次）。
+    # 刻意不用整点：官方文档指出 "High load times include the start of every hour"，
+    # 整点触发的定时任务更容易被延迟调度。
+    - cron: '17 4 1,16 * *'
   workflow_dispatch:
 
 permissions:

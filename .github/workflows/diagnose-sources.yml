@@ -1,0 +1,31 @@
+name: Diagnose Sources
+
+# 手动触发的连通性诊断：在 Runner 的真实出口 IP 上逐个探测数据源。
+# 存在的理由是豆瓣对不同 IP 段策略不同 —— 本地（住宅 IP）能通的接口，
+# 在 GitHub Actions（数据中心 IP）上可能返回 200 但内容为空壳。
+# 改抓取逻辑前先跑一次，用 Runner 的结论而不是本地的结论做决定。
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rottendouban-diagnose
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Probe data sources
+        run: python scripts/diagnose_sources.py
