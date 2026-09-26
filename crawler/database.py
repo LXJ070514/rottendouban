@@ -11,6 +11,16 @@ from crawler.config import (
 logger = logging.getLogger("database")
 
 
+def make_slug(title, year):
+    """片名 + 年份构成跨抓取稳定的唯一键。
+
+    必须由调用方用**数据源自身的标识**（片单里的 title_en）来算，不能用
+    original_title —— 那个字段会被 TMDB / RT 的响应覆写，密钥配与不配之间
+    同一部片就会裂成两行。
+    """
+    return f"{(title or '').strip().lower()}-{year or 0}"
+
+
 class Database:
     """电影数据库管理类"""
 
@@ -119,10 +129,7 @@ class Database:
                     pass
         self.conn.commit()
 
-    @staticmethod
-    def make_slug(title, year):
-        """片名 + 年份构成跨抓取稳定的唯一键，不依赖 RT 是否匹配成功。"""
-        return f"{(title or '').strip().lower()}-{year or 0}"
+    make_slug = staticmethod(make_slug)
 
     @staticmethod
     def truncate_field(value, max_len):
@@ -171,7 +178,8 @@ class Database:
         movie_data["cast"] = self.truncate_field(movie_data.get("cast"), MAX_CAST_LENGTH)
         movie_data["synopsis"] = self.truncate_field(movie_data.get("synopsis"), MAX_SYNOPSIS_LENGTH)
 
-        movie_data["slug"] = self.make_slug(
+        # 调用方（main）已按片单标识算好 slug；仅在缺失时才从标题回退推导
+        movie_data["slug"] = movie_data.get("slug") or make_slug(
             movie_data.get("original_title") or movie_data.get("title"),
             movie_data.get("year"),
         )

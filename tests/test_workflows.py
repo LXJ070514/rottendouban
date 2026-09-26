@@ -48,3 +48,15 @@ def test_crawler_step_is_not_error_tolerant():
     crawler = next(s for s in fetch if s.get("name") == "Fetch movie data")
     assert not crawler.get("continue-on-error")
     assert "||" not in crawler["run"]
+
+
+@pytest.mark.parametrize("name", sorted(WORKFLOWS))
+def test_no_expression_interpolated_into_shell(name):
+    """${{ }} 直插 run 脚本是 Actions 的经典注入面，值一律经 env 传入。"""
+    offenders = []
+    for job_id, job in WORKFLOWS[name]["jobs"].items():
+        for step in job.get("steps", []):
+            run = step.get("run")
+            if run and "${{" in run:
+                offenders.append(f"{job_id}/{step.get('name')}")
+    assert not offenders, f"{name} 中表达式直插 shell: {offenders}"

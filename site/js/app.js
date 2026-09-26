@@ -165,9 +165,10 @@
 
         const year = m.year || '';
         const runtime = m.runtime || '';
+        // runtime 是外部 API 给的字符串，必须转义后再进 innerHTML
         const metaParts = [];
-        if (year) metaParts.push(year);
-        if (runtime) metaParts.push(runtime);
+        if (year) metaParts.push(esc(year));
+        if (runtime) metaParts.push(esc(runtime));
         const metaHtml = metaParts.join('<span class="card-meta-sep">·</span>');
 
         const catHtml = m.category ? `<span class="card-category">${esc(m.category)}</span>` : '';

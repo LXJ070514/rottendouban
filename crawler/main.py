@@ -20,7 +20,7 @@ from crawler.config import (
     LOG_LEVEL, LOG_FILE, LOG_FORMAT, LOG_DATE_FORMAT,
     ensure_dirs,
 )
-from crawler.database import Database
+from crawler.database import Database, make_slug
 from crawler.site_generator import generate_site_data
 
 
@@ -138,8 +138,11 @@ def fetch_from_movie_list(logger, limit=None):
         logger.info(f"[{i+1}/{total}] {label} / {title_cn}")
 
         # rt_url 留空，由 RT 匹配结果填入 —— 之前用 /unknown/<slug> 兜底
-        # 会在网站上生成点开就 404 的烂番茄链接
+        # 会在网站上生成点开就 404 的烂番茄链接。
+        # slug 必须在 TMDB/RT 合并前按片单标识算好：original_title 会被外部响应覆写，
+        # 拿它当唯一键会让同一部片在密钥配与不配之间裂成两行。
         movie_data = {
+            "slug": make_slug(title_en, year),
             "rt_url": "",
             "title": title_en,
             "original_title": title_en,

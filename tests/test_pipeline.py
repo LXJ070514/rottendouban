@@ -136,6 +136,37 @@ def test_each_movie_keeps_its_own_row(sandbox, stub_sources):
     assert len({m["slug"] for m in movies}) == 2
 
 
+def test_slug_survives_external_title_override(sandbox, stub_sources, monkeypatch):
+    """身份键必须来自片单，不能来自会被 TMDB/RT 覆写的 original_title。
+
+    否则密钥配与不配之间同一部片会裂成两行，"重抓是更新而非新增"的保证失效。
+    """
+    import crawler.tmdb_api as tmdb_mod
+
+    monkeypatch.setattr(tmdb_mod, "is_available", lambda: True)
+    monkeypatch.setattr(
+        tmdb_mod, "search_and_get_details",
+        lambda title, year=None: {
+            "title": "Titanic (1997 4K Remaster)",
+            "original_title": "完全不同的标题",
+            "year": 1997, "genre": "Romance", "runtime": "194 minutes",
+        })
+
+    main_mod.main()
+    movies = json.loads((sandbox / "data" / "movies.json").read_text(encoding="utf-8"))
+    by_slug = {m["slug"]: m for m in movies}
+    # TMDB 把 title / original_title 全改写了，slug 仍须锚在片单标识上
+    assert "titanic-1997" in by_slug
+    assert by_slug["titanic-1997"]["original_title"] == "完全不同的标题"
+
+    # 再跑一次不带 TMDB，slug 必须相同 → 更新同一行而不是新增
+    monkeypatch.setattr(tmdb_mod, "is_available", lambda: False)
+    main_mod.main()
+    movies = json.loads((sandbox / "data" / "movies.json").read_text(encoding="utf-8"))
+    assert len(movies) == 2
+    assert {m["slug"] for m in movies} == {"titanic-1997", "se7en-1995"}
+
+
 def test_below_publish_floor_keeps_previous_data(sandbox, stub_sources, monkeypatch):
     target = sandbox / "data" / "movies.json"
     target.write_text('[{"title": "sentinel"}]', encoding="utf-8")

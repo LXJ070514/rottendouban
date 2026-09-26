@@ -51,17 +51,23 @@ jobs:
 
       - name: Verify site data
         id: after
+        env:
+          # 经 env 传入而非 ${{ }} 直插 shell：值虽是自己算出的整数，
+          # 但表达式直接拼进脚本是 Actions 的注入面，不给它留口子
+          PREV_COUNT: ${{ steps.before.outputs.count }}
         run: |
           COUNT=$(python -c "import json;print(len(json.load(open('site/data/movies.json'))))")
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
           echo "本次生成 $COUNT 部电影"
           python scripts/verify_site.py
-          if [ "$COUNT" -lt "${{ steps.before.outputs.count }}" ]; then
-            echo "新数据比仓库中的少（$COUNT < ${{ steps.before.outputs.count }}），不覆盖线上" >&2
+          if [ "$COUNT" -lt "$PREV_COUNT" ]; then
+            echo "新数据比仓库中的少（$COUNT < $PREV_COUNT），不覆盖线上" >&2
             exit 1
           fi
 
       - name: Commit refreshed data
+        env:
+          NEW_COUNT: ${{ steps.after.outputs.count }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -69,7 +75,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "无数据变化"
           else
-            git commit -m "Refresh data: ${{ steps.after.outputs.count }} movies [skip ci]"
+            git commit -m "Refresh data: $NEW_COUNT movies [skip ci]"
             git push
           fi
 
