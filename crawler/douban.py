@@ -42,7 +42,13 @@ _UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 # 限流判定：至少这么多实时样本，且空结果占比达到该阈值
 BLOCK_MIN_SAMPLES = int(os.environ.get("DOUBAN_BLOCK_MIN_SAMPLES", 12))
 BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
-REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 0.4))
+# 节流 4s。依据是 CI matrix 实测（每档独立 Runner/IP，各连发 20 次）：
+#   0.5s → 10 成功 | 2s → 14 | 4s → 19 | 8s → 17（8s 的失败是 SSL 握手超时，非配额）
+# 四档的首次失败都在第 10-11 次，说明配额按时间窗滚动、放慢即可恢复，
+# 因此不需要按 IP 分片并行。
+REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 4.0))
+RATE_LIMIT_RETRIES = int(os.environ.get("DOUBAN_RATE_LIMIT_RETRIES", 3))
+RATE_LIMIT_BACKOFF = float(os.environ.get("DOUBAN_RATE_LIMIT_BACKOFF", 20))
 COMMENT_COUNT = int(os.environ.get("DOUBAN_COMMENT_COUNT", 3))
 
 
@@ -50,8 +56,16 @@ class DoubanError(Exception):
     """豆瓣端点不可用（网络失败或被限流）。"""
 
 
+class RateLimited(DoubanError):
+    """按 IP 的时间窗配额已用尽：HTTP 400 + {"msg":"subject_ip_rate_limit"}。
+
+    必须与普通失败区分 —— 这种是"等一等就能继续"，若当成"该片无详情"
+    就会永久跳过，缓存也永远补不上。
+    """
+
+
 def _get(url: str, referer: str, timeout: int = 15):
-    """GET 并解析 JSON。返回 None 表示拿不到可用数据（供上层统计限流）。"""
+    """GET 并解析 JSON。返回 None 表示拿不到数据；配额耗尽抛 RateLimited。"""
     headers = {
         "User-Agent": _UA,
         "Accept": "application/json, text/plain, */*",
@@ -63,6 +77,13 @@ def _get(url: str, referer: str, timeout: int = 15):
         with urllib.request.urlopen(req, timeout=timeout, context=_SSL_CTX) as resp:
             body = resp.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
+        detail = ""
+        try:
+            detail = e.read()[:200].decode("utf-8", "replace")
+        except OSError:
+            pass
+        if "subject_ip_rate_limit" in detail:
+            raise RateLimited(url) from e
         logger.warning(f"豆瓣 HTTP {e.code}: {url[:90]}")
         return None
     except (urllib.error.URLError, TimeoutError, OSError) as e:
@@ -72,7 +93,7 @@ def _get(url: str, referer: str, timeout: int = 15):
     try:
         return json.loads(body)
     except json.JSONDecodeError:
-        # 被限流时常见形态：200 + HTML 验证页
+        # 限流的另一形态：200 + HTML 验证页
         logger.warning(f"豆瓣返回非 JSON（{len(body)}B），疑似验证页: {url[:90]}")
         return None
 
@@ -134,9 +155,27 @@ class DoubanClient:
         self._last_request = time.time()
 
     def _request(self, url: str, referer: str):
-        self._throttle()
+        """带配额退避的单次请求。
+
+        撞上 subject_ip_rate_limit 时等待后重试 —— CI 实测配额按时间窗滚动，
+        等一个窗口就能继续，直接放弃会让缓存永远补不满。
+        """
         self.live_lookups += 1
-        data = _get(url, referer)
+        data = None
+        for attempt in range(RATE_LIMIT_RETRIES + 1):
+            self._throttle()
+            try:
+                data = _get(url, referer)
+                break
+            except RateLimited:
+                if attempt >= RATE_LIMIT_RETRIES:
+                    logger.warning(f"配额重试 {attempt} 次仍被限流，放弃: {url[:80]}")
+                    break
+                wait = RATE_LIMIT_BACKOFF * (attempt + 1)
+                logger.info(f"豆瓣配额限流，等待 {wait:.0f}s 后重试 "
+                            f"({attempt + 1}/{RATE_LIMIT_RETRIES}): {url[:70]}")
+                time.sleep(wait)
+
         if data is None or (isinstance(data, (list, dict)) and not data):
             self.empty_lookups += 1
         return data

@@ -248,8 +248,6 @@ def test_request_counts_empty_and_nonempty(client, monkeypatch):
 
 def test_non_json_response_counts_as_empty(client, monkeypatch):
     """限流时豆瓣返回 200 + HTML 验证页，JSON 解析失败必须计入空结果。"""
-    import urllib.error
-
     class FakeResp:
         def read(self):
             return b"<html>please verify</html>"
@@ -263,3 +261,73 @@ def test_non_json_response_counts_as_empty(client, monkeypatch):
     monkeypatch.setattr(douban_mod.urllib.request, "urlopen",
                         lambda *a, **k: FakeResp())
     assert douban_mod._get("https://m.douban.com/rexxar/api/v2/movie/1", "https://r") is None
+
+
+# ==================== 配额退避 ====================
+
+class _RateLimitHTTPError(douban_mod.urllib.error.HTTPError):
+    def __init__(self):
+        super().__init__("https://m.douban.com/rexxar/api/v2/movie/1", 400,
+                         "Bad Request", {}, None)
+        self._body = b'{"request": "GET /v2/movie/1", "msg": "subject_ip_rate_limit"}'
+
+    def read(self, *a):
+        return self._body
+
+
+def test_get_raises_ratelimited_on_ip_quota(client, monkeypatch):
+    """HTTP 400 + subject_ip_rate_limit 必须抛 RateLimited，不能和普通失败混为一谈。
+
+    混为一谈的后果是"等一等就能继续"被当成"该片没有详情"永久跳过，缓存永远补不满。
+    """
+    def boom(*a, **k):
+        raise _RateLimitHTTPError()
+
+    monkeypatch.setattr(douban_mod.urllib.request, "urlopen", boom)
+    with pytest.raises(douban_mod.RateLimited):
+        douban_mod._get("https://m.douban.com/rexxar/api/v2/movie/1", "https://r")
+
+
+def test_request_retries_after_rate_limit(client, monkeypatch):
+    """撞配额后应等待重试并成功，而不是直接放弃。"""
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 0)
+    calls = []
+
+    def flaky(url, referer, timeout=15):
+        calls.append(url)
+        if len(calls) < 3:
+            raise douban_mod.RateLimited(url)
+        return {"title": "肖申克的救赎"}
+
+    monkeypatch.setattr(douban_mod, "_get", flaky)
+    got = client._request("https://x", "https://r")
+    assert got == {"title": "肖申克的救赎"}
+    assert len(calls) == 3
+    assert client.empty_lookups == 0, "重试成功后不应计为空结果"
+
+
+def test_request_gives_up_after_max_retries(client, monkeypatch):
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 0)
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_RETRIES", 2)
+    calls = []
+
+    def always_limited(url, referer, timeout=15):
+        calls.append(url)
+        raise douban_mod.RateLimited(url)
+
+    monkeypatch.setattr(douban_mod, "_get", always_limited)
+    assert client._request("https://x", "https://r") is None
+    assert len(calls) == 3, "首次 + 2 次重试"
+    assert client.empty_lookups == 1
+
+
+def test_fetch_subject_survives_rate_limit(client, monkeypatch):
+    """详情被限流时返回 None 让上层降级，而不是把异常抛穿整轮抓取。"""
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 0)
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_RETRIES", 0)
+
+    def limited(url, referer, timeout=15):
+        raise douban_mod.RateLimited(url)
+
+    monkeypatch.setattr(douban_mod, "_get", limited)
+    assert client.fetch_subject("1292052") is None

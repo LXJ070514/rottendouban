@@ -24,8 +24,10 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    # 250 部 × (榜单 + 详情 + 短评) ≈ 750 次请求，含 0.4s 节流与重试，留足余量
-    timeout-minutes: 40
+    # 首轮补齐详情时最慢：250 部 × (详情 + 短评) ≈ 500 次请求，
+    # 按 4s 节流约 33 分钟，加上 RT/TMDB 与配额退避重试，留到 75 分钟。
+    # 详情按 subject id 缓存并回传仓库，后续运行只抓新增条目，通常 10 分钟内结束。
+    timeout-minutes: 75
 
     steps:
       - name: Checkout repository
