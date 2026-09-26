@@ -71,6 +71,10 @@ class Database:
                 douban_cast TEXT,
                 douban_synopsis TEXT,
                 douban_poster TEXT,
+                douban_comments TEXT,
+                douban_rank INTEGER,
+                douban_countries TEXT,
+                douban_durations TEXT,
                 weighted_score REAL DEFAULT -1,
                 category TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -120,6 +124,8 @@ class Database:
             ("weighted_score", "REAL DEFAULT -1"), ("original_title", "TEXT"),
             ("category", "TEXT"), ("critics_consensus", "TEXT"),
             ("writers", "TEXT"), ("douban_writers", "TEXT"),
+            ("douban_comments", "TEXT"), ("douban_rank", "INTEGER"),
+            ("douban_countries", "TEXT"), ("douban_durations", "TEXT"),
         ]
         for col_name, col_type in migrations:
             if col_name not in existing:
@@ -191,6 +197,7 @@ class Database:
             "poster_url", "douban_id", "douban_url",
             "douban_score", "douban_vote_count", "douban_title", "douban_genre",
             "douban_director", "douban_writers", "douban_cast", "douban_synopsis", "douban_poster",
+            "douban_comments", "douban_rank", "douban_countries", "douban_durations",
             "weighted_score", "category", "updated_at"
         ]
         values = []
@@ -267,12 +274,26 @@ class Database:
         """导出站点数据。
 
         不含 score_history：每跑一次就给每部片追加一行，嵌进 JSON 会让部署产物无上限
-        膨胀（实测已占 9.1%，按每周两次一年约 1.8 MB），而前端从不渲染它。
+        膨胀（实测已占 9.1%，按每半月一次一年约 400 KB），而前端从不渲染它。
         历史仍完整保存在 movies.db 与 movies.csv 里。
+
+        douban_comments 在库里是 JSON 文本（SQLite 无数组类型），导出时还原成数组，
+        前端才不必自己 parse。
         """
         import json
-        return json.dumps([dict(m) for m in self.get_all_movies()],
-                          ensure_ascii=False, indent=2)
+        rows = []
+        for m in self.get_all_movies():
+            row = dict(m)
+            raw = row.get("douban_comments")
+            if isinstance(raw, str) and raw:
+                try:
+                    row["douban_comments"] = json.loads(raw)
+                except json.JSONDecodeError:
+                    row["douban_comments"] = []
+            elif not raw:
+                row["douban_comments"] = []
+            rows.append(row)
+        return json.dumps(rows, ensure_ascii=False, indent=2)
 
     def export_csv(self):
         import csv

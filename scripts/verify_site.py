@@ -39,12 +39,22 @@ def main(path="site/data/movies.json"):
         rt_url = movie.get("rt_url") or ""
         if rt_url and "/unknown/" in rt_url:
             problems.append(f"#{mid} {title} 仍有占位 rt_url: {rt_url}")
+        if not movie.get("douban_id"):
+            problems.append(f"#{mid} {title} 缺 douban_id（榜单驱动下不该发生）")
+        comments = movie.get("douban_comments")
+        if comments is not None and not isinstance(comments, list):
+            problems.append(f"#{mid} {title} 的 douban_comments 不是数组: {type(comments).__name__}")
 
     scored = [m for m in movies if (m.get("weighted_score") or 0) > 0]
     douban = [m for m in movies if (m.get("douban_score") or 0) > 0]
     rt = [m for m in movies if (m.get("tomatometer") or 0) >= 0]
+    intro = [m for m in movies if m.get("douban_synopsis")]
+    cast = [m for m in movies if m.get("douban_cast")]
+    comments = [m for m in movies if m.get("douban_comments")]
+    ranked = [m for m in movies if m.get("douban_rank")]
 
     print(f"电影 {len(movies)} | 有加权分 {len(scored)} | 有豆瓣 {len(douban)} | 有RT {len(rt)}")
+    print(f"豆瓣详情: 简介 {len(intro)} | 演员 {len(cast)} | 短评 {len(comments)} | 名次 {len(ranked)}")
     for movie in movies[:3]:
         print(f"  {movie.get('title', '?')[:24]:26} "
               f"🍅{movie.get('tomatometer')} 🍿{movie.get('audience_score')} "

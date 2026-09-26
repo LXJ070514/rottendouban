@@ -171,7 +171,10 @@
         if (runtime) metaParts.push(esc(runtime));
         const metaHtml = metaParts.join('<span class="card-meta-sep">·</span>');
 
-        const catHtml = m.category ? `<span class="card-category">${esc(m.category)}</span>` : '';
+        // 名次徽章。原先这里显示 category，但全站都是"豆瓣Top250"，是条恒定无信息量的标签
+        const catHtml = m.douban_rank
+            ? `<span class="card-category" title="豆瓣 Top250 排名">No.${esc(m.douban_rank)}</span>`
+            : (m.category ? `<span class="card-category">${esc(m.category)}</span>` : '');
         // 加权分是 0–100，与豆瓣的 0–10 并排展示时容易被误读，用 title 标明量纲
         const wsHtml = m.weighted_score > 0
             ? `<span class="card-weighted" title="综合加权分（满分 100）">${m.weighted_score.toFixed(1)}</span>`
@@ -237,10 +240,14 @@
         }
 
         // ====== 豆瓣信息区 ======
-        // 豆瓣只用搜索接口，拿不到导演/编剧/演员/简介/短评，这里只渲染确实存在的字段
         const dbMeta = [];
+        if (m.douban_rank) dbMeta.push(['豆瓣排名', `No.${m.douban_rank}`]);
         if (m.douban_title) dbMeta.push(['中文名', m.douban_title]);
-        if (m.douban_genre) dbMeta.push(['豆瓣类型', m.douban_genre]);
+        if (m.douban_genre) dbMeta.push(['类型', m.douban_genre]);
+        if (m.douban_director) dbMeta.push(['导演', m.douban_director]);
+        if (m.douban_cast) dbMeta.push(['主演', m.douban_cast]);
+        if (m.douban_countries) dbMeta.push(['制片国家', m.douban_countries]);
+        if (m.douban_durations) dbMeta.push(['片长', m.douban_durations]);
         if (m.douban_score > 0) dbMeta.push(['豆瓣评分', `${m.douban_score} / 10`]);
         if (m.douban_vote_count > 0) dbMeta.push(['评分人数', `${Number(m.douban_vote_count).toLocaleString()} 人`]);
 
@@ -248,10 +255,37 @@
             `<div class="meta-row"><span class="meta-label">${l}</span><span class="meta-value">${esc(v)}</span></div>`
         ).join('');
 
+        let dbSynopsisHtml = '';
+        if (m.douban_synopsis) {
+            dbSynopsisHtml = `<div class="detail-synopsis db-synopsis"><div class="detail-synopsis-label">⭐ 豆瓣简介</div>${esc(m.douban_synopsis)}</div>`;
+        }
+
         // Links
         const links = [];
         if (m.rt_url) links.push(`<a class="detail-link rt-link" href="${sanitizeUrl(m.rt_url)}" target="_blank" rel="noopener noreferrer">🍅 烂番茄</a>`);
         if (m.douban_url) links.push(`<a class="detail-link db-link" href="${sanitizeUrl(m.douban_url)}" target="_blank" rel="noopener noreferrer">⭐ 豆瓣</a>`);
+
+        // 热门短评。Rexxar 的 rating.value 是 5 分制（不是 10 分制），直接当星数用
+        let reviewsHtml = '';
+        const reviews = Array.isArray(m.douban_comments) ? m.douban_comments : [];
+        if (reviews.length) {
+            const cards = reviews.map(r => {
+                const stars = Array.from({length: 5}, (_, i) =>
+                    `<span class="review-star${i < Math.round(r.rating || 0) ? '' : ' empty'}">★</span>`
+                ).join('');
+                return `<div class="review-card">
+                    <div class="review-top">
+                        <span class="review-user">${esc(r.user)}</span>
+                        <div class="review-rating">${stars}</div>
+                    </div>
+                    <div class="review-text">${esc(r.comment)}</div>
+                </div>`;
+            }).join('');
+            reviewsHtml = `<div class="douban-reviews">
+                <div class="reviews-header"><h3>⭐ 豆瓣热门短评</h3><span class="reviews-count">${reviews.length} 条</span></div>
+                ${cards}
+            </div>`;
+        }
 
         // Assemble - separate RT and Douban sections clearly
         let rtSection = '';
@@ -264,10 +298,11 @@
         }
 
         let dbSection = '';
-        if (dbMetaHtml) {
+        if (dbMetaHtml || dbSynopsisHtml) {
             dbSection = `<div class="detail-section db-section">
                 <div class="section-header"><h3>⭐ 豆瓣</h3></div>
-                <div class="detail-meta">${dbMetaHtml}</div>
+                ${dbMetaHtml ? `<div class="detail-meta">${dbMetaHtml}</div>` : ''}
+                ${dbSynopsisHtml}
             </div>`;
         }
 
@@ -283,6 +318,7 @@
             </div>
             ${rtSection}
             ${dbSection}
+            ${reviewsHtml}
         `;
 
         overlay.style.display = 'block';

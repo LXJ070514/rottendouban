@@ -36,8 +36,8 @@ TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500"
 
 # ===== 豆瓣 =====
-DOUBAN_BASE_URL = "https://www.douban.com"
-DOUBAN_SEARCH_URL = "https://search.douban.com/movie/subject_search"
+# 端点常量在 crawler/douban.py：只用 CI 实测可用的榜单与 Rexxar 接口，
+# 不再使用会被数据中心 IP 限流的 search.douban.com 搜索页
 
 # ===== TLS 校验 =====
 # 默认校验证书。仅在本地代理做 HTTPS 中间人导致握手失败时设 CRAWLER_INSECURE_SSL=1

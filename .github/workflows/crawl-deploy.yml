@@ -24,7 +24,8 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # 250 部 × (榜单 + 详情 + 短评) ≈ 750 次请求，含 0.4s 节流与重试，留足余量
+    timeout-minutes: 40
 
     steps:
       - name: Checkout repository

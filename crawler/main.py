@@ -1,14 +1,20 @@
 """
 RottenDouban 数据获取主入口
 ============================
-- 以豆瓣电影列表为基础数据源
-- TMDB API 获取详情（可选，需 TMDB_API_KEY / TMDB_BEARER_TOKEN）
-- RT Algolia API 获取烂番茄评分
-- 豆瓣搜索 API 获取中文数据
-- 三种模式: full / douban_only / site_only
+以豆瓣 Top250 榜单为驱动：
+
+1. `j/chart/top_list` 取榜单 —— 名次、豆瓣评分、评分人数、subject id
+2. Rexxar `movie/<id>` 取详情 —— 中文简介、导演、演员、原名/别名、制片国家
+3. Rexxar `movie/<id>/interests` 取热门短评
+4. 用详情里的英文名去 RT Algolia 匹配新鲜度与爆米花指数
+5. TMDB（可选，需 TMDB_API_KEY / TMDB_BEARER_TOKEN）补海报与英文简介
+
+subject id 直接来自榜单，豆瓣侧不需要任何模糊匹配。
+模式：`full` 全流程 / `site_only` 仅从 movies.db 重出站点数据。
 """
 import os
 import sys
+import json
 import logging
 import time
 import traceback
@@ -20,8 +26,12 @@ from crawler.config import (
     LOG_LEVEL, LOG_FILE, LOG_FORMAT, LOG_DATE_FORMAT,
     ensure_dirs,
 )
-from crawler.database import Database, make_slug
+from crawler.database import Database
 from crawler.site_generator import generate_site_data
+
+
+class CrawlError(Exception):
+    """预期内的失败原因，只记一行日志；未预期的异常才打完整堆栈。"""
 
 
 def setup_logging():
@@ -113,160 +123,191 @@ def process_movies_pipeline(movies_list, db, logger):
     return success_count
 
 
-# ==================== 从电影列表获取数据 ====================
-def fetch_from_movie_list(logger, limit=None):
-    """从电影列表逐部拉取 TMDB + RT Algolia 数据"""
-    from crawler.movie_list import DOUBAN_TOP_250
-    from crawler.tmdb_api import is_available as tmdb_available, search_and_get_details
-    from crawler.rotten_tomatoes import RottenTomatoesCrawler
+# ==================== 数据获取 ====================
+TOP250_SIZE = int(os.environ.get("DOUBAN_TOP_N", 250))
 
+
+def _as_year(value):
+    try:
+        return int(str(value).strip()[:4])
+    except (TypeError, ValueError):
+        return None
+
+
+def _hand_english_map():
+    """movie_list.py 的手工中英映射 —— Rexxar 给不出英文名时的最后兜底。"""
+    from crawler.movie_list import DOUBAN_TOP_250
+    return {e["title_cn"]: e["title_en"] for e in DOUBAN_TOP_250}
+
+
+def fetch_from_douban_top250(logger, limit=None):
+    """豆瓣 Top250 榜单驱动的抓取流水线。
+
+    榜单给名次/评分/subject id → Rexxar 详情给简介/导演/演员/英文名 → 用英文名
+    去 RT Algolia 匹配 → TMDB（可选）补海报与英文简介。
+
+    因为 subject id 直接来自榜单，豆瓣侧不再需要任何模糊匹配，
+    "匹配到同名剧集"这一整类 bug 从结构上消失了。
+    """
+    from crawler.douban import DoubanClient, english_title_candidates
+    from crawler.rotten_tomatoes import RottenTomatoesCrawler
+    from crawler.tmdb_api import is_available as tmdb_available, search_and_get_details
+
+    client = DoubanClient()
+    try:
+        entries = client.fetch_top_list(limit=limit or TOP250_SIZE)
+    finally:
+        client.save_cache()
+
+    if not entries:
+        raise CrawlError("豆瓣 Top250 榜单不可用，放弃本轮（线上数据保持不变）")
+
+    total = len(entries)
     use_tmdb = tmdb_available()
     rt_crawler = RottenTomatoesCrawler()
-    movies_list = []
-    entries = DOUBAN_TOP_250[:limit] if limit else DOUBAN_TOP_250
-    total = len(entries)
+    hand_map = _hand_english_map()
+    movies = []
+    hits = {"detail": 0, "rt": 0, "comments": 0}
 
-    logger.info(f"===== 从电影列表获取数据 (共 {total} 部) =====")
-    logger.info(f"数据源: TMDB={'ON' if use_tmdb else 'OFF'} | RT Algolia=ON")
+    logger.info(f"===== 豆瓣 Top{total} 驱动抓取 =====")
+    logger.info(f"数据源: 豆瓣榜单+Rexxar=ON | RT Algolia=ON | TMDB={'ON' if use_tmdb else 'OFF'}")
 
     for i, entry in enumerate(entries):
-        title_en = entry["title_en"]
-        title_cn = entry["title_cn"]
-        year = entry.get("year")
-        label = f"{title_en} ({year})" if year else title_en
+        subject_id = entry["douban_id"]
+        cn_title = entry["douban_title"]
+        logger.info(f"[{i+1}/{total}] #{entry['douban_rank']:>3} {cn_title} "
+                    f"(id={subject_id}) 豆{entry['douban_score']}")
 
-        logger.info(f"[{i+1}/{total}] {label} / {title_cn}")
+        # slug 用 subject id：比片名+年份更稳，且不受改名影响
+        movie = dict(entry)
+        movie["slug"] = f"douban-{subject_id}"
+        movie["category"] = "豆瓣Top250"
+        movie["rt_url"] = ""
+        movie["year"] = _as_year(entry.get("douban_release_date"))
 
-        # rt_url 留空，由 RT 匹配结果填入 —— 之前用 /unknown/<slug> 兜底
-        # 会在网站上生成点开就 404 的烂番茄链接。
-        # slug 必须在 TMDB/RT 合并前按片单标识算好：original_title 会被外部响应覆写，
-        # 拿它当唯一键会让同一部片在密钥配与不配之间裂成两行。
-        movie_data = {
-            "slug": make_slug(title_en, year),
-            "rt_url": "",
-            "title": title_en,
-            "original_title": title_en,
-            "year": year,
-            "category": "豆瓣Top250",
-            "douban_title": title_cn,
-        }
-
-        if use_tmdb:
+        detail = None
+        if client.blocked:
+            logger.warning("  豆瓣已限流，跳过详情/短评，仅用榜单字段")
+        else:
             try:
-                tmdb_data = search_and_get_details(title_en, year)
-                if tmdb_data:
-                    movie_data.update(tmdb_data)
-                    logger.info(f"  TMDB: ✓ {tmdb_data.get('title', '')[:30]} | "
-                                f"poster={'✓' if tmdb_data.get('poster_url') else '✗'} | "
-                                f"synopsis={'✓' if tmdb_data.get('synopsis') else '✗'}")
-                else:
-                    logger.info("  TMDB: ✗ 未找到")
+                detail = client.fetch_subject(subject_id)
+            except Exception as e:
+                logger.warning(f"  豆瓣详情异常: {e}")
+
+        en_title = ""
+        if detail:
+            hits["detail"] += 1
+            # 榜单每轮取新值，详情走缓存，所以评分/人数以榜单为准，详情只补静态字段
+            movie.update({
+                "douban_synopsis": detail.get("intro") or "",
+                "douban_director": ", ".join(detail.get("directors") or []),
+                "douban_cast": ", ".join(detail.get("actors") or []),
+                "douban_comments": json.dumps(detail.get("comments") or [], ensure_ascii=False),
+                "douban_countries": ", ".join(detail.get("countries") or []),
+                "douban_durations": ", ".join(detail.get("durations") or []),
+                "douban_genre": movie.get("douban_genre") or ", ".join(detail.get("genres") or []),
+                "douban_poster": movie.get("douban_poster") or detail.get("cover_url") or "",
+            })
+            movie["year"] = _as_year(detail.get("year")) or movie["year"]
+            if detail.get("comments"):
+                hits["comments"] += 1
+            en_title = next(english_title_candidates(detail), "")
+            logger.info(f"  详情: 简介 {len(detail.get('intro') or '')} 字 | "
+                        f"导演 {len(detail.get('directors') or [])} | "
+                        f"演员 {len(detail.get('actors') or [])} | "
+                        f"短评 {len(detail.get('comments') or [])} | 英文名 {en_title or '无'}")
+
+        if not en_title:
+            en_title = hand_map.get(cn_title, "")
+            if en_title:
+                logger.info(f"  英文名取自手工片单: {en_title}")
+
+        movie["title"] = en_title or cn_title
+        movie["original_title"] = (detail or {}).get("original_title") or en_title or cn_title
+        year = movie["year"]
+
+        # RT：逐个英文候选试。aka 里可能有多个英文名（《活着》是
+        # ['Lifetimes', 'To Live']，前者并非 RT 收录的那个），靠严格匹配器
+        # （精确标题 + 年份）自校验，第一个通过的才算命中。
+        candidates = list(dict.fromkeys(
+            ([en_title] if en_title else []) + list(english_title_candidates(detail or {}))
+        ))
+        rt_data = None
+        for candidate in candidates:
+            try:
+                rt_data = rt_crawler.search_movie(candidate, year)
+            except Exception as e:
+                logger.warning(f"  RT 异常 [{candidate[:24]}]: {e}")
+                rt_data = None
+            if rt_data:
+                if candidate != en_title:
+                    logger.info(f"  英文名改用别名: {candidate}")
+                    en_title = candidate
+                    movie["title"] = candidate
+                break
+
+        if rt_data:
+            for key, value in rt_data.items():
+                if value:
+                    movie[key] = value
+            hits["rt"] += 1
+            logger.info(f"  RT: 🍅{rt_data.get('tomatometer') or '-'} "
+                        f"🍿{rt_data.get('audience_score') or '-'} "
+                        f"| {rt_data.get('rt_url', '')}")
+        elif not candidates:
+            logger.info("  RT: ✗ 无英文片名可用")
+        else:
+            logger.info(f"  RT: ✗ 索引内无本片（试过 {len(candidates)} 个英文名）")
+
+        if use_tmdb and en_title:
+            try:
+                tmdb_data = search_and_get_details(en_title, year)
             except Exception as e:
                 logger.warning(f"  TMDB 异常: {e}")
+                tmdb_data = None
+            if tmdb_data:
+                # 只补缺，不覆盖豆瓣与 RT 已给出的字段
+                if not movie.get("poster_url"):
+                    movie["poster_url"] = tmdb_data.get("poster_url", "")
+                if not movie.get("synopsis"):
+                    movie["synopsis"] = tmdb_data.get("synopsis", "")
+                if not movie.get("runtime") and tmdb_data.get("runtime"):
+                    movie["runtime"] = tmdb_data["runtime"]
+                if not movie.get("rating"):
+                    movie["rating"] = tmdb_data.get("rating", "")
+                if not movie.get("release_date"):
+                    movie["release_date"] = tmdb_data.get("release_date", "")
+                movie["title"] = movie["title"] or tmdb_data.get("title", "")
 
-        try:
-            rt_data = rt_crawler.search_movie(title_en, year)
-            if rt_data:
-                for key, value in rt_data.items():
-                    if value:
-                        movie_data[key] = value
-                logger.info(f"  RT: 🍅{rt_data.get('tomatometer') or '-'} "
-                            f"🍿{rt_data.get('audience_score') or '-'} "
-                            f"| {rt_data.get('rt_url', '')}")
-            else:
-                logger.info("  RT: ✗ 索引内无本片，放弃番茄分")
-        except Exception as e:
-            logger.warning(f"  RT 异常: {e}")
+        movies.append(movie)
 
-        movies_list.append(movie_data)
-
+    client.save_cache()
     rt_crawler.close()
-    logger.info(f"数据获取完成: {len(movies_list)} 部电影")
-    return movies_list
-
-
-# ==================== 豆瓣匹配 ====================
-def match_douban(movies_list, logger):
-    """豆瓣匹配 — 缓存优先，中文片名 + 年份共同裁决
-
-    豆瓣会限流数据中心 IP（返回 200 但无结果，两种形态见 douban.blocked）。
-    判定后停止继续敲接口，剩余影片只走缓存，避免 100+ 次无意义请求
-    把每次运行都拖成一片假"查无此片"。
-    """
-    from crawler.douban import DoubanMatcher
-
-    matcher = DoubanMatcher(use_cache=True)
-    logger.info(f"===== 豆瓣匹配 (缓存 {matcher.cache_size} 条) =====")
-
-    matched = 0
-    cache_only = False
-    for i, movie in enumerate(movies_list):
-        title_cn = movie.get("douban_title") or movie.get("title", "")
-        year = movie.get("year")
-        try:
-            if cache_only:
-                douban_data = matcher.cached_only(title_cn, year)
-            else:
-                douban_data = matcher.match_and_fetch(title_cn, year)
-                if matcher.blocked:
-                    cache_only = True
-                    logger.warning(
-                        f"  {matcher.live_lookups} 次实时检索中 {matcher.empty_lookups} 次空结果，"
-                        f"判定豆瓣已限流；剩余 {len(movies_list) - i - 1} 部只读缓存")
-        except Exception as e:
-            logger.error(f"豆瓣匹配失败: {movie.get('title')} - {e}")
-            continue
-
-        for key, value in douban_data.items():
-            if value:
-                movie[key] = value
-
-        if douban_data.get("douban_id"):
-            matched += 1
-            logger.info(f"  [{i+1}/{len(movies_list)}] {title_cn} → "
-                        f"豆瓣 {douban_data['douban_score']} "
-                        f"({douban_data['douban_title'][:30]})")
-        else:
-            logger.warning(f"  [{i+1}/{len(movies_list)}] {title_cn} → 豆瓣未匹配")
-
-    matcher.save_cache()
-    logger.info(f"豆瓣匹配完成: {matched}/{len(movies_list)}"
-                + ("（受限流影响，未全量检索）" if cache_only else ""))
-    return movies_list
+    logger.info(f"抓取完成: {len(movies)} 部 | 详情 {hits['detail']} | "
+                f"RT {hits['rt']} | 短评 {hits['comments']} | 缓存 {client.cache_size}")
+    return movies
 
 
 # ==================== 主流程 ====================
-class CrawlError(Exception):
-    """预期内的失败原因，只记一行日志；未预期的异常才打完整堆栈。"""
-
 
 def main():
     """返回进程退出码：0 成功，1 失败（供 CI 判断是否部署）"""
     logger = setup_logging()
     start_time = time.time()
     mode = os.environ.get("CRAWLER_MODE", "full").lower()
-    min_publish = int(os.environ.get("MIN_MOVIES_TO_PUBLISH", 50))
-    # 本地调试用 CRAWLER_LIMIT=5 只跑前几部；CI 不设，全量抓取
+    # 本地调试用 CRAWLER_LIMIT=5 只跑前几部；CI 不设，抓满 Top250
     limit = int(os.environ["CRAWLER_LIMIT"]) if os.environ.get("CRAWLER_LIMIT") else None
+    target = limit or TOP250_SIZE
+    # 发布下限随目标条数走：上游只回一半数据时宁可失败并保留线上旧版
+    min_publish = int(os.environ.get("MIN_MOVIES_TO_PUBLISH") or max(1, int(target * 0.8)))
 
     db = Database()
     try:
         if mode == "site_only":
-            logger.info("===== 仅生成网站 =====")
-
-        elif mode == "douban_only":
-            logger.info("===== 仅豆瓣匹配 =====")
-            existing = db.get_all_movies()
-            if not existing:
-                raise CrawlError("数据库无数据，无法仅做豆瓣匹配")
-            movies_list = match_douban([dict(row) for row in existing], logger)
-            process_movies_pipeline(movies_list, db, logger)
+            logger.info("===== 仅重出站点数据 =====")
 
         elif mode == "full":
-            movies_list = fetch_from_movie_list(logger, limit)
-            if not movies_list:
-                raise CrawlError("电影列表为空")
-            movies_list = match_douban(movies_list, logger)
+            movies_list = fetch_from_douban_top250(logger, limit)
             logger.info("===== 处理流水线 =====")
             process_movies_pipeline(movies_list, db, logger)
             db.conn.commit()
@@ -277,16 +318,15 @@ def main():
                     db.record_score_history(movie["id"], movie)
                 db.conn.commit()
         else:
-            raise CrawlError(f"未知 CRAWLER_MODE: {mode}")
+            raise CrawlError(f"未知 CRAWLER_MODE: {mode}（可用: full / site_only）")
 
         stats = db.get_statistics()
         total = stats.get("total_movies", 0)
         logger.info("===== 统计 =====")
-        logger.info(f"电影: {total} | 平均分: {stats.get('avg_weighted', 0):.1f} | "
-                    f"豆瓣匹配: {stats.get('matched_douban', 0)} | "
+        logger.info(f"电影: {total}/{target} | 平均分: {stats.get('avg_weighted', 0):.1f} | "
+                    f"有豆瓣: {stats.get('matched_douban', 0)} | "
                     f"历史记录: {stats.get('history_records', 0)}")
 
-        # 上游 API 抖动时宁可让 CI 红灯并保留线上旧数据，也不发布半截结果
         if total < min_publish:
             raise CrawlError(
                 f"仅取到 {total} 部电影，低于发布下限 {min_publish}，不覆盖站点数据")
