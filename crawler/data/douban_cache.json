@@ -438,5 +438,75 @@
     "chinese_title": "当幸福来敲门 The Pursuit of Happyness‎ (2006)",
     "genre": "剧情, 传记, 家庭",
     "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2220721286.jpg"
+  },
+  "心灵捕手|1997": {
+    "url": "https://movie.douban.com/subject/1292656/",
+    "id": 1292656,
+    "title": "心灵捕手 Good Will Hunting‎ (1997)",
+    "score": "9.0",
+    "vote_count": "828581",
+    "chinese_title": "心灵捕手 Good Will Hunting‎ (1997)",
+    "genre": "剧情",
+    "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p480965695.jpg"
+  },
+  "美丽心灵|2001": {
+    "url": "https://movie.douban.com/subject/1306029/",
+    "id": 1306029,
+    "title": "美丽心灵 A Beautiful Mind‎ (2001)",
+    "score": "9.1",
+    "vote_count": "862598",
+    "chinese_title": "美丽心灵 A Beautiful Mind‎ (2001)",
+    "genre": "传记, 剧情",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1665997400.jpg"
+  },
+  "钢琴家|2002": {
+    "url": "https://movie.douban.com/subject/1296736/",
+    "id": 1296736,
+    "title": "钢琴家 The Pianist‎ (2002)",
+    "score": "9.3",
+    "vote_count": "761694",
+    "chinese_title": "钢琴家 The Pianist‎ (2002)",
+    "genre": "剧情, 传记, 战争, 音乐",
+    "poster": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1381339291.jpg"
+  },
+  "天堂电影院|1988": {
+    "url": "https://movie.douban.com/subject/1291828/",
+    "id": 1291828,
+    "title": "天堂电影院 Nuovo Cinema Paradiso‎ (1988)",
+    "score": "9.2",
+    "vote_count": "750835",
+    "chinese_title": "天堂电影院 Nuovo Cinema Paradiso‎ (1988)",
+    "genre": "剧情, 爱情",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2653054340.jpg"
+  },
+  "海上钢琴师|1998": {
+    "url": "https://movie.douban.com/subject/1292001/",
+    "id": 1292001,
+    "title": "海上钢琴师 La leggenda del pianista sull'oceano‎ (1998)",
+    "score": "9.3",
+    "vote_count": "1901976",
+    "chinese_title": "海上钢琴师 La leggenda del pianista sull'oceano‎ (1998)",
+    "genre": "剧情, 音乐",
+    "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2914698334.jpg"
+  },
+  "忠犬八公的故事|2009": {
+    "url": "https://movie.douban.com/subject/3011091/",
+    "id": 3011091,
+    "title": "忠犬八公的故事 Hachi: A Dog's Tale‎ (2009)",
+    "score": "9.4",
+    "vote_count": "1560232",
+    "chinese_title": "忠犬八公的故事 Hachi: A Dog's Tale‎ (2009)",
+    "genre": "剧情",
+    "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2587099240.jpg"
+  },
+  "寻梦环游记|2017": {
+    "url": "https://movie.douban.com/subject/20495023/",
+    "id": 20495023,
+    "title": "寻梦环游记 Coco‎ (2017)",
+    "score": "9.1",
+    "vote_count": "2028000",
+    "chinese_title": "寻梦环游记 Coco‎ (2017)",
+    "genre": "喜剧, 动画, 奇幻, 音乐",
+    "poster": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2505426431.jpg"
   }
 }
