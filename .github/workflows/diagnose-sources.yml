@@ -17,7 +17,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,3 +29,8 @@ jobs:
 
       - name: Probe data sources
         run: python scripts/diagnose_sources.py
+
+      # Rexxar 在 CI 上出现"前 26 次成功、之后一律 HTTP 400"的现象，
+      # 而同一份代码在住宅 IP 上全通。差异只可能在请求头或会话上，故逐变体实测。
+      - name: Probe Rexxar header variants
+        run: python scripts/diagnose_rexxar.py 30
