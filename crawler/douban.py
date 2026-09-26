@@ -42,13 +42,18 @@ _UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 # 限流判定：至少这么多实时样本，且空结果占比达到该阈值
 BLOCK_MIN_SAMPLES = int(os.environ.get("DOUBAN_BLOCK_MIN_SAMPLES", 12))
 BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
-# 节流 4s。依据是 CI matrix 实测（每档独立 Runner/IP，各连发 20 次）：
-#   0.5s → 10 成功 | 2s → 14 | 4s → 19 | 8s → 17（8s 的失败是 SSL 握手超时，非配额）
-# 四档的首次失败都在第 10-11 次，说明配额按时间窗滚动、放慢即可恢复，
-# 因此不需要按 IP 分片并行。
-REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 4.0))
+# 基础节流 1.5s，撞配额时由退避接管。
+# CI matrix 实测（每档独立 Runner/IP，各连发 20 次）：0.5s→10 成功、2s→14、4s→19、
+# 8s→17（8s 的失败是 SSL 握手超时而非配额），各档首次失败都在第 10-11 次，
+# 说明配额按时间窗滚动。但固定 4s 不可行：250 部 × 2 请求 = 500 次，
+# 光节流就 33 分钟，叠加退避后实测 75 分钟被 CI 强杀、缓存颗粒无收。
+# 故改为"小基础节流 + 配额退避 + 时间预算 + 跨轮续抓"。
+REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 1.5))
 RATE_LIMIT_RETRIES = int(os.environ.get("DOUBAN_RATE_LIMIT_RETRIES", 3))
 RATE_LIMIT_BACKOFF = float(os.environ.get("DOUBAN_RATE_LIMIT_BACKOFF", 20))
+# 豆瓣阶段的时间预算（秒）。用尽即停止发请求，剩余条目留给下一轮从缓存续抓，
+# 以保证整轮抓取必定能在 CI 超时内跑完并把缓存提交上去。
+TIME_BUDGET = float(os.environ.get("DOUBAN_TIME_BUDGET", 1200))
 COMMENT_COUNT = int(os.environ.get("DOUBAN_COMMENT_COUNT", 3))
 
 
@@ -124,18 +129,37 @@ class DoubanClient:
     """豆瓣榜单与详情客户端，带 id 级缓存与限流熔断。"""
 
     def __init__(self, cache_path: Optional[str] = None, use_cache: bool = True,
-                 fetch_comments: bool = True):
+                 time_budget: Optional[float] = None):
         self.cache_path = cache_path or DEFAULT_CACHE_PATH
         self.use_cache = use_cache
-        self.fetch_comments = fetch_comments
+        self.time_budget = TIME_BUDGET if time_budget is None else time_budget
         self._cache: Dict[str, Dict] = {}
         self.live_lookups = 0
         self.empty_lookups = 0
         self._last_request = 0.0
+        self._started = time.time()
+        self.budget_exhausted = False
         if use_cache:
             self._load_cache()
 
     # ==================== 限流与节流 ====================
+
+    @property
+    def elapsed(self) -> float:
+        return time.time() - self._started
+
+    def _check_budget(self) -> bool:
+        """预算是否还够再发一次请求。用尽时置标志，交由上层跨轮续抓。"""
+        if self.budget_exhausted:
+            return False
+        # 预留一次退避的余量，避免刚判定"还够"就撞上限流等待而超预算
+        if self.elapsed + RATE_LIMIT_BACKOFF >= self.time_budget:
+            self.budget_exhausted = True
+            logger.warning(
+                f"豆瓣时间预算用尽（{self.elapsed:.0f}s / {self.time_budget:.0f}s），"
+                f"停止实时请求；已缓存 {len(self._cache)} 条，剩余留给下一轮续抓")
+            return False
+        return True
 
     @property
     def blocked(self) -> bool:
@@ -159,7 +183,10 @@ class DoubanClient:
 
         撞上 subject_ip_rate_limit 时等待后重试 —— CI 实测配额按时间窗滚动，
         等一个窗口就能继续，直接放弃会让缓存永远补不满。
+        预算用尽时不再发请求，直接返回 None。
         """
+        if not self._check_budget():
+            return None
         self.live_lookups += 1
         data = None
         for attempt in range(RATE_LIMIT_RETRIES + 1):
@@ -268,7 +295,8 @@ class DoubanClient:
     # ==================== 详情与短评 ====================
 
     def fetch_subject(self, subject_id: str) -> Optional[Dict]:
-        """Rexxar 详情 + 热门短评，按 id 缓存。
+        """Rexxar 详情，按 id 缓存。不含短评 —— 短评是独立一次请求，
+        拆开后详情可以先补齐、短评在预算允许时再补，跨轮续抓。
 
         简介/导演/演员/别名基本不变，评分与名次每轮从榜单取新值，
         所以缓存详情既省请求又不会让评分过期。
@@ -298,20 +326,33 @@ class DoubanClient:
             "rating_count": rating.get("count"),
             "cover_url": detail.get("cover_url") or "",
             "url": detail.get("url") or f"https://movie.douban.com/subject/{subject_id}/",
-            "comments": self._fetch_comments(subject_id, referer) if self.fetch_comments else [],
+            "comments": [],
         }
 
         if self.use_cache:
             self._cache[subject_id] = record
         return record
 
-    def _fetch_comments(self, subject_id: str, referer: str) -> List[Dict]:
+    def needs_comments(self, subject_id: str) -> bool:
+        """已有详情但还没短评 —— 短评阶段的待办判定。"""
+        record = self._cache.get(str(subject_id))
+        return bool(record) and not record.get("comments")
+
+    def fetch_comments(self, subject_id: str) -> List[Dict]:
+        """抓热门短评并写入已缓存的详情记录。详情缺失时不发请求。"""
+        subject_id = str(subject_id)
+        record = self._cache.get(subject_id)
+        if record is None:
+            return []
+
+        referer = f"https://m.douban.com/movie/subject/{subject_id}/"
         params = urllib.parse.urlencode({
             "count": str(COMMENT_COUNT), "order_by": "hot", "start": "0",
         })
         data = self._request(f"{REXXAR_BASE}/{subject_id}/interests?{params}", referer)
         if not isinstance(data, dict):
             return []
+
         comments = []
         for item in data.get("interests") or []:
             text = (item.get("comment") or "").strip()
@@ -323,4 +364,9 @@ class DoubanClient:
                 "comment": text,
                 "time": item.get("create_time") or "",
             })
+        record["comments"] = comments
         return comments
+
+    def cached_subject(self, subject_id: str) -> Optional[Dict]:
+        """只读缓存，不发请求。"""
+        return self._cache.get(str(subject_id))

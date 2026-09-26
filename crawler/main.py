@@ -1,15 +1,20 @@
 """
 RottenDouban 数据获取主入口
 ============================
-以豆瓣 Top250 榜单为驱动：
+以豆瓣 Top250 榜单为驱动，分两轮抓取（配额所迫，见 `_fetch_comments`）：
 
-1. `j/chart/top_list` 取榜单 —— 名次、豆瓣评分、评分人数、subject id
-2. Rexxar `movie/<id>` 取详情 —— 中文简介、导演、演员、原名/别名、制片国家
-3. Rexxar `movie/<id>/interests` 取热门短评
-4. 用详情里的英文名去 RT Algolia 匹配新鲜度与爆米花指数
-5. TMDB（可选，需 TMDB_API_KEY / TMDB_BEARER_TOKEN）补海报与英文简介
+第一轮 —— 榜单与详情
+  1. `j/chart/top_list` 取榜单：名次、豆瓣评分、评分人数、subject id
+  2. Rexxar `movie/<id>` 取详情：中文简介、导演、演员、原名/别名、制片国家
+  3. 用详情里的英文名去 RT Algolia 匹配新鲜度与爆米花指数
+  4. TMDB（可选，需 TMDB_API_KEY / TMDB_BEARER_TOKEN）补海报与英文简介
 
-subject id 直接来自榜单，豆瓣侧不需要任何模糊匹配。
+第二轮 —— 短评
+  5. Rexxar `movie/<id>/interests` 取热门短评，只补"有详情但缺短评"的条目
+
+subject id 直接来自榜单，豆瓣侧不需要任何模糊匹配。豆瓣阶段有共享的时间预算，
+用尽即停，未完成的条目下一轮从缓存续抓；缓存在 finally 里保存，失败也不丢。
+
 模式：`full` 全流程 / `site_only` 仅从 movies.db 重出站点数据。
 """
 import os
@@ -140,37 +145,17 @@ def _hand_english_map():
     return {e["title_cn"]: e["title_en"] for e in DOUBAN_TOP_250}
 
 
-def fetch_from_douban_top250(logger, limit=None):
-    """豆瓣 Top250 榜单驱动的抓取流水线。
+def _fetch_details(client, entries, hand_map, rt_crawler, use_tmdb, logger, hits):
+    """第一轮：详情 + 英文名解析 + RT 匹配 + TMDB 补字段。
 
-    榜单给名次/评分/subject id → Rexxar 详情给简介/导演/演员/英文名 → 用英文名
-    去 RT Algolia 匹配 → TMDB（可选）补海报与英文简介。
-
-    因为 subject id 直接来自榜单，豆瓣侧不再需要任何模糊匹配，
-    "匹配到同名剧集"这一整类 bug 从结构上消失了。
+    详情是短评的前提（fetch_comments 对无缓存记录的条目不发请求），所以这一轮
+    优先吃时间预算 —— 冷启动时预算可能全花在详情上，短评顺延到下一轮。
     """
-    from crawler.douban import DoubanClient, english_title_candidates
-    from crawler.rotten_tomatoes import RottenTomatoesCrawler
-    from crawler.tmdb_api import is_available as tmdb_available, search_and_get_details
-
-    client = DoubanClient()
-    try:
-        entries = client.fetch_top_list(limit=limit or TOP250_SIZE)
-    finally:
-        client.save_cache()
-
-    if not entries:
-        raise CrawlError("豆瓣 Top250 榜单不可用，放弃本轮（线上数据保持不变）")
+    from crawler.douban import english_title_candidates
+    from crawler.tmdb_api import search_and_get_details
 
     total = len(entries)
-    use_tmdb = tmdb_available()
-    rt_crawler = RottenTomatoesCrawler()
-    hand_map = _hand_english_map()
     movies = []
-    hits = {"detail": 0, "rt": 0, "comments": 0}
-
-    logger.info(f"===== 豆瓣 Top{total} 驱动抓取 =====")
-    logger.info(f"数据源: 豆瓣榜单+Rexxar=ON | RT Algolia=ON | TMDB={'ON' if use_tmdb else 'OFF'}")
 
     for i, entry in enumerate(entries):
         subject_id = entry["douban_id"]
@@ -258,7 +243,6 @@ def fetch_from_douban_top250(logger, limit=None):
             if rt_data:
                 if candidate != en_title:
                     logger.info(f"  英文名改用别名: {candidate}")
-                    en_title = candidate
                     movie["title"] = candidate
                 break
 
@@ -296,11 +280,82 @@ def fetch_from_douban_top250(logger, limit=None):
 
         movies.append(movie)
 
-    client.save_cache()
-    rt_crawler.close()
-    logger.info(f"抓取完成: {len(movies)} 部 | 详情 {hits['detail']} | "
-                f"RT {hits['rt']} | 短评 {hits['comments']} | 缓存 {client.cache_size}")
     return movies
+
+
+def _fetch_comments(client, movies, logger, hits):
+    """第二轮：只给"已有详情但缺短评"的条目补短评。
+
+    与详情拆成两轮是配额所迫 —— 豆瓣按 IP 的时间窗配额撑不住一轮跑完
+    250×2 次请求。拆开后详情先落地、短评用剩余预算补，补不完的下一轮
+    从缓存接着补，覆盖率单调递增。
+    """
+    todo = [m for m in movies if client.needs_comments(m["douban_id"])]
+    if not todo:
+        if client.budget_exhausted:
+            logger.info("短评阶段跳过：时间预算已用尽")
+        return
+
+    logger.info(f"===== 短评补抓: 待办 {len(todo)} 部 =====")
+    filled = 0
+    for i, movie in enumerate(todo):
+        if client.budget_exhausted or client.blocked:
+            reason = "时间预算用尽" if client.budget_exhausted else "豆瓣限流"
+            logger.info(f"  短评阶段中止（{reason}）: 已补 {filled}，"
+                        f"剩余 {len(todo) - i} 部留给下一轮")
+            break
+        try:
+            comments = client.fetch_comments(movie["douban_id"])
+        except Exception as e:
+            logger.warning(f"  短评异常 {movie['douban_title']}: {e}")
+            continue
+        if comments:
+            movie["douban_comments"] = json.dumps(comments, ensure_ascii=False)
+            filled += 1
+
+    hits["comments"] += filled
+    logger.info(f"短评补抓完成: {filled}/{len(todo)}")
+
+
+def fetch_from_douban_top250(logger, limit=None):
+    """豆瓣 Top250 榜单驱动的抓取流水线。
+
+    榜单给名次/评分/subject id → Rexxar 详情给简介/导演/演员/英文名 → 用英文名
+    去 RT Algolia 匹配 → TMDB（可选）补海报与英文简介 → 剩余预算补短评。
+
+    因为 subject id 直接来自榜单，豆瓣侧不再需要任何模糊匹配，
+    "匹配到同名剧集"这一整类 bug 从结构上消失了。
+
+    缓存在 finally 里保存：豆瓣阶段被限流、超预算甚至抛异常，已抓到的部分
+    也必须落盘提交，否则下一轮从零开始，覆盖率永远爬不上去。
+    """
+    from crawler.douban import DoubanClient
+    from crawler.rotten_tomatoes import RottenTomatoesCrawler
+    from crawler.tmdb_api import is_available as tmdb_available
+
+    client = DoubanClient()
+    rt_crawler = RottenTomatoesCrawler()
+    hits = {"detail": 0, "rt": 0, "comments": 0}
+    try:
+        entries = client.fetch_top_list(limit=limit or TOP250_SIZE)
+        if not entries:
+            raise CrawlError("豆瓣 Top250 榜单不可用，放弃本轮（线上数据保持不变）")
+
+        use_tmdb = tmdb_available()
+        logger.info(f"===== 豆瓣 Top{len(entries)} 驱动抓取 =====")
+        logger.info(f"数据源: 豆瓣榜单+Rexxar=ON | RT Algolia=ON | TMDB={'ON' if use_tmdb else 'OFF'}")
+        logger.info(f"豆瓣缓存: {client.cache_size} 条 | 时间预算: {client.time_budget:.0f}s")
+
+        movies = _fetch_details(client, entries, _hand_english_map(),
+                                rt_crawler, use_tmdb, logger, hits)
+        _fetch_comments(client, movies, logger, hits)
+
+        logger.info(f"抓取完成: {len(movies)} 部 | 详情 {hits['detail']} | "
+                    f"RT {hits['rt']} | 短评 {hits['comments']} | 缓存 {client.cache_size}")
+        return movies
+    finally:
+        client.save_cache()
+        rt_crawler.close()
 
 
 # ==================== 主流程 ====================

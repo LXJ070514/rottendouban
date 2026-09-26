@@ -21,13 +21,20 @@ concurrency:
   group: rottendouban-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
+env:
+  # 豆瓣阶段（榜单 + 详情 + 短评共用一份）的墙钟上限，秒。用尽即停止发请求，
+  # 未完成的条目下一轮从 douban_cache.json 续抓。这是"整轮必定能在
+  # timeout-minutes 内跑完并提交缓存"的唯一保证 —— 之前没有它，固定节流下
+  # 250×2 次请求叠加配额退避实测烧到 75 分钟被强杀，缓存颗粒无收。
+  DOUBAN_TIME_BUDGET: '1200'
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    # 首轮补齐详情时最慢：250 部 × (详情 + 短评) ≈ 500 次请求，
-    # 按 4s 节流约 33 分钟，加上 RT/TMDB 与配额退避重试，留到 75 分钟。
-    # 详情按 subject id 缓存并回传仓库，后续运行只抓新增条目，通常 10 分钟内结束。
-    timeout-minutes: 75
+    # 豆瓣阶段有 DOUBAN_TIME_BUDGET（默认 1200s）硬上限，两轮（详情 + 短评）
+    # 共用同一份预算，故豆瓣侧墙钟 ≤ 20 分钟；加上榜单、RT/TMDB 与入库约 25 分钟。
+    # 40 分钟留足余量 —— 之前设 75 分钟反而有害：跑不完就被强杀，缓存颗粒无收。
+    timeout-minutes: 40
 
     steps:
       - name: Checkout repository
@@ -55,6 +62,27 @@ jobs:
         # 不再用 `|| true` / continue-on-error：上游抖动时 crawler 会因低于
         # MIN_MOVIES_TO_PUBLISH 而非零退出，此处让它如实失败并保留线上旧数据
 
+      # 缓存必须独立于抓取成败回传：豆瓣按 IP 的时间窗配额撑不住一轮抓满
+      # 250×2 次请求，靠"每轮补一点、下轮从缓存接着补"才能让覆盖率单调递增。
+      # 放在 Verify 之前 + if: always()，抓取失败时缓存照样落地。
+      - name: Commit douban cache
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f crawler/data/douban_cache.json
+          if git diff --cached --quiet; then
+            echo "豆瓣缓存无变化"
+            exit 0
+          fi
+          SIZE=$(python -c "import json;print(len(json.load(open('crawler/data/douban_cache.json'))))")
+          git commit -m "chore(douban): cache $SIZE subjects [skip ci]"
+          # checkout@v4 处于 detached HEAD，git pull --rebase 不可用；
+          # 且并发推送（另一次 run 或人工提交）会让裸 push 非快进失败、整轮成果丢失
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+
       - name: Verify site data
         id: after
         env:
@@ -77,13 +105,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f crawler/data/douban_cache.json site/data/movies.json
+          git add -f site/data/movies.json site/data/movies.csv site/data/stats.json
           if git diff --cached --quiet; then
-            echo "无数据变化"
-          else
-            git commit -m "Refresh data: $NEW_COUNT movies [skip ci]"
-            git push
+            echo "站点数据无变化"
+            exit 0
           fi
+          git commit -m "Refresh data: $NEW_COUNT movies [skip ci]"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
 
       - name: Summary
         run: |
@@ -95,9 +125,11 @@ jobs:
           db = sum(1 for m in movies if (m.get('douban_score') or 0) > 0)
           both = sum(1 for m in movies if (m.get('tomatometer') or -1) >= 0
                      and (m.get('douban_score') or 0) > 0)
+          intro = sum(1 for m in movies if m.get('douban_synopsis'))
+          cast = sum(1 for m in movies if m.get('douban_cast'))
+          comments = sum(1 for m in movies if m.get('douban_comments'))
           poster = sum(1 for m in movies if m.get('poster_url'))
           cache = json.load(open('crawler/data/douban_cache.json', encoding='utf-8'))
-          floor = os.environ.get('MIN_MOVIES_TO_PUBLISH') or 50
           print('## 数据抓取结果\n')
           print('| 指标 | 数量 |')
           print('|---|---|')
@@ -105,14 +137,16 @@ jobs:
           print(f'| 有烂番茄评分 | {rt} |')
           print(f'| 有豆瓣评分 | {db} |')
           print(f'| 双源齐全 | {both} |')
+          print(f'| 有豆瓣简介 | {intro} |')
+          print(f'| 有导演/演员 | {cast} |')
+          print(f'| 有豆瓣短评 | {comments} |')
           print(f'| 有海报 | {poster} |')
           print(f'| 豆瓣缓存条目 | {len(cache)} |')
-          print(f'\n发布下限 {floor} 已通过；抓取失败时不会覆盖线上数据。')
-          if db < total * 0.5:
-              print('\n> ⚠️ 豆瓣覆盖率偏低，通常是其反爬限流所致：返回 HTTP 200，'
-                    '但页面里没有 `window.__DATA__`、或有 `__DATA__` 而 `items` 为空'
-                    '（CI 实测后者是主流形态）。爬虫按空结果比例熔断后回落到缓存，'
-                    '缓存会随每轮运行逐步补齐，烂番茄侧不受影响。')
+          if len(cache) < total:
+              print(f'\n> ℹ️ 豆瓣详情缓存 {len(cache)}/{total}。Rexxar 按 IP 的时间窗配额'
+                    f'（HTTP 400 + `subject_ip_rate_limit`）撑不住一轮抓满 250×2 次请求，'
+                    f'故设 {os.environ.get("DOUBAN_TIME_BUDGET", "1200")}s 时间预算，'
+                    f'超出的条目下一轮从缓存续抓，覆盖率单调递增。')
           PY
 
   deploy:
@@ -124,8 +158,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      # 显式按分支名检出：fetch job 刚推了新提交，而 github.sha 仍是触发时的旧 SHA，
+      # 用默认值会把上一次的 movies.json 部署上去。
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

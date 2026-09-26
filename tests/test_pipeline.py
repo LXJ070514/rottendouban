@@ -86,19 +86,32 @@ RT_TABLE = {
     },
 }
 
+# 短评是独立于详情的第二次请求（配额所迫，见 main._fetch_comments），
+# 所以替身也分开存：详情夹具里的 comments 代表"上一轮已补过"的状态。
+COMMENTS = {
+    "1291546": [{"user": "阿德", "rating": 5, "comment": "不疯魔不成活。", "time": ""}],
+}
+
 
 class FakeClient:
-    """替身豆瓣客户端。构造参数与真实 DoubanClient 对齐。"""
+    """替身豆瓣客户端。接口与真实 DoubanClient 对齐（含时间预算与短评两轮）。"""
 
     chart = CHART
     details = DETAILS
+    comments = COMMENTS
     blocked = False
+    exhaust_budget = False
     saved = 0
+    last_client = None
 
-    def __init__(self, cache_path=None, use_cache=True, fetch_comments=True):
+    def __init__(self, cache_path=None, use_cache=True, time_budget=None):
         self._cache = {}
         self.live_lookups = 0
         self.empty_lookups = 0
+        self.time_budget = 1200.0 if time_budget is None else time_budget
+        self.budget_exhausted = type(self).exhaust_budget
+        self.comment_calls = []
+        type(self).last_client = self
 
     @property
     def cache_size(self):
@@ -112,8 +125,26 @@ class FakeClient:
             return None
         detail = self.details.get(str(subject_id))
         if detail:
-            self._cache[str(subject_id)] = detail
-        return detail
+            # 深拷贝：真实客户端每次构造新 dict，替身若共享夹具会跨测试污染
+            self._cache[str(subject_id)] = json.loads(json.dumps(detail))
+            return self._cache[str(subject_id)]
+        return None
+
+    def needs_comments(self, subject_id):
+        record = self._cache.get(str(subject_id))
+        return bool(record) and not record.get("comments")
+
+    def fetch_comments(self, subject_id):
+        self.comment_calls.append(str(subject_id))
+        record = self._cache.get(str(subject_id))
+        if record is None:
+            return []
+        got = [dict(c) for c in self.comments.get(str(subject_id), [])]
+        record["comments"] = got
+        return got
+
+    def cached_subject(self, subject_id):
+        return self._cache.get(str(subject_id))
 
     def save_cache(self):
         type(self).saved += 1
@@ -136,6 +167,8 @@ def stub_sources(monkeypatch):
 
     FakeClient.saved = 0
     FakeClient.blocked = False
+    FakeClient.exhaust_budget = False
+    FakeClient.last_client = None
     monkeypatch.setattr(douban_mod, "DoubanClient", FakeClient)
     monkeypatch.setattr(rt_mod, "RottenTomatoesCrawler", FakeRT)
     monkeypatch.setattr(tmdb_mod, "is_available", lambda: False)
@@ -185,10 +218,55 @@ def test_comments_are_exported_as_array_not_json_text(sandbox, stub_sources):
     """库里存 JSON 文本，导出必须还原成数组，前端才不必自己 parse。"""
     main_mod.main()
     by_id = {m["douban_id"]: m for m in read_movies(sandbox)}
-    comments = by_id["1292052"]["douban_comments"]
-    assert isinstance(comments, list) and len(comments) == 1
-    assert comments[0]["user"] == "文泽尔"
-    assert by_id["1291546"]["douban_comments"] == []
+    # 1292052 的短评来自详情缓存（上一轮已补），1291546 的来自本轮短评阶段
+    shawshank = by_id["1292052"]["douban_comments"]
+    assert isinstance(shawshank, list) and len(shawshank) == 1
+    assert shawshank[0]["user"] == "文泽尔"
+    concubine = by_id["1291546"]["douban_comments"]
+    assert isinstance(concubine, list) and len(concubine) == 1
+    assert concubine[0]["comment"] == "不疯魔不成活。"
+
+
+def test_comment_pass_only_touches_details_missing_comments(sandbox, stub_sources):
+    """短评阶段是增量的：已有短评的条目不该再发请求，配额要留给缺的。"""
+    main_mod.main()
+    assert stub_sources.last_client.comment_calls == ["1291546"]
+
+
+def test_comment_pass_is_skipped_when_budget_exhausted(sandbox, stub_sources, monkeypatch):
+    """预算在详情阶段就用尽时，短评顺延到下一轮 —— 冷启动正是这种形态。"""
+    monkeypatch.setattr(stub_sources, "exhaust_budget", True)
+    assert main_mod.main() == 0
+
+    by_id = {m["douban_id"]: m for m in read_movies(sandbox)}
+    assert stub_sources.last_client.comment_calls == []
+    assert by_id["1291546"]["douban_comments"] == [], "短评留空，等下一轮补"
+    assert by_id["1292052"]["douban_comments"], "详情缓存里已有的短评不受影响"
+    assert by_id["1291546"]["douban_synopsis"], "详情字段照常发布"
+
+
+def test_comment_pass_stops_midway_when_blocked(sandbox, stub_sources, monkeypatch):
+    """短评阶段中途被限流时停下，已补的照常发布，未补的留给下一轮。"""
+    monkeypatch.setattr(stub_sources, "details", {
+        "1292052": dict(DETAILS["1292052"], comments=[]),
+        "1291546": DETAILS["1291546"],
+    })
+    monkeypatch.setattr(stub_sources, "comments", {
+        "1292052": [{"user": "文泽尔", "rating": 4, "comment": "希望是好东西。", "time": ""}],
+    })
+    original = FakeClient.fetch_comments
+
+    def trips_after_first(self, subject_id):
+        got = original(self, subject_id)
+        self.blocked = True          # 实例属性遮蔽类属性，模拟抓取途中被限流
+        return got
+
+    monkeypatch.setattr(stub_sources, "fetch_comments", trips_after_first)
+    assert main_mod.main() == 0
+
+    by_id = {m["douban_id"]: m for m in read_movies(sandbox)}
+    assert by_id["1292052"]["douban_comments"], "限流前抓到的短评要留住"
+    assert stub_sources.last_client.comment_calls == ["1292052"], "限流后不该继续发请求"
 
 
 def test_english_name_resolved_from_aka_for_chinese_films(sandbox, stub_sources):

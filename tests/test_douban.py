@@ -193,30 +193,117 @@ def test_cache_roundtrip_and_old_format_rejected(tmp_path, monkeypatch):
 
 # ==================== 短评 ====================
 
-def test_comments_are_normalized(client, monkeypatch):
+_INTERESTS = {"total": 666846, "interests": [
+    {"user": {"name": "文泽尔"}, "rating": {"value": 4},
+     "comment": "人的生命不过是从一个洞穴通往另一个世界", "create_time": "2020-01-01"},
+    {"user": {"name": "某人"}, "rating": None, "comment": "   ", "create_time": ""},
+]}
+
+
+def _stub_detail_then_interests(client, monkeypatch):
     def fake_request(url, referer):
-        if "interests" in url:
-            return {"total": 666846, "interests": [
-                {"user": {"name": "文泽尔"}, "rating": {"value": 4},
-                 "comment": "人的生命不过是从一个洞穴通往另一个世界", "create_time": "2020-01-01"},
-                {"user": {"name": "某人"}, "rating": None, "comment": "   ", "create_time": ""},
-            ]}
-        return detail()
+        return _INTERESTS if "interests" in url else detail()
 
     monkeypatch.setattr(client, "_request", fake_request)
-    got = client.fetch_subject("1292052")
-    assert len(got["comments"]) == 1, "空正文的短评应被丢弃"
-    assert got["comments"][0]["user"] == "文泽尔"
-    assert got["comments"][0]["rating"] == 4
 
 
-def test_comments_can_be_disabled(client, monkeypatch):
-    client.fetch_comments = False
+def test_comments_are_normalized(client, monkeypatch):
+    _stub_detail_then_interests(client, monkeypatch)
+    client.fetch_subject("1292052")
+    got = client.fetch_comments("1292052")
+    assert len(got) == 1, "空正文的短评应被丢弃"
+    assert got[0]["user"] == "文泽尔"
+    assert got[0]["rating"] == 4
+
+
+def test_fetch_comments_writes_into_cached_detail(client, monkeypatch):
+    """短评落进缓存记录，才能随 douban_cache.json 跨轮留存。"""
+    _stub_detail_then_interests(client, monkeypatch)
+    client.fetch_subject("1292052")
+    assert client.cached_subject("1292052")["comments"] == []
+    client.fetch_comments("1292052")
+    assert len(client.cached_subject("1292052")["comments"]) == 1
+
+
+def test_fetch_subject_does_not_request_interests(client, monkeypatch):
+    """详情与短评是两次独立请求，拆开才能各自按预算跨轮续抓。"""
     urls = []
-    monkeypatch.setattr(client, "_request",
-                        lambda url, referer: urls.append(url) or detail())
+
+    def fake_request(url, referer):
+        urls.append(url)
+        return _INTERESTS if "interests" in url else detail()
+
+    monkeypatch.setattr(client, "_request", fake_request)
     client.fetch_subject("1292052")
     assert not any("interests" in u for u in urls)
+
+
+def test_needs_comments_only_for_details_without_them(client, monkeypatch):
+    _stub_detail_then_interests(client, monkeypatch)
+    assert client.needs_comments("1292052") is False, "无详情时不该发请求"
+    client.fetch_subject("1292052")
+    assert client.needs_comments("1292052") is True
+    client.fetch_comments("1292052")
+    assert client.needs_comments("1292052") is False
+
+
+def test_fetch_comments_skips_subject_without_detail(client, monkeypatch):
+    """详情缺失时短路：短评写不进任何记录，白发一次请求只会更快耗尽配额。"""
+    urls = []
+    monkeypatch.setattr(client, "_request", lambda url, referer: urls.append(url) or _INTERESTS)
+    assert client.fetch_comments("1292052") == []
+    assert urls == []
+
+
+def test_comments_survive_a_cache_roundtrip(tmp_path, monkeypatch):
+    """跨轮续抓的根基：短评必须能存进 JSON 再读回来。"""
+    monkeypatch.setattr(douban_mod, "REQUEST_DELAY", 0.0)
+    path = tmp_path / "cache.json"
+    first = DoubanClient(cache_path=str(path), use_cache=True)
+    _stub_detail_then_interests(first, monkeypatch)
+    first.fetch_subject("1292052")
+    first.fetch_comments("1292052")
+    first.save_cache()
+
+    second = DoubanClient(cache_path=str(path), use_cache=True)
+    assert second.needs_comments("1292052") is False, "上一轮已补过的短评不该重抓"
+    assert second.cached_subject("1292052")["comments"][0]["user"] == "文泽尔"
+
+
+# ==================== 时间预算 ====================
+
+def test_budget_exhaustion_stops_requests(client, monkeypatch):
+    """预算用尽后不再发请求 —— 这是"整轮必定能在 CI 超时内跑完"的保证。
+
+    没有它，固定节流下 250×2 次请求叠加配额退避实测烧到 75 分钟被强杀，
+    缓存一条都没提交上去。
+    """
+    monkeypatch.setattr(client, "time_budget", 0)
+    urls = []
+    real_get = douban_mod._get
+    monkeypatch.setattr(douban_mod, "_get",
+                        lambda *a, **k: urls.append(a[0]) or real_get(*a, **k))
+    assert client._request("https://x", "https://r") is None
+    assert urls == []
+    assert client.budget_exhausted is True
+
+
+def test_budget_reserves_room_for_one_backoff(client, monkeypatch):
+    """预留一次退避的余量：否则刚判定"还够"就撞限流等待，反而超预算。"""
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 30)
+    monkeypatch.setattr(client, "time_budget", 40)
+    monkeypatch.setattr(client, "_started", douban_mod.time.time() - 20)
+    assert client._check_budget() is False, "剩 20s 不够 30s 退避，应提前收手"
+
+
+def test_budget_is_shared_across_both_passes(client, monkeypatch):
+    """详情与短评共用一份预算：冷启动时详情优先，短评顺延到下一轮。"""
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 0)
+    monkeypatch.setattr(client, "time_budget", 100)
+    client._started = douban_mod.time.time() - 95
+    assert client._check_budget() is True
+    client._started = douban_mod.time.time() - 100
+    assert client._check_budget() is False
 
 
 # ==================== 限流熔断 ====================
