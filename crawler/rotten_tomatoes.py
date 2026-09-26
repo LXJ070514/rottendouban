@@ -176,7 +176,6 @@ def _algolia_to_movie_data(hit):
         "poster_url": hit.get('posterImageUrl', ''),
         "runtime": f"{hit.get('runTime', '')} minutes" if hit.get('runTime') else '',
         "release_date": '',
-        "critics_consensus": '',
     }
 
 

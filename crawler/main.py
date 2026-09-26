@@ -157,7 +157,7 @@ def fetch_from_movie_list(logger, limit=None):
                                 f"poster={'✓' if tmdb_data.get('poster_url') else '✗'} | "
                                 f"synopsis={'✓' if tmdb_data.get('synopsis') else '✗'}")
                 else:
-                    logger.info(f"  TMDB: ✗ 未找到")
+                    logger.info("  TMDB: ✗ 未找到")
             except Exception as e:
                 logger.warning(f"  TMDB 异常: {e}")
 
@@ -171,7 +171,7 @@ def fetch_from_movie_list(logger, limit=None):
                             f"🍿{rt_data.get('audience_score') or '-'} "
                             f"| {rt_data.get('rt_url', '')}")
             else:
-                logger.info(f"  RT: ✗ 索引内无本片，放弃番茄分")
+                logger.info("  RT: ✗ 索引内无本片，放弃番茄分")
         except Exception as e:
             logger.warning(f"  RT 异常: {e}")
 
@@ -186,13 +186,14 @@ def fetch_from_movie_list(logger, limit=None):
 def match_douban(movies_list, logger):
     """豆瓣匹配 — 缓存优先，中文片名 + 年份共同裁决
 
-    豆瓣对数据中心 IP 会软封（200 + 空壳页）。检测到后停止继续敲接口，
-    剩余影片只走缓存，避免 100+ 次无意义请求把每次运行都拖成假"查无此片"。
+    豆瓣会限流数据中心 IP（返回 200 但无结果，两种形态见 douban.blocked）。
+    判定后停止继续敲接口，剩余影片只走缓存，避免 100+ 次无意义请求
+    把每次运行都拖成一片假"查无此片"。
     """
     from crawler.douban import DoubanMatcher
 
     matcher = DoubanMatcher(use_cache=True)
-    logger.info(f"===== 豆瓣匹配 (缓存 {len(matcher._cache)} 条) =====")
+    logger.info(f"===== 豆瓣匹配 (缓存 {matcher.cache_size} 条) =====")
 
     matched = 0
     cache_only = False
@@ -225,7 +226,7 @@ def match_douban(movies_list, logger):
         else:
             logger.warning(f"  [{i+1}/{len(movies_list)}] {title_cn} → 豆瓣未匹配")
 
-    matcher._save_cache()
+    matcher.save_cache()
     logger.info(f"豆瓣匹配完成: {matched}/{len(movies_list)}"
                 + ("（受限流影响，未全量检索）" if cache_only else ""))
     return movies_list

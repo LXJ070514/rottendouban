@@ -86,15 +86,10 @@
     function searchMovies(query) {
         if (!query) return movies;
         const q = query.toLowerCase().trim();
-        return movies.filter(m =>
-            (m.title || '').toLowerCase().includes(q) ||
-            (m.original_title || '').toLowerCase().includes(q) ||
-            (m.douban_title || '').toLowerCase().includes(q) ||
-            (m.douban_genre || '').toLowerCase().includes(q) ||
-            (m.genre || '').toLowerCase().includes(q) ||
-            (m.director || '').toLowerCase().includes(q) ||
-            (m.douban_director || '').toLowerCase().includes(q)
-        );
+        const fields = ['title', 'original_title', 'douban_title',
+                        'douban_genre', 'genre', 'director', 'cast'];
+        return movies.filter(m => fields.some(f =>
+            (m[f] || '').toLowerCase().includes(q)));
     }
 
     // ===== Filter & Sort =====
@@ -234,12 +229,6 @@
             `<div class="meta-row"><span class="meta-label">${l}</span><span class="meta-value">${esc(v)}</span></div>`
         ).join('');
 
-        // Critics Consensus
-        let consensusHtml = '';
-        if (m.critics_consensus) {
-            consensusHtml = `<div class="detail-synopsis rt-synopsis"><div class="detail-synopsis-label">🍅 影评人共识</div>${esc(m.critics_consensus)}</div>`;
-        }
-
         // RT Synopsis (英文)
         let rtSynopsisHtml = '';
         if (m.synopsis) {
@@ -247,12 +236,10 @@
         }
 
         // ====== 豆瓣信息区 ======
+        // 豆瓣只用搜索接口，拿不到导演/编剧/演员/简介/短评，这里只渲染确实存在的字段
         const dbMeta = [];
         if (m.douban_title) dbMeta.push(['中文名', m.douban_title]);
         if (m.douban_genre) dbMeta.push(['豆瓣类型', m.douban_genre]);
-        if (m.douban_director) dbMeta.push(['豆瓣导演', m.douban_director]);
-        if (m.douban_writers) dbMeta.push(['豆瓣编剧', m.douban_writers]);
-        if (m.douban_cast) dbMeta.push(['豆瓣演员', m.douban_cast]);
         if (m.douban_score > 0) dbMeta.push(['豆瓣评分', `${m.douban_score} / 10`]);
         if (m.douban_vote_count > 0) dbMeta.push(['评分人数', `${Number(m.douban_vote_count).toLocaleString()} 人`]);
 
@@ -260,55 +247,26 @@
             `<div class="meta-row"><span class="meta-label">${l}</span><span class="meta-value">${esc(v)}</span></div>`
         ).join('');
 
-        // Douban Synopsis (中文)
-        let dbSynopsisHtml = '';
-        if (m.douban_synopsis) {
-            dbSynopsisHtml = `<div class="detail-synopsis db-synopsis"><div class="detail-synopsis-label">⭐ 豆瓣简介</div>${esc(m.douban_synopsis)}</div>`;
-        }
-
         // Links
         const links = [];
         if (m.rt_url) links.push(`<a class="detail-link rt-link" href="${sanitizeUrl(m.rt_url)}" target="_blank" rel="noopener noreferrer">🍅 烂番茄</a>`);
         if (m.douban_url) links.push(`<a class="detail-link db-link" href="${sanitizeUrl(m.douban_url)}" target="_blank" rel="noopener noreferrer">⭐ 豆瓣</a>`);
 
-        // Douban Reviews
-        let reviewsHtml = '';
-        if (m.douban_short_reviews && m.douban_short_reviews.length) {
-            const reviews = m.douban_short_reviews.map(r => {
-                const stars = Array.from({length: 5}, (_, i) =>
-                    `<span class="review-star${i < Math.round(r.rating / 2) ? '' : ' empty'}">★</span>`
-                ).join('');
-                return `<div class="review-card">
-                    <div class="review-top">
-                        <span class="review-user">${esc(r.user)}</span>
-                        <div class="review-rating">${stars}</div>
-                    </div>
-                    <div class="review-text">${esc(r.content)}</div>
-                </div>`;
-            }).join('');
-            reviewsHtml = `<div class="douban-reviews">
-                <div class="reviews-header"><h3>⭐ 豆瓣热评</h3><span class="reviews-count">${m.douban_short_reviews.length}条</span></div>
-                ${reviews}
-            </div>`;
-        }
-
         // Assemble - separate RT and Douban sections clearly
         let rtSection = '';
-        if (rtMetaHtml || rtSynopsisHtml || consensusHtml) {
+        if (rtMetaHtml || rtSynopsisHtml) {
             rtSection = `<div class="detail-section rt-section">
                 <div class="section-header"><h3>🍅 Rotten Tomatoes</h3></div>
                 ${rtMetaHtml ? `<div class="detail-meta">${rtMetaHtml}</div>` : ''}
-                ${consensusHtml}
                 ${rtSynopsisHtml}
             </div>`;
         }
 
         let dbSection = '';
-        if (dbMetaHtml || dbSynopsisHtml) {
+        if (dbMetaHtml) {
             dbSection = `<div class="detail-section db-section">
                 <div class="section-header"><h3>⭐ 豆瓣</h3></div>
-                ${dbMetaHtml ? `<div class="detail-meta">${dbMetaHtml}</div>` : ''}
-                ${dbSynopsisHtml}
+                <div class="detail-meta">${dbMetaHtml}</div>
             </div>`;
         }
 
@@ -324,7 +282,6 @@
             </div>
             ${rtSection}
             ${dbSection}
-            ${reviewsHtml}
         `;
 
         overlay.style.display = 'block';

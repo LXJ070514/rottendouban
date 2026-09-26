@@ -84,3 +84,17 @@ def test_export_json_roundtrips(db):
     data = json.loads(db.export_json())
     assert data[0]["title"] == "Titanic"
     assert data[0]["douban_score"] == pytest.approx(9.5)
+
+
+def test_export_json_excludes_score_history(db):
+    """历史每次运行都追加一行，嵌进部署产物会让 JSON 无上限膨胀（实测已占 9.1%），
+    而前端从不渲染它。历史仍应留在 DB 与 CSV 里。"""
+    import json
+    db.insert_movie(movie())
+    row = db.get_movie_by_slug(db.make_slug("Titanic", 1997))
+    db.record_score_history(row["id"], row)
+    db.conn.commit()
+
+    assert "score_history" not in json.loads(db.export_json())[0]
+    assert len(db.get_score_history(row["id"])) == 1
+    assert "weighted_score" in db.export_csv().splitlines()[0]

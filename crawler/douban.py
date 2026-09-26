@@ -8,7 +8,6 @@
 import os
 import re
 import json
-import time
 import logging
 import urllib.parse
 import urllib.request
@@ -28,14 +27,6 @@ DOUBAN_CACHE_PATH = os.path.join(DATA_DIR, "douban_cache.json")
 BLOCK_MIN_SAMPLES = int(os.environ.get("DOUBAN_BLOCK_MIN_SAMPLES", 12))
 BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
 
-
-def _as_int(value, default=0):
-    try:
-        return int(str(value).replace(",", "").strip() or default)
-    except (ValueError, TypeError):
-        return default
-
-# 请求头
 _SEARCH_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                   "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -43,6 +34,20 @@ _SEARCH_HEADERS = {
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
     "Referer": "https://www.douban.com/",
 }
+
+# 未匹配到豆瓣时返回的空字段集
+EMPTY_FIELDS = {
+    "douban_id": "", "douban_url": "", "douban_score": "",
+    "douban_vote_count": "", "douban_title": "", "douban_genre": "",
+    "douban_poster": "",
+}
+
+
+def _as_int(value, default=0):
+    try:
+        return int(str(value).replace(",", "").strip() or default)
+    except (ValueError, TypeError):
+        return default
 
 
 class DoubanMatcher:
@@ -98,8 +103,8 @@ class DoubanMatcher:
         """先查带年份的新键，再回退到历史的裸片名键。
 
         缓存键在 6.1 从 title 改成 title|year，直接把仓库里已有的条目全作废了，
-        逼着每次运行都去敲豆瓣接口 —— 而豆瓣对数据中心 IP 会软封（返回 200 但页面里
-        没有 window.__DATA__）。回退时仍用条目自身标题里的年份做校验，不放严格性。
+        逼着每次运行都去敲豆瓣接口 —— 而豆瓣会限流数据中心 IP（判定逻辑见 blocked）。
+        回退时仍用条目自身标题里的年份做校验，不放松严格性。
         """
         if not self._use_cache:
             return None
@@ -238,24 +243,27 @@ class DoubanMatcher:
             item for item in results
             if needle and needle in (item.get("title") or "").strip().lower()
         ]
-        if not candidates:
-            return {}
-
         if year:
-            same_year = [
+            # 年份缺失的条目（少数）一并放过，否则会被误判为查无此片
+            candidates = [
                 item for item in candidates
                 if (got := self._parse_year(item.get("title"))) is None
                 or abs(got - year) <= 1
             ]
-            candidates = same_year or [
-                item for item in candidates if self._parse_year(item.get("title")) is None
-            ]
-            if not candidates:
-                return {}
+        if not candidates:
+            return {}
 
         return max(candidates, key=lambda item: _as_int(item.get("vote_count")))
 
     # ==================== 对外接口 ====================
+
+    @property
+    def cache_size(self) -> int:
+        return len(self._cache)
+
+    def save_cache(self):
+        """回写缓存文件；CI 会把它提交回仓库以摊薄后续抓取。"""
+        self._save_cache()
 
     def find_movie(self, title: str, year: Optional[int] = None) -> Dict:
         """匹配豆瓣电影 — 缓存优先，搜索 API 次之"""
@@ -269,26 +277,21 @@ class DoubanMatcher:
             if api_results:
                 result = self._best_match(api_results, title, year)
         except Exception as e:
-            logger.debug(f"匹配异常 [{title[:30]}]: {e}")
+            # 不能留在 debug：本次事故的根因就是失败被压到 INFO 以下，CI 全绿而数据全空
+            logger.warning(f"匹配异常 [{title[:30]}]: {e}")
 
         self._update_cache(title, result, year)
         return result
 
-    EMPTY = {
-        "douban_id": "", "douban_url": "", "douban_score": "",
-        "douban_vote_count": "", "douban_title": "", "douban_genre": "",
-        "douban_poster": "",
-    }
-
     def cached_only(self, title: str, year: Optional[int] = None) -> Dict:
         """只读缓存、不敲接口 —— 判定被限流后仍要把已有数据用上。"""
         info = self._check_cache(title, year)
-        return self._to_fields(info) if info else dict(self.EMPTY)
+        return self._to_fields(info) if info else dict(EMPTY_FIELDS)
 
     def match_and_fetch(self, title: str, year: Optional[int] = None) -> Dict:
         """匹配豆瓣并返回标准化的 douban_* 字段；未匹配到时返回空字段"""
         info = self.find_movie(title, year)
-        return self._to_fields(info) if info else dict(self.EMPTY)
+        return self._to_fields(info) if info else dict(EMPTY_FIELDS)
 
     @staticmethod
     def _to_fields(info: Dict) -> Dict:

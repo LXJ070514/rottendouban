@@ -74,7 +74,12 @@ def stub_sources(monkeypatch):
     class FakeMatcher:
         def __init__(self, use_cache=True):
             self._cache = {}
-            self.empty_page_streak = 0
+            self.live_lookups = 0
+            self.empty_lookups = 0
+
+        @property
+        def cache_size(self):
+            return len(self._cache)
 
         @property
         def blocked(self):
@@ -86,7 +91,7 @@ def stub_sources(monkeypatch):
         def cached_only(self, title, year=None):
             return douban_table.get(title, {})
 
-        def _save_cache(self):
+        def save_cache(self):
             pass
 
     monkeypatch.setattr(douban_mod, "DoubanMatcher", FakeMatcher)
@@ -146,10 +151,18 @@ def test_unexpected_upstream_error_exits_nonzero(sandbox, stub_sources, monkeypa
         def __init__(self, use_cache=True):
             self._cache = {}
 
+        @property
+        def cache_size(self):
+            return 0
+
+        @property
+        def blocked(self):
+            return False
+
         def match_and_fetch(self, title, year=None):
             raise OSError("douban unreachable")
 
-        def _save_cache(self):
+        def save_cache(self):
             pass
 
     monkeypatch.setattr(douban_mod, "DoubanMatcher", ExplodingMatcher)

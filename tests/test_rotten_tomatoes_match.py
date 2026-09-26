@@ -3,8 +3,6 @@
 这些用例来自 2026-09-26 的实测事故——旧实现无脑取 hits[0]，
 把《泰坦尼克号》匹配到 2018 年同名片、《霸王别姬》匹配到 2014 年纪录片。
 """
-import pytest
-
 from crawler.rotten_tomatoes import _algolia_best_match, _query_variants
 
 

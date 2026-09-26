@@ -1,9 +1,8 @@
-"""数据库管理模块 — SQLite 操作、自动迁移、批量提交"""
+"""数据库管理模块 — SQLite 操作、schema 自愈、批量提交"""
 import sqlite3
 import logging
 import os
 from datetime import datetime
-from typing import Optional, List, Dict, Any
 
 from crawler.config import (
     DB_PATH, MAX_DIRECTOR_LENGTH, MAX_CAST_LENGTH, MAX_SYNOPSIS_LENGTH,
@@ -256,25 +255,16 @@ class Database:
     def get_score_history(self, movie_id):
         return self.conn.execute("SELECT * FROM score_history WHERE movie_id=? ORDER BY recorded_at ASC", (movie_id,)).fetchall()
 
-    def _get_all_score_histories(self) -> Dict[int, List[Dict[str, Any]]]:
-        history_map = {}
-        for row in self.conn.execute("SELECT * FROM score_history ORDER BY movie_id, recorded_at ASC"):
-            movie_id = row['movie_id']
-            if movie_id not in history_map:
-                history_map[movie_id] = []
-            history_map[movie_id].append(dict(row))
-        return history_map
-
     def export_json(self):
+        """导出站点数据。
+
+        不含 score_history：每跑一次就给每部片追加一行，嵌进 JSON 会让部署产物无上限
+        膨胀（实测已占 9.1%，按每周两次一年约 1.8 MB），而前端从不渲染它。
+        历史仍完整保存在 movies.db 与 movies.csv 里。
+        """
         import json
-        movies = self.get_all_movies()
-        history_map = self._get_all_score_histories()
-        result = []
-        for m in movies:
-            movie_dict = dict(m)
-            movie_dict["score_history"] = history_map.get(m["id"], [])
-            result.append(movie_dict)
-        return json.dumps(result, ensure_ascii=False, indent=2)
+        return json.dumps([dict(m) for m in self.get_all_movies()],
+                          ensure_ascii=False, indent=2)
 
     def export_csv(self):
         import csv
