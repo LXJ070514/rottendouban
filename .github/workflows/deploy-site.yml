@@ -9,7 +9,8 @@ on:
       - 'site/data/**'      # 爬虫自己提交的数据刷新
       - 'crawler/data/**'   # douban_cache.json 回传
       - 'README.md'
-      - '说明.txt'
+      - 'LICENSE'
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
