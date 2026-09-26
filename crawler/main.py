@@ -184,18 +184,31 @@ def fetch_from_movie_list(logger, limit=None):
 
 # ==================== 豆瓣匹配 ====================
 def match_douban(movies_list, logger):
-    """豆瓣匹配 — 缓存优先，中文片名 + 年份共同裁决"""
+    """豆瓣匹配 — 缓存优先，中文片名 + 年份共同裁决
+
+    豆瓣对数据中心 IP 会软封（200 + 空壳页）。检测到后停止继续敲接口，
+    剩余影片只走缓存，避免 100+ 次无意义请求把每次运行都拖成假"查无此片"。
+    """
     from crawler.douban import DoubanMatcher
 
     matcher = DoubanMatcher(use_cache=True)
     logger.info(f"===== 豆瓣匹配 (缓存 {len(matcher._cache)} 条) =====")
 
     matched = 0
+    cache_only = False
     for i, movie in enumerate(movies_list):
         title_cn = movie.get("douban_title") or movie.get("title", "")
         year = movie.get("year")
         try:
-            douban_data = matcher.match_and_fetch(title_cn, year)
+            if cache_only:
+                douban_data = matcher.cached_only(title_cn, year)
+            else:
+                douban_data = matcher.match_and_fetch(title_cn, year)
+                if matcher.blocked:
+                    cache_only = True
+                    logger.warning(
+                        f"  连续 {matcher.empty_page_streak} 次拿到空壳页面，"
+                        f"判定豆瓣已限流；剩余 {len(movies_list) - i - 1} 部只读缓存")
         except Exception as e:
             logger.error(f"豆瓣匹配失败: {movie.get('title')} - {e}")
             continue
@@ -213,7 +226,8 @@ def match_douban(movies_list, logger):
             logger.warning(f"  [{i+1}/{len(movies_list)}] {title_cn} → 豆瓣未匹配")
 
     matcher._save_cache()
-    logger.info(f"豆瓣匹配完成: {matched}/{len(movies_list)}")
+    logger.info(f"豆瓣匹配完成: {matched}/{len(movies_list)}"
+                + ("（受限流影响，未全量检索）" if cache_only else ""))
     return movies_list
 
 

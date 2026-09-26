@@ -47,9 +47,15 @@ class DoubanMatcher:
     def __init__(self, use_cache=True):
         self._use_cache = use_cache
         self._cache = {}
-        self._search_delay = (0.3, 0.6)
+        # 连续拿到"无 window.__DATA__ 页面"的次数，用于识别软封后提前收手
+        self.empty_page_streak = 0
         if self._use_cache:
             self._load_cache()
+
+    @property
+    def blocked(self) -> bool:
+        """连续多次拿到无数据页面 —— 判定为被限流，上层应停止实时检索。"""
+        return self.empty_page_streak >= int(os.environ.get("DOUBAN_BLOCK_THRESHOLD", 8))
 
     # ==================== 缓存 ====================
 
@@ -76,9 +82,27 @@ class DoubanMatcher:
         return f"{title.strip().lower()}|{year or ''}"
 
     def _check_cache(self, title, year=None):
+        """先查带年份的新键，再回退到历史的裸片名键。
+
+        缓存键在 6.1 从 title 改成 title|year，直接把仓库里已有的条目全作废了，
+        逼着每次运行都去敲豆瓣接口 —— 而豆瓣对数据中心 IP 会软封（返回 200 但页面里
+        没有 window.__DATA__）。回退时仍用条目自身标题里的年份做校验，不放严格性。
+        """
         if not self._use_cache:
             return None
-        return self._cache.get(self._cache_key(title, year))
+
+        hit = self._cache.get(self._cache_key(title, year))
+        if hit is not None:
+            return hit
+
+        legacy = self._cache.get(title.strip().lower())
+        if not legacy:
+            return None
+        if year:
+            cached_year = self._parse_year(legacy.get("title", ""))
+            if cached_year and abs(cached_year - year) > 1:
+                return None
+        return legacy
 
     def _update_cache(self, title, data, year=None):
         if not self._use_cache or not data:
@@ -127,20 +151,30 @@ class DoubanMatcher:
         return None
 
     def _api_search(self, title: str) -> List[Dict]:
-        """使用豆瓣搜索 API"""
+        """使用豆瓣搜索 API
+
+        区分两种"没结果"：页面里根本没有 window.__DATA__ 是软封信号（豆瓣对数据中心
+        IP 会返回 200 + 登录/验证页），累加 streak 供上层熔断；页面正常但无命中条目
+        是真的查无此片，属正常结果。
+        """
         url = f'{DOUBAN_SEARCH_URL}?search_text={urllib.parse.quote(title.strip())}'
         try:
             req = urllib.request.Request(url, headers=_SEARCH_HEADERS)
             with urllib.request.urlopen(req, timeout=10, context=_SSL_CTX) as resp:
                 content = resp.read().decode('utf-8', errors='replace')
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError) as e:
-            logger.debug(f"搜索API失败 [{title[:30]}]: {e}")
+            logger.warning(f"搜索API失败 [{title[:30]}]: {e}")
             return []
 
         data = self._extract_json_from_html(content)
         if data is None:
+            self.empty_page_streak += 1
+            logger.warning(
+                f"页面无 window.__DATA__ [{title[:30]}]，"
+                f"连续 {self.empty_page_streak} 次（疑似被限流）")
             return []
 
+        self.empty_page_streak = 0
         results = []
         for item in data.get('items', []):
             rating = item.get('rating', {})
@@ -231,12 +265,18 @@ class DoubanMatcher:
         "douban_poster": "",
     }
 
+    def cached_only(self, title: str, year: Optional[int] = None) -> Dict:
+        """只读缓存、不敲接口 —— 判定被限流后仍要把已有数据用上。"""
+        info = self._check_cache(title, year)
+        return self._to_fields(info) if info else dict(self.EMPTY)
+
     def match_and_fetch(self, title: str, year: Optional[int] = None) -> Dict:
         """匹配豆瓣并返回标准化的 douban_* 字段；未匹配到时返回空字段"""
         info = self.find_movie(title, year)
-        if not info:
-            return dict(self.EMPTY)
+        return self._to_fields(info) if info else dict(self.EMPTY)
 
+    @staticmethod
+    def _to_fields(info: Dict) -> Dict:
         douban_id = info.get("id", "")
         if not douban_id:
             match = re.search(r"/subject/(\d+)/", info.get("url", ""))

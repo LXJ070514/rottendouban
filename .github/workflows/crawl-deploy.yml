@@ -75,12 +75,32 @@ jobs:
 
       - name: Summary
         run: |
-          {
-            echo "## 数据抓取结果"
-            echo ""
-            echo "- 电影数：${{ steps.after.outputs.count }}"
-            echo "- 抓取前：${{ steps.before.outputs.count }}"
-          } >> "$GITHUB_STEP_SUMMARY"
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          movies = json.load(open('site/data/movies.json', encoding='utf-8'))
+          total = len(movies)
+          rt = sum(1 for m in movies if (m.get('tomatometer') or -1) >= 0)
+          db = sum(1 for m in movies if (m.get('douban_score') or 0) > 0)
+          both = sum(1 for m in movies if (m.get('tomatometer') or -1) >= 0
+                     and (m.get('douban_score') or 0) > 0)
+          poster = sum(1 for m in movies if m.get('poster_url'))
+          cache = json.load(open('crawler/data/douban_cache.json', encoding='utf-8'))
+          floor = os.environ.get('MIN_MOVIES_TO_PUBLISH') or 50
+          print('## 数据抓取结果\n')
+          print('| 指标 | 数量 |')
+          print('|---|---|')
+          print(f'| 电影总数 | {total} |')
+          print(f'| 有烂番茄评分 | {rt} |')
+          print(f'| 有豆瓣评分 | {db} |')
+          print(f'| 双源齐全 | {both} |')
+          print(f'| 有海报 | {poster} |')
+          print(f'| 豆瓣缓存条目 | {len(cache)} |')
+          print(f'\n发布下限 {floor} 已通过；抓取失败时不会覆盖线上数据。')
+          if db < total * 0.5:
+              print('\n> ⚠️ 豆瓣覆盖率偏低，通常是其反爬软封（返回 200 但页面里没有 '
+                    '`window.__DATA__`）所致。爬虫已在连续空页后熔断并回落到缓存，'
+                    '烂番茄侧不受影响。')
+          PY
 
   deploy:
     needs: fetch

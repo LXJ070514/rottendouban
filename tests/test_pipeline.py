@@ -74,8 +74,16 @@ def stub_sources(monkeypatch):
     class FakeMatcher:
         def __init__(self, use_cache=True):
             self._cache = {}
+            self.empty_page_streak = 0
+
+        @property
+        def blocked(self):
+            return False
 
         def match_and_fetch(self, title, year=None):
+            return douban_table.get(title, {})
+
+        def cached_only(self, title, year=None):
             return douban_table.get(title, {})
 
         def _save_cache(self):
