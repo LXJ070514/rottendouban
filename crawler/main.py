@@ -222,9 +222,25 @@ def fetch_from_douban_top250(logger, limit=None):
             if en_title:
                 logger.info(f"  英文名取自手工片单: {en_title}")
 
+        year = movie["year"]
+
+        # TMDB 除了补海报与英文简介，还承担英文名反查：Rexxar 与手工片单都给不出
+        # 英文名时用中文片名查（TMDB 支持中文检索）。这样 RT 覆盖率不再依赖
+        # 豆瓣详情接口是否可达 —— CI 实测 Rexxar 会在若干次后返回 400。
+        tmdb_data = None
+        if use_tmdb:
+            try:
+                tmdb_data = search_and_get_details(en_title or cn_title, year)
+            except Exception as e:
+                logger.warning(f"  TMDB 异常: {e}")
+            if tmdb_data and not en_title:
+                en_title = (tmdb_data.get("title")
+                            or tmdb_data.get("original_title") or "")
+                if en_title:
+                    logger.info(f"  英文名由 TMDB 反查: {en_title}")
+
         movie["title"] = en_title or cn_title
         movie["original_title"] = (detail or {}).get("original_title") or en_title or cn_title
-        year = movie["year"]
 
         # RT：逐个英文候选试。aka 里可能有多个英文名（《活着》是
         # ['Lifetimes', 'To Live']，前者并非 RT 收录的那个），靠严格匹配器
@@ -259,25 +275,24 @@ def fetch_from_douban_top250(logger, limit=None):
         else:
             logger.info(f"  RT: ✗ 索引内无本片（试过 {len(candidates)} 个英文名）")
 
-        if use_tmdb and en_title:
-            try:
-                tmdb_data = search_and_get_details(en_title, year)
-            except Exception as e:
-                logger.warning(f"  TMDB 异常: {e}")
-                tmdb_data = None
-            if tmdb_data:
-                # 只补缺，不覆盖豆瓣与 RT 已给出的字段
-                if not movie.get("poster_url"):
-                    movie["poster_url"] = tmdb_data.get("poster_url", "")
-                if not movie.get("synopsis"):
-                    movie["synopsis"] = tmdb_data.get("synopsis", "")
-                if not movie.get("runtime") and tmdb_data.get("runtime"):
-                    movie["runtime"] = tmdb_data["runtime"]
-                if not movie.get("rating"):
-                    movie["rating"] = tmdb_data.get("rating", "")
-                if not movie.get("release_date"):
-                    movie["release_date"] = tmdb_data.get("release_date", "")
-                movie["title"] = movie["title"] or tmdb_data.get("title", "")
+        if tmdb_data:
+            # 只补缺，不覆盖豆瓣与 RT 已给出的字段
+            if not movie.get("poster_url"):
+                movie["poster_url"] = tmdb_data.get("poster_url", "")
+            if not movie.get("synopsis"):
+                movie["synopsis"] = tmdb_data.get("synopsis", "")
+            if not movie.get("runtime") and tmdb_data.get("runtime"):
+                movie["runtime"] = tmdb_data["runtime"]
+            if not movie.get("rating"):
+                movie["rating"] = tmdb_data.get("rating", "")
+            if not movie.get("release_date"):
+                movie["release_date"] = tmdb_data.get("release_date", "")
+            if not movie.get("genre"):
+                movie["genre"] = tmdb_data.get("genre", "")
+            if not movie.get("director"):
+                movie["director"] = tmdb_data.get("director", "")
+            if not movie.get("cast"):
+                movie["cast"] = tmdb_data.get("cast", "")
 
         movies.append(movie)
 

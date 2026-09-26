@@ -246,6 +246,45 @@ def test_cache_is_saved_even_when_fetch_fails(sandbox, stub_sources, monkeypatch
     assert stub_sources.saved >= 1, "失败也要回写缓存，已抓到的详情不能白抓"
 
 
+def test_tmdb_resolves_english_title_from_chinese(sandbox, stub_sources, monkeypatch):
+    """Rexxar 与手工片单都给不出英文名时，用 TMDB 按中文片名反查。
+
+    这样 RT 覆盖率不再依赖豆瓣详情接口是否可达 —— CI 实测 Rexxar 会在
+    若干次请求后一律返回 HTTP 400。
+    """
+    import crawler.tmdb_api as tmdb_mod
+
+    # 榜单换成一部手工片单里没有、Rexxar 也给不出英文名的片子
+    monkeypatch.setattr(stub_sources, "chart", [
+        {"douban_rank": 1, "douban_id": "9999999", "douban_title": "某部冷门片",
+         "douban_score": "8.0", "douban_vote_count": 1000,
+         "douban_url": "https://movie.douban.com/subject/9999999/",
+         "douban_poster": "", "douban_genre": "剧情", "douban_regions": "",
+         "douban_release_date": "2001-01-01"},
+    ])
+    monkeypatch.setattr(stub_sources, "details", {})
+    monkeypatch.setattr(tmdb_mod, "is_available", lambda: True)
+    seen = {}
+
+    def fake_tmdb(title, year=None):
+        seen["query"] = title
+        return {"title": "Some Obscure Film", "original_title": "某部冷门片",
+                "year": 2001, "poster_url": "https://tmdb/p.jpg", "synopsis": "EN"}
+
+    monkeypatch.setattr(tmdb_mod, "search_and_get_details", fake_tmdb)
+    monkeypatch.setitem(RT_TABLE, ("Some Obscure Film", 2001), {
+        "rt_url": "https://www.rottentomatoes.com/m/some_obscure_film",
+        "tomatometer": "70%", "audience_score": "80%",
+    })
+
+    assert main_mod.main() == 0
+    assert seen["query"] == "某部冷门片", "应以中文片名查 TMDB"
+    movie = read_movies(sandbox)[0]
+    assert movie["title"] == "Some Obscure Film"
+    assert movie["tomatometer"] == pytest.approx(70), "反查到的英文名应能匹配上 RT"
+    assert movie["poster_url"] == "https://tmdb/p.jpg"
+
+
 def test_below_publish_floor_keeps_previous_data(sandbox, stub_sources, monkeypatch):
     target = sandbox / "data" / "movies.json"
     target.write_text('[{"title": "sentinel"}]', encoding="utf-8")

@@ -17,7 +17,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,7 +30,32 @@ jobs:
       - name: Probe data sources
         run: python scripts/diagnose_sources.py
 
-      # Rexxar 在 CI 上出现"前 26 次成功、之后一律 HTTP 400"的现象，
-      # 而同一份代码在住宅 IP 上全通。差异只可能在请求头或会话上，故逐变体实测。
-      - name: Probe Rexxar header variants
-        run: python scripts/diagnose_rexxar.py 30
+  # Rexxar 的 HTTP 400 响应体是 {"msg":"subject_ip_rate_limit"}，即按 IP 配额。
+  # 用 matrix 让每个节流档位跑在独立 Runner（独立 IP）上：否则先跑的档位会把配额
+  # 吃光、后面的档位一律 0 成功，结论毫无意义（上一轮的请求头对照就踩了这个坑，
+  # C/D 两个变体得 0 并不是因为它们差，而是因为 A/B 已经把配额用完了）。
+  #
+  # 要区分两种可能：配额是"每 IP 总量"还是"每 IP 时间窗"。
+  # 放慢就能持续成功 → 时间窗，只需调大 DOUBAN_REQUEST_DELAY；
+  # 放慢仍卡在相近数量 → 总量，只能靠 matrix 分片（每片一个 IP）扩容。
+  rexxar-throttle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        delay: ['0.5', '2', '4', '8']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Probe Rexxar at ${{ matrix.delay }}s intervals
+        env:
+          REXXAR_DELAY: ${{ matrix.delay }}
+          REXXAR_SAMPLES: '20'
+        run: python scripts/diagnose_rexxar.py
