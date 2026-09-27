@@ -121,13 +121,29 @@ jobs:
           fi
           git commit -m "chore(data): cache $SIZE subjects [skip ci]"
 
-          # checkout@v4 处于 detached HEAD，git pull --rebase 用不了；
-          # 且并发推送（另一次 run 或人工提交）会让裸 push 非快进失败。
-          # 提交完成 → 工作树干净 → rebase 才能正常工作。
-          git fetch origin "$GITHUB_REF_NAME"
-          git rebase "origin/$GITHUB_REF_NAME"
-          git push origin "HEAD:$GITHUB_REF_NAME"
-          echo "已回传：缓存 $SIZE 条"
+          # checkout@v4 处于 detached HEAD，git pull --rebase 用不了，只能 fetch + rebase。
+          # 重试 3 次：网络抖动或恰好撞上并发推送时，一次失败就会让整轮白跑，
+          # 而这些恰恰都是重试一下就能过的瞬时故障。
+          for attempt in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"
+            if ! git rebase "origin/$GITHUB_REF_NAME"; then
+              git rebase --abort 2>/dev/null || true
+              echo "第 $attempt 次 rebase 失败（远端改动与本次提交冲突）" >&2
+              sleep 5
+              continue
+            fi
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then
+              echo "已回传：缓存 $SIZE 条"
+              exit 0
+            fi
+            echo "第 $attempt 次 push 失败，重试" >&2
+            sleep 5
+          done
+          # 推不上去就如实失败：deploy 是独立 job、按分支重新检出，
+          # 数据没落到 main 的话它部署的仍是上一轮的 movies.json，
+          # 绿灯会让人误以为这轮成功了。
+          echo "三次推送均失败，本轮数据未能回传" >&2
+          exit 1
 
       - name: Summary
         run: |

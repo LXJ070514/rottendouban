@@ -103,6 +103,18 @@ def test_commit_step_rebases_onto_the_remote_branch_first():
     assert "\n          git push\n" not in run, "仍有裸 push"
 
 
+def test_push_is_retried_and_aborts_a_broken_rebase():
+    """瞬时故障（网络抖动、恰好撞上并发推送）一次失败就让整轮白跑，
+    而这些恰恰是重试一下就能过的。冲突时还必须 abort，否则仓库留在
+    rebase 中间态，工作树一片混乱。"""
+    run = _fetch_step(WORKFLOWS["crawl-deploy.yml"], "Commit data")["run"]
+    assert "for attempt in 1 2 3" in run, "push 没有重试"
+    assert "git rebase --abort" in run, "rebase 冲突后没有恢复现场"
+    # 重试仍失败必须让 job 失败：deploy 是独立 job、按分支重新检出，
+    # 数据没落到 main 时它部署的还是上一轮，绿灯会误导
+    assert run.rstrip().endswith("exit 1")
+
+
 def test_failed_verification_discards_the_new_site_data():
     """校验没过却把 movies.json 提交上去，等于把坏数据变成下一轮的基线，
     deploy-site.yml 触发时还会把它部署上线。"""
