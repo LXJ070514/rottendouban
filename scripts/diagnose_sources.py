@@ -33,7 +33,14 @@ def fetch(url, headers=None, timeout=15):
         with urllib.request.urlopen(req, timeout=timeout, context=CTX) as resp:
             return resp.status, resp.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
-        return e.code, ""
+        # 错误体必须读出来：豆瓣的两种拒绝都靠 msg 区分
+        # （400 subject_ip_rate_limit = 配额；403 need_permission = 条目级权限），
+        # 丢掉 body 就只剩一个状态码，无法判断"等一等能不能好"。
+        try:
+            body = e.read()[:300].decode("utf-8", "replace")
+        except OSError:
+            body = ""
+        return e.code, body
     except Exception as e:
         return None, f"{type(e).__name__}: {e}"
 
@@ -122,6 +129,28 @@ if status == 200:
         record("Rexxar 电影详情", status, body, "EMPTY", f"非 JSON: {e}")
 else:
     record("Rexxar 电影详情", status, body, "FAIL", body[:80])
+
+# ---------- 5b. Rexxar 条目级权限拒绝（need_permission）----------
+# 与配额限流是两回事：配额等一等就好，条目级权限永远拿不到。
+# 用一个已知被拒的 subject 探测，确认该信号仍能被识别（爬虫据此跳过重试）。
+# 判据不是"返回 403"而是"响应体里是 need_permission" —— 若哪天豆瓣改成别的形式，
+# 这里会立刻显现，避免爬虫把它误当配额去退避。
+DENIED_ID = "1307528"   # 《盲井》，实测稳定 403 need_permission
+status, body = fetch(f"https://m.douban.com/rexxar/api/v2/movie/{DENIED_ID}",
+                     headers={"Referer": f"https://m.douban.com/movie/subject/{DENIED_ID}/",
+                              "Accept": "application/json"})
+if "need_permission" in (body or ""):
+    record("Rexxar 条目级拒绝", status, body, "OK",
+           "need_permission 已正确识别（爬虫会跳过、不重试）")
+elif status == 200:
+    record("Rexxar 条目级拒绝", status, body, "OK",
+           "该条目现在可访问了 —— 豆瓣放开了权限，可重新纳入抓取")
+elif "subject_ip_rate_limit" in (body or ""):
+    record("Rexxar 条目级拒绝", status, body, "EMPTY",
+           "撞上配额，本次探测无效（换时机再试）")
+else:
+    record("Rexxar 条目级拒绝", status, body, "FAIL",
+           f"预期 need_permission，实际: {(body or '')[:70]}")
 
 # ---------- 6. Rexxar 热门短评 ----------
 status, body = fetch(
