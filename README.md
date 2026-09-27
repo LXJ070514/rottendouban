@@ -223,7 +223,7 @@ cd site && python -m http.server 8080
 
 ```bash
 pip install pytest pyyaml           # 仅测试需要
-python -m pytest                    # 112 项，全部离线，不碰网络
+python -m pytest                    # 113 项，全部离线，不碰网络
 ```
 
 ## 配置
@@ -250,12 +250,12 @@ TMDB 密钥放在仓库 **Settings → Secrets and variables → Actions**，不
 
 ## 测试
 
-112 项 pytest，全部离线（构造数据 + 打桩，不碰豆瓣 / RT / TMDB 网络），约 2 秒跑完：
+113 项 pytest，全部离线（构造数据 + 打桩，不碰豆瓣 / RT / TMDB 网络），约 2 秒跑完：
 
 | 文件 | 项数 | 覆盖 |
 |---|---:|---|
 | `test_douban.py` | 32 | 榜单分页与 rank 语义、翻页封顶、Rexxar 归一化、id 级缓存与旧格式识别、详情/短评两轮拆分、短评跨轮留存、时间预算与退避余量、IP 配额识别与重试 |
-| `test_workflows.py` | 19 | workflow 语法、fetch/deploy 必须拆分、禁止用 shell 短路吞掉退出码、禁止表达式直插 shell、提交必须 `if: always()`、推送必须收在**一个**步骤里并先 rebase、校验失败要丢弃新数据、Pages 部署方共用一个并发组 |
+| `test_workflows.py` | 20 | workflow 语法、fetch/deploy 必须拆分、禁止用 shell 短路吞掉退出码、禁止表达式直插 shell、提交必须 `if: always()`、推送必须收在**一个**步骤里并先 rebase 且可重试、校验失败要丢弃新数据、Pages 部署方共用一个并发组 |
 | `test_pipeline.py` | 18 | 打桩四个数据源跑通 `main()`：落盘位置、退出码、字段贯通、TMDB 反查、限流降级、短评阶段的增量与中止、制片国家的榜单兜底 |
 | `test_tmdb_match.py` | 14 | 检索 language 跟着查询语言走、中文译名精确命中、模糊匹配的年份把关、兜底路径保留 |
 | `test_rotten_tomatoes_match.py` | 9 | 同名翻拍片择优、年份门槛、重音归一、别名变体 |
@@ -294,7 +294,7 @@ scripts/
   verify_site.py       校验量纲、必填字段、占位链接、短评类型
   check_db.py          查看本地库概况
   check_cache.py       查看豆瓣缓存概况
-tests/                 112 项离线测试
+tests/                 113 项离线测试
 .github/workflows/     ci · crawl-deploy · deploy-site · diagnose-sources
 ```
 
@@ -304,7 +304,8 @@ tests/                 112 项离线测试
   （`{"msg":"subject_ip_rate_limit"}`）。CI matrix 实测：0.5s 节流 10/20 成功、
   2s → 14、4s → 19、8s → 17（8s 的失败是 SSL 握手超时而非配额），
   且各档首次失败都在第 10-11 次 —— 配额是按时间窗滚动的**固定额度**，放慢只能摊平。
-  冷启动第一轮实测只补到 78/250 部详情。因此改为时间预算 + 跨轮续抓
+  冷启动实测：第一轮补到 78/250 部详情，第二轮 101/250，逐轮递增。
+  因此改为时间预算 + 跨轮续抓
   （见[配额有限时怎么抓满 250 部](#配额有限时怎么抓满-250-部)）：
   **冷启动需要几轮才能补齐详情与短评**，覆盖率随每轮运行单调递增。
   固定 4s 节流的旧方案实测在 75 分钟被 CI 强杀且缓存全丢，已废弃。
@@ -334,7 +335,7 @@ tests/                 112 项离线测试
 ## 贡献
 
 1. Fork 本仓库并新建分支
-2. `pip install pytest pyyaml && python -m pytest` 确认 112 项全绿
+2. `pip install pytest pyyaml && python -m pytest` 确认 113 项全绿
 3. **改动抓取逻辑前，先手动跑一次 `diagnose-sources.yml`** —— 豆瓣对不同 IP 段策略不同，
    本地能通不代表 CI 能通，反之亦然
 4. 涉及匹配逻辑的改动请补测试——本项目最贵的 bug 都出在"匹配到了错误的电影"
