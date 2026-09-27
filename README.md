@@ -305,9 +305,20 @@ tests/                 112 项离线测试
 - **`search.douban.com` 在 CI 上不可用**：返回 200 但 `items` 为空。整个模块已弃用它，
   改用榜单 + Rexxar。本地住宅 IP 上它仍然可用，所以这个差异只能在 CI 里发现。
 - **短评条数有限**（默认每部 3 条）。豆瓣短评接口同样受配额约束，条数越多耗时越长。
-- **海报走远程直链**（TMDB / 豆瓣图床），不下载入库。好处是仓库体积小，代价是图床策略
-  变化时海报会失效。豆瓣图床是**反向防盗链**：缺 `Referer` 才回 418，带 `Referer` 一律 200，
-  所以前端**不能**给它加 `referrerpolicy="no-referrer"`（曾经加过，整批海报被 418 打回）。
+- **海报走远程直链**（TMDB / RT / 豆瓣图床），不下载入库。好处是仓库体积小，代价是图床
+  策略变化时海报会失效。前端按 `poster_url`（TMDB / RT）→ `douban_poster` → picsum
+  占位图的顺序取，所以豆瓣图床挂了也不会出现碎图。
+- **豆瓣图床是反向防盗链，且认 Referer 的域名族**。实测 24 张随机海报：
+
+  | 请求带的 Referer | 200 |
+  |---|---:|
+  | 无 | 0 / 24 |
+  | `https://lxj070514.github.io/`（本站） | 7 / 24 |
+  | `https://movie.douban.com/` | **24 / 24** |
+
+  所以前端**不能**给它加 `referrerpolicy="no-referrer"`（曾经加过，整批 418 打回），
+  但也**无法**把它伪装成豆瓣域名 —— `Referer` 是浏览器禁止脚本修改的头。
+  这决定了豆瓣图床只适合当兜底：真正扛覆盖率的是 RT 与 TMDB 提供的 `poster_url`。
 - **GitHub 会在仓库 60 天无活动后停掉定时任务**（官方文档原文："scheduled workflows are
   automatically disabled when no repository activity has occurred in 60 days"，
   且未定义何种行为算 activity）。本仓库每半月有一次 bot 数据提交，但**不能保证**这算活动，

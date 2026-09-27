@@ -133,11 +133,12 @@
     function getPoster(m) {
         const rtUrl = sanitizeUrl(m.poster_url);
         const dbUrl = sanitizeUrl(m.douban_poster);
-        // 豆瓣图床是**反向**防盗链：缺 Referer 才回 418，带 Referer 一律 200。
-        // 曾按常见做法加 referrerpolicy="no-referrer"，结果整批海报 418 全挂。
-        // 实测（浏览器内 new Image）+ curl 四种 Referer 对照一致：
-        //   无 Referer→418、movie.douban.com→200、github.io→200、img9.doubanio.com→200
-        // 默认策略会带上本站 URL 作为 Referer，正好满足它。
+        // 豆瓣图床是**反向**防盗链：缺 Referer 回 418。曾经按常见做法加
+        // referrerpolicy="no-referrer"，结果整批海报被 418 打回。
+        // 但它还认 Referer 的域名族 —— 实测 24 张随机海报：
+        //   无 Referer→0/24 成功、本站 github.io→7/24、movie.douban.com→24/24。
+        // 前端改不了 Referer（属浏览器禁改头），所以豆瓣图床只能当兜底；
+        // 真正扛覆盖率的是上面那条 poster_url（RT / TMDB）。
         if (rtUrl && !rtUrl.includes('example')) return rtUrl;
         if (dbUrl) return dbUrl;
         // Fallback: unique placeholder per movie via picsum
