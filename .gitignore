@@ -46,3 +46,10 @@ venv/
 # 临时调试产物（API 响应转储）
 .r.json
 .j.json
+.lg.zip
+.newlogs.zip
+.logs.zip
+.m.json
+.l.json
+.c.json
+.s.json

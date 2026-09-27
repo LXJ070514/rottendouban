@@ -270,16 +270,14 @@ def test_comments_survive_a_cache_roundtrip(tmp_path, monkeypatch):
     assert second.cached_subject("1292052")["comments"][0]["user"] == "文泽尔"
 
 
-def test_backoff_sleep_is_capped(client, monkeypatch):
-    """退避睡眠必须有总额上限。
+def test_backoff_waits_past_the_retry_cap(client, monkeypatch):
+    """退避是唯一能拿到新额度的途径，不能封顶。
 
-    run 36296432188 实测：25 次退避睡掉 920s，占满 1200s 预算的 77%，
-    只换来 4 条详情，代价是 139 条连试都没试上。配额是时间窗额度，
-    睡久了换不来额度，只把预算从真正能发出去的请求手里抢走。
+    曾误判"退避是负收益"并加过封顶，实测数据推翻了这个判断：
+    配额按时间窗滚动，每个窗口分别产出 74/23/4/1 条详情，
+    封顶会直接损失后续窗口的全部产出。这条测试钉住"依然会等"。
     """
     monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 30)
-    monkeypatch.setattr(douban_mod, "RATE_LIMIT_SLEEP_BUDGET", 0)
-    monkeypatch.setattr(client, "backoff_slept", 0.0)
     slept = []
     monkeypatch.setattr(douban_mod.time, "sleep", lambda s: slept.append(s))
     monkeypatch.setattr(douban_mod, "_get",
@@ -287,24 +285,19 @@ def test_backoff_sleep_is_capped(client, monkeypatch):
                             douban_mod.RateLimited(url)))
 
     assert client._request("https://x", "https://r") is None
-    assert slept == [], f"退避额度为 0 时不该为退避而睡，实际睡了 {slept}"
-    assert client.backoff_slept == 0
+    # 默认重试 3 次 → 等 30 / 60 / 90，然后放弃
+    assert slept == [30, 60, 90], f"退避序列不符: {slept}"
 
 
-def test_backoff_accumulates_until_the_cap(client, monkeypatch):
-    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 30)
-    monkeypatch.setattr(douban_mod, "RATE_LIMIT_SLEEP_BUDGET", 50)
-    monkeypatch.setattr(client, "backoff_slept", 0.0)
-    slept = []
-    monkeypatch.setattr(douban_mod.time, "sleep", lambda s: slept.append(s))
+def test_backoff_gives_up_after_the_retry_cap(client, monkeypatch):
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 0)
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_RETRIES", 1)
+    calls = []
     monkeypatch.setattr(douban_mod, "_get",
-                        lambda url, referer, timeout=15: (_ for _ in ()).throw(
-                            douban_mod.RateLimited(url)))
-
-    client._request("https://x", "https://r")
-    # 第一次要 30s（累计 30 ≤ 50）→ 睡；第二次要 60s 会超上限 → 停手
-    assert slept == [30], f"应只睡第一次退避，实际 {slept}"
-    assert client.backoff_slept == 30
+                        lambda url, referer, timeout=15: calls.append(url) or
+                        (_ for _ in ()).throw(douban_mod.RateLimited(url)))
+    assert client._request("https://x", "https://r") is None
+    assert len(calls) == 2, "首次 + 1 次重试"
 
 
 # ==================== 时间预算 ====================
