@@ -20,6 +20,10 @@ logger = logging.getLogger("rotten_tomatoes")
 _SSL_CTX = build_ssl_context()
 
 # ==================== Algolia 搜索 API ====================
+# APP_ID / API_KEY 是 RT 网页前端自己使用的搜索凭据：浏览器在
+# rottentomatoes.com 上每次搜索都会带上它，不是破解或泄露物。
+# RT 官方 API 面向合作方商业授权，个人项目拿不到，故走这条与页面同源的路。
+# 两者都可用环境变量覆盖（键若轮换，改环境变量即可，不必改代码）。
 ALGOLIA_APP_ID = os.environ.get("ALGOLIA_APP_ID", "79FRDP12PN")
 ALGOLIA_API_KEY = os.environ.get("ALGOLIA_API_KEY", "175588f6e5f8319b27702e4cc4013561")
 ALGOLIA_INDEX = os.environ.get("ALGOLIA_INDEX", "content")
