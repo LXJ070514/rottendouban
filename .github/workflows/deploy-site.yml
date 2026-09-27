@@ -35,8 +35,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      # 显式按分支名检出：与 crawl-deploy 共用一个并发组，本 workflow 常排在
+      # 一次抓取后面才轮到执行，此时分支上已有更新的 movies.json。
+      # 按分支（而非触发时的 SHA）检出，部署的才是当前最新的站点数据。
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
