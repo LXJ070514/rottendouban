@@ -10,6 +10,13 @@ SCHEMA = {
 }
 
 
+# 覆盖率统计用的取值器：字段类型不对时返回 None 而不是抛异常。
+# 直接写 (m.get("tomatometer") or 0) >= 0 会在遇到字符串 "90%" 时崩成
+# TypeError 堆栈 —— 校验脚本的职责是**报告**问题，自己先崩掉就失去意义了。
+def _num(value):
+    return value if isinstance(value, (int, float)) else None
+
+
 def main(path="site/data/movies.json"):
     try:
         with open(path, encoding="utf-8") as f:
@@ -32,7 +39,7 @@ def main(path="site/data/movies.json"):
             value = movie.get(field)
             if value is None or value == -1 or value == "":
                 continue
-            if not isinstance(value, (int, float)):
+            if not isinstance(value, (int, float)) or isinstance(value, bool):
                 problems.append(f"#{mid} {title} 的 {field} 不是数字: {value!r}")
             elif not low <= value <= high:
                 problems.append(f"#{mid} {title} 的 {field}={value} 越界 [{low},{high}]")
@@ -45,9 +52,9 @@ def main(path="site/data/movies.json"):
         if comments is not None and not isinstance(comments, list):
             problems.append(f"#{mid} {title} 的 douban_comments 不是数组: {type(comments).__name__}")
 
-    scored = [m for m in movies if (m.get("weighted_score") or 0) > 0]
-    douban = [m for m in movies if (m.get("douban_score") or 0) > 0]
-    rt = [m for m in movies if (m.get("tomatometer") or 0) >= 0]
+    scored = [m for m in movies if (_num(m.get("weighted_score")) or 0) > 0]
+    douban = [m for m in movies if (_num(m.get("douban_score")) or 0) > 0]
+    rt = [m for m in movies if (_num(m.get("tomatometer")) or -1) >= 0]
     intro = [m for m in movies if m.get("douban_synopsis")]
     cast = [m for m in movies if m.get("douban_cast")]
     comments = [m for m in movies if m.get("douban_comments")]

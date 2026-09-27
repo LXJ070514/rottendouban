@@ -233,7 +233,7 @@ cd site && python -m http.server 8080
 
 ```bash
 pip install pytest pyyaml           # 仅测试需要
-python -m pytest                    # 116 项，全部离线，不碰网络
+python -m pytest                    # 133 项，全部离线，不碰网络
 ```
 
 ## 配置
@@ -261,13 +261,14 @@ TMDB 密钥放在仓库 **Settings → Secrets and variables → Actions**，不
 
 ## 测试
 
-116 项 pytest，全部离线（构造数据 + 打桩，不碰豆瓣 / RT / TMDB 网络），约 2 秒跑完：
+133 项 pytest，全部离线（构造数据 + 打桩，不碰豆瓣 / RT / TMDB 网络），约 2 秒跑完：
 
 | 文件 | 项数 | 覆盖 |
 |---|---:|---|
-| `test_douban.py` | 35 | 榜单分页与 rank 语义、翻页封顶、Rexxar 归一化、id 级缓存与旧格式识别、详情/短评两轮拆分、短评跨轮留存、时间预算与退避余量、IP 配额识别与重试 |
+| `test_douban.py` | 35 | 榜单分页与 rank 语义、翻页封顶、Rexxar 归一化、id 级缓存与旧格式识别、详情/短评两轮拆分、短评跨轮留存、时间预算与退避封顶、IP 配额识别与重试 |
 | `test_workflows.py` | 20 | workflow 语法、fetch/deploy 必须拆分、禁止用 shell 短路吞掉退出码、禁止表达式直插 shell、提交必须 `if: always()`、推送必须收在**一个**步骤里并先 rebase 且可重试、校验失败要丢弃新数据、Pages 部署方共用一个并发组 |
 | `test_pipeline.py` | 18 | 打桩四个数据源跑通 `main()`：落盘位置、退出码、字段贯通、TMDB 反查、限流降级、短评阶段的增量与中止、制片国家的榜单兜底 |
+| `test_verify_site.py` | 17 | 发布闸门本身：量纲越界/占位链接/缺 douban_id/短评非数组必须拦住，且**不得崩成堆栈**（曾对字符串评分抛 TypeError） |
 | `test_tmdb_match.py` | 14 | 检索 language 跟着查询语言走、中文译名精确命中、模糊匹配的年份把关、兜底路径保留 |
 | `test_rotten_tomatoes_match.py` | 9 | 同名翻拍片择优、年份门槛、重音归一、别名变体 |
 | `test_database.py` | 9 | slug 唯一性、评分归一与夹取、历史快照、导出不含历史 |
@@ -302,10 +303,10 @@ scripts/
   diagnose_sources.py  在 Runner 出口 IP 上探测各数据源可用性
   diagnose_rexxar.py   Rexxar IP 配额探测（配合 matrix 分档节流）
   update_site.py       不碰上游 API，仅从 movies.db 重出站点数据
-  verify_site.py       校验量纲、必填字段、占位链接、短评类型
+  verify_site.py       校验量纲、必填字段、占位链接、短评类型；坏数据只报错不崩溃
   check_db.py          查看本地库概况
   check_cache.py       查看豆瓣缓存概况
-tests/                 116 项离线测试
+tests/                 133 项离线测试
 .github/workflows/     ci · crawl-deploy · deploy-site · diagnose-sources
 ```
 
@@ -345,7 +346,7 @@ tests/                 116 项离线测试
 ## 贡献
 
 1. Fork 本仓库并新建分支
-2. `pip install pytest pyyaml && python -m pytest` 确认 116 项全绿
+2. `pip install pytest pyyaml && python -m pytest` 确认 133 项全绿
 3. **改动抓取逻辑前，先手动跑一次 `diagnose-sources.yml`** —— 豆瓣对不同 IP 段策略不同，
    本地能通不代表 CI 能通，反之亦然
 4. 涉及匹配逻辑的改动请补测试——本项目最贵的 bug 都出在"匹配到了错误的电影"
