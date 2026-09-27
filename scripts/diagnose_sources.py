@@ -179,42 +179,55 @@ TMDB_TOKEN = os.environ.get("TMDB_BEARER_TOKEN", "")
 if not TMDB_KEY and not TMDB_TOKEN:
     record("TMDB 中文反查", None, "", "FAIL", "未配置 TMDB_API_KEY / TMDB_BEARER_TOKEN")
 else:
-    tmdb_headers = {"Content-Type": "application/json"}
-    tmdb_query = {}
-    found_id = None
-    if TMDB_TOKEN:
-        tmdb_headers["Authorization"] = f"Bearer {TMDB_TOKEN}"
-    else:
-        tmdb_query["api_key"] = TMDB_KEY
+    # 两条凭据路径都要探，且要标明哪条是生产实际走的。
+    # crawl-deploy.yml 只传 TMDB_API_KEY，所以爬虫走 api_key 分支；
+    # 而 tmdb_api 优先用 bearer_token —— 若 bearer 无效而 api_key 有效，
+    # 只探 bearer 会误报"TMDB 不可用"（本轮就踩了：bearer 401、api_key 其实是好的）。
+    def _tmdb_auth(mode):
+        if mode == "bearer" and TMDB_TOKEN:
+            return {"Authorization": f"Bearer {TMDB_TOKEN}"}, {}
+        if mode == "api_key" and TMDB_KEY:
+            return {}, {"api_key": TMDB_KEY}
+        return None, None
 
-    for lang in ("en-US", "zh-CN"):
-        params = dict(tmdb_query, query="控方证人", language=lang,
+    for mode in ("bearer", "api_key"):
+        headers, query = _tmdb_auth(mode)
+        if headers is None:
+            record(f"TMDB 凭据 {mode}", None, "", "FAIL",
+                   f"未提供 {mode}（生产走的是 api_key 分支）" if mode == "api_key"
+                   else "未提供 bearer")
+            continue
+        probe_headers = dict(headers, **{"Content-Type": "application/json"})
+        params = dict(query, query="控方证人", language="zh-CN",
                       primary_release_year="1957", include_adult="false")
         status, body = fetch(
             "https://api.themoviedb.org/3/search/movie?" + urllib.parse.urlencode(params),
-            headers=tmdb_headers)
-        if status != 200:
-            record(f"TMDB 搜索 lang={lang}", status, body, "FAIL", body[:80])
-            continue
-        try:
-            res = json.loads(body).get("results") or []
-        except json.JSONDecodeError as e:
-            record(f"TMDB 搜索 lang={lang}", status, body, "EMPTY", f"非 JSON: {e}")
-            continue
-        first = res[0] if res else {}
-        if lang == "zh-CN" and first.get("id"):
-            found_id = first["id"]
-        record(f"TMDB 搜索 lang={lang}", status, body, "OK" if res else "EMPTY",
-               f"{len(res)} 条，首条 title={first.get('title')!r} "
-               f"original={first.get('original_title')!r} "
-               f"date={first.get('release_date')!r}")
+            headers=probe_headers)
+        prod = "  ← 生产实际使用" if mode == "api_key" else ""
+        if status == 200:
+            try:
+                res = json.loads(body).get("results") or []
+            except json.JSONDecodeError as e:
+                record(f"TMDB 凭据 {mode}", status, body, "EMPTY", f"非 JSON: {e}{prod}")
+                continue
+            first = res[0] if res else {}
+            if mode == "api_key" and first.get("id"):
+                found_id = first["id"]
+            record(f"TMDB 凭据 {mode}", status, body, "OK" if res else "EMPTY",
+                   f"{len(res)} 条，首条 title={first.get('title')!r}{prod}")
+        elif status == 401:
+            record(f"TMDB 凭据 {mode}", status, body, "FAIL",
+                   f"密钥无效（{'但生产走这条，必须修' if mode == 'api_key' else '该 secret 可删或更新'}）")
+        else:
+            record(f"TMDB 凭据 {mode}", status, body, "FAIL", f"{(body or '')[:70]}{prod}")
 
     # 详情必须回英文 title —— main.py 靠它拿英文片名去匹配 RT
     if found_id:
+        headers, query = _tmdb_auth("api_key") if TMDB_KEY else _tmdb_auth("bearer")
         status, body = fetch(
             f"https://api.themoviedb.org/3/movie/{found_id}?"
-            + urllib.parse.urlencode(dict(tmdb_query, language="en-US")),
-            headers=tmdb_headers)
+            + urllib.parse.urlencode(dict(query or {}, language="en-US")),
+            headers=dict(headers or {}, **{"Content-Type": "application/json"}))
         if status == 200:
             try:
                 d = json.loads(body)
