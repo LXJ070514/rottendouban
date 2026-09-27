@@ -305,8 +305,9 @@ tests/                 112 项离线测试
 - **`search.douban.com` 在 CI 上不可用**：返回 200 但 `items` 为空。整个模块已弃用它，
   改用榜单 + Rexxar。本地住宅 IP 上它仍然可用，所以这个差异只能在 CI 里发现。
 - **短评条数有限**（默认每部 3 条）。豆瓣短评接口同样受配额约束，条数越多耗时越长。
-- **海报走远程直链**（TMDB / 豆瓣图床），不下载入库；豆瓣图床需要 `no-referrer`，前端已处理。
-  好处是仓库体积小，代价是图床策略变化时海报会失效。
+- **海报走远程直链**（TMDB / 豆瓣图床），不下载入库。好处是仓库体积小，代价是图床策略
+  变化时海报会失效。豆瓣图床是**反向防盗链**：缺 `Referer` 才回 418，带 `Referer` 一律 200，
+  所以前端**不能**给它加 `referrerpolicy="no-referrer"`（曾经加过，整批海报被 418 打回）。
 - **GitHub 会在仓库 60 天无活动后停掉定时任务**（官方文档原文："scheduled workflows are
   automatically disabled when no repository activity has occurred in 60 days"，
   且未定义何种行为算 activity）。本仓库每半月有一次 bot 数据提交，但**不能保证**这算活动，
