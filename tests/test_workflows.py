@@ -66,31 +66,56 @@ def _fetch_step(doc, name):
     return next(s for s in doc["jobs"]["fetch"]["steps"] if s.get("name") == name)
 
 
-def test_douban_cache_is_committed_even_when_the_crawl_fails():
+def test_data_commit_runs_even_when_the_crawl_fails():
     """豆瓣按 IP 的时间窗配额撑不住一轮抓满 250×2 次请求，
     覆盖率靠"每轮补一点、下轮从缓存续抓"爬升。缓存若只在成功时提交，
     抓取一失败这轮就白跑 —— 实测过一次 75 分钟被强杀、缓存颗粒无收。"""
     doc = WORKFLOWS["crawl-deploy.yml"]
-    cache_step = _fetch_step(doc, "Commit douban cache")
-    assert cache_step.get("if") == "always()"
-    assert "douban_cache.json" in cache_step["run"]
-    # 必须排在 Verify 之前：Verify 失败会让后续步骤全部跳过
+    step = _fetch_step(doc, "Commit data")
+    assert step.get("if") == "always()"
+    assert "douban_cache.json" in step["run"]
+    # 排在 Verify 之后：Verify 失败时这一步靠 steps.after.outcome 决定丢掉 movies.json
     names = [s.get("name") for s in doc["jobs"]["fetch"]["steps"]]
-    assert names.index("Commit douban cache") < names.index("Verify site data")
+    assert names.index("Commit data") > names.index("Verify site data")
 
 
-def test_pushes_rebase_onto_the_remote_branch_first():
+def test_all_pushes_happen_in_one_commit_step():
+    """提交必须一次做完：分两个步骤的话，前一步提交完缓存后工作树里仍留着
+    被跟踪但未提交的 site/data/movies.json（爬虫每轮都重写它），
+    后一步的 git rebase 会以 "You have unstaged changes" 直接失败。
+    run 36267829360 正是死在这里 —— 78 条详情抓完，缓存一条没推上去。
+    """
+    doc = WORKFLOWS["crawl-deploy.yml"]
+    pushers = [s.get("name") for s in doc["jobs"]["fetch"]["steps"]
+               if "git push" in (s.get("run") or "")]
+    assert pushers == ["Commit data"], f"推送分散在多个步骤里: {pushers}"
+
+
+def test_commit_step_rebases_onto_the_remote_branch_first():
     """裸 git push 在并发推送下会非快进失败，整轮成果丢失。
 
     checkout@v4 是 detached HEAD，git pull --rebase 用不了，只能 fetch + rebase。
     """
-    doc = WORKFLOWS["crawl-deploy.yml"]
-    for name in ("Commit douban cache", "Commit refreshed data"):
-        run = _fetch_step(doc, name)["run"]
-        assert "git fetch origin" in run, f"{name} 未先 fetch"
-        assert "git rebase" in run, f"{name} 未 rebase"
-        assert "git push origin" in run, f"{name} 未显式推到分支"
-        assert "\n          git push\n" not in run, f"{name} 仍有裸 push"
+    run = _fetch_step(WORKFLOWS["crawl-deploy.yml"], "Commit data")["run"]
+    assert "git fetch origin" in run
+    assert "git rebase" in run
+    assert "git push origin" in run
+    assert "\n          git push\n" not in run, "仍有裸 push"
+
+
+def test_failed_verification_discards_the_new_site_data():
+    """校验没过却把 movies.json 提交上去，等于把坏数据变成下一轮的基线，
+    deploy-site.yml 触发时还会把它部署上线。"""
+    step = _fetch_step(WORKFLOWS["crawl-deploy.yml"], "Commit data")
+    # 表达式走 env 传入（直插 shell 是注入面），脚本里只认 $VERIFIED
+    assert step["env"]["VERIFIED"] == "${{ steps.after.outcome }}"
+    run = step["run"]
+    assert '"$VERIFIED" != "success"' in run
+    # 被判为坏数据时要把它还原成仓库里的版本，且不再 git add 它
+    assert "git checkout -- site/data/movies.json" in run
+    discard_at = run.index("git checkout -- site/data/movies.json")
+    add_at = run.index("git add -f site/data/movies.json", run.index("else"))
+    assert discard_at < add_at, "丢弃分支必须排在 add 之前"
 
 
 def test_deploy_checks_out_the_branch_not_the_trigger_sha():
@@ -100,6 +125,23 @@ def test_deploy_checks_out_the_branch_not_the_trigger_sha():
     checkout = doc["jobs"]["deploy"]["steps"][0]
     assert checkout["uses"].startswith("actions/checkout@")
     assert checkout["with"]["ref"] == "${{ github.ref_name }}"
+
+
+def test_pages_deployers_share_one_concurrency_group():
+    """两条流水线都会部署 Pages，分组若各自独立就会互相覆盖。
+
+    后果是抓取途中的一次前端提交把上一轮的 movies.json 重新部署上去，
+    线上数据静默回退，直到半个月后的下一次定时抓取才被纠正。
+    """
+    groups = {n: WORKFLOWS[n].get("concurrency", {}).get("group")
+              for n in ("crawl-deploy.yml", "deploy-site.yml")}
+    assert groups["crawl-deploy.yml"] == groups["deploy-site.yml"], groups
+    assert "${{ github.workflow }}" not in groups["crawl-deploy.yml"], (
+        "组名里带 workflow 名就等于两条流水线各排各的队")
+    for name, group in groups.items():
+        assert WORKFLOWS[name]["concurrency"]["cancel-in-progress"] is False, (
+            f"{name} 不该取消进行中的部署")
+    assert group is not None
 
 
 def test_fetch_timeout_leaves_headroom_over_the_douban_budget():

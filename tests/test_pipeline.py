@@ -227,6 +227,25 @@ def test_comments_are_exported_as_array_not_json_text(sandbox, stub_sources):
     assert concubine[0]["comment"] == "不疯魔不成活。"
 
 
+def test_countries_fall_back_to_chart_regions(sandbox, stub_sources, monkeypatch):
+    """详情没抓到时，制片国家仍要有值 —— 榜单自带 regions，冷启动的头几轮全靠它。"""
+    monkeypatch.setattr(stub_sources, "details", {})
+    assert main_mod.main() == 0
+    by_id = {m["douban_id"]: m for m in read_movies(sandbox)}
+    assert by_id["1292052"]["douban_countries"] == "美国"
+    assert by_id["1291546"]["douban_countries"] == "中国大陆"
+
+
+def test_detail_countries_win_over_chart_regions(sandbox, stub_sources, monkeypatch):
+    monkeypatch.setattr(stub_sources, "details", {
+        "1292052": dict(DETAILS["1292052"], countries=["美国", "加拿大"]),
+    })
+    main_mod.main()
+    by_id = {m["douban_id"]: m for m in read_movies(sandbox)}
+    assert by_id["1292052"]["douban_countries"] == "美国, 加拿大"
+    assert by_id["1291546"]["douban_countries"] == "中国大陆"
+
+
 def test_comment_pass_only_touches_details_missing_comments(sandbox, stub_sources):
     """短评阶段是增量的：已有短评的条目不该再发请求，配额要留给缺的。"""
     main_mod.main()

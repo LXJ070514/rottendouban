@@ -100,11 +100,30 @@ def is_available():
     return any(_credentials())
 
 
+def _search_language(query):
+    """检索语言跟着查询语言走，让"精确匹配"那一级能真正生效。
+
+    注：反查本身**不依赖**这一点 —— run 36267829360 里用 en-US 搜中文片名
+    也拿到了 153/250 的反查结果（TMDB 会索引译名，结果落在 results[0]）。
+    改 zh-CN 是为了把命中从"兜底取首条"抬到"标题精确匹配"，
+    少走后面那道纯靠年份的模糊判断。上一版注释把覆盖率的锅算在这里是错的：
+    当时那次低覆盖率来自 1413fc5，那个版本还没有反查代码。
+    """
+    return "en-US" if (query or "").isascii() else "zh-CN"
+
+
+def _year_of(release_date):
+    try:
+        return int((release_date or "")[:4])
+    except (TypeError, ValueError):
+        return None
+
+
 def search_movie(title, year=None):
     """搜索电影，返回最佳匹配的 TMDB ID"""
     params = {
         "query": title,
-        "language": "en-US",
+        "language": _search_language(title),
         "page": 1,
         "include_adult": "false",
     }
@@ -129,16 +148,24 @@ def search_movie(title, year=None):
         if r_title == title_lower or r_original == title_lower:
             return r["id"]
 
-    # 模糊匹配
+    # 模糊匹配。改用 zh-CN 检索后这一级才真正有被触发的机会
+    # （en-US 下 r_title 是英文，对中文查询几乎不可能构成子串关系），
+    # 而子串关系是双向的 —— "证人" 是 "控方证人" 的子串，反过来也成立，
+    # 光靠标题就能把无关影片选进来。故有年份时要求年份也吻合。
     for r in results:
         r_title = (r.get("title") or "").lower()
         r_original = (r.get("original_title") or "").lower()
-        if title_lower in r_title or title_lower in r_original:
-            return r["id"]
-        if r_title in title_lower or r_original in title_lower:
-            return r["id"]
+        fuzzy = (title_lower in r_title or title_lower in r_original
+                 or r_title in title_lower or r_original in title_lower)
+        if not fuzzy:
+            continue
+        r_year = _year_of(r.get("release_date"))
+        if year and r_year and abs(r_year - year) > 2:
+            continue
+        return r["id"]
 
-    # 返回第一个结果
+    # 兜底取首个结果 —— TMDB 自己的相关度排序，用 en-US 检索时正是靠这一级
+    # 拿到 153/250 的英文名（run 36267829360），是经验证有效的路径，不动它。
     return results[0]["id"] if results else None
 
 

@@ -4,7 +4,7 @@
 
 **烂番茄 × 豆瓣 聚合评分** — 把欧美影评人口味与中文观众口味并排放在一起看
 
-一个纯静态、运行时零第三方依赖、由 GitHub Actions 每周自动更新数据的电影评分对照站。
+一个纯静态、运行时零第三方依赖、由 GitHub Actions 每半月自动更新数据的电影评分对照站。
 
 [![CI](https://img.shields.io/github/actions/workflow/status/LXJ070514/rottendouban/ci.yml?label=CI&logo=githubactions&logoColor=white)](https://github.com/LXJ070514/rottendouban/actions/workflows/ci.yml)
 [![Fetch & Deploy](https://img.shields.io/github/actions/workflow/status/LXJ070514/rottendouban/crawl-deploy.yml?label=Fetch%20%26%20Deploy&logo=githubactions&logoColor=white)](https://github.com/LXJ070514/rottendouban/actions/workflows/crawl-deploy.yml)
@@ -41,9 +41,12 @@ RottenDouban 把三个口径并排展示，再给一个加权总分，让你自�
 
 - **三口径并排** — 烂番茄新鲜度（影评人）、爆米花指数（观众）、豆瓣评分 + 评分人数
 - **加权总分** — 影评人 0.3 + 观众 0.3 + 豆瓣 0.4；某源缺失时权重按比例重新分配给其余源，不虚假拉高
+- **豆瓣 Top250 全自动** — 榜单名次、评分、人数直接取自豆瓣官方接口，不再手工维护片单
+- **中文详情** — 简介、导演、主演、制片国家、片长、类型
+- **豆瓣热门短评** — 每部片附热门短评与星级
 - **搜索与筛选** — 支持片名（中英）、导演、**演员**、类型；按分类 / 类型过滤，5 种排序
 - **暗色 / 亮色主题**，响应式布局，桌面与手机均可用
-- **自动更新** — GitHub Actions 每周两次抓取并部署，无需人工干预
+- **自动更新** — GitHub Actions 每半月抓取并部署，无需人工干预
 - **失败安全** — 抓取异常或数据量低于下限时**不覆盖线上数据**，CI 如实红灯
 
 ### 运行时零依赖
@@ -54,50 +57,102 @@ RottenDouban 把三个口径并排展示，再给一个加权总分，让你自�
 ## 它是如何工作的
 
 ```
-                    ┌──────────────────────────────────────────┐
-                    │  crawler/movie_list.py                   │
-                    │  119 部片单（英文名 + 中文名 + 年份）      │
-                    └───────────────┬──────────────────────────┘
-                                    │  片单是唯一事实来源
-              ┌─────────────────────┼─────────────────────┐
-              ▼                     ▼                     ▼
-   ┌────────────────────┐ ┌────────────────────┐ ┌────────────────────┐
-   │ TMDB API（可选）    │ │ RT Algolia 搜索     │ │ 豆瓣搜索页          │
-   │ 海报/简介/演职员     │ │ 新鲜度/爆米花指数    │ │ 中文标题/评分/人数   │
-   │ 需配 TMDB_API_KEY   │ │ 精确标题 + 年份择优  │ │ 精确标题 + 年份择优  │
-   └─────────┬──────────┘ └─────────┬──────────┘ └─────────┬──────────┘
-             └─────────────────────┼─────────────────────┘
+        ┌───────────────────────────────────────────────────────────┐
+        │ ① 豆瓣 j/chart/top_list                                   │
+        │    Top250 榜单：官方 rank、subject id、评分、人数、海报、类型 │
+        └─────────────────────────┬─────────────────────────────────┘
+                                  │  subject id 是后续一切的钥匙
+                                  ▼
+        ┌───────────────────────────────────────────────────────────┐
+        │ ② 豆瓣 Rexxar  movie/<id>  +  movie/<id>/interests         │
+        │    中文简介、导演、演员、原名/别名、制片国家、片长、热门短评    │
+        │    按 subject id 缓存，只在缺失时才请求                      │
+        └─────────────────────────┬─────────────────────────────────┘
+                                  │  英文片名（original_title → aka → TMDB 反查）
+              ┌───────────────────┴───────────────────┐
+              ▼                                       ▼
+   ┌────────────────────────┐            ┌────────────────────────────┐
+   │ ③ RT Algolia 搜索       │            │ ④ TMDB（可选，需密钥）       │
+   │    新鲜度 / 爆米花指数   │            │    海报、英文简介、MPAA 评级 │
+   │    精确标题 + 年份择优   │            │    兼任中文名→英文名反查     │
+   └───────────┬────────────┘            └─────────────┬──────────────┘
+               └───────────────────┬───────────────────┘
                                    ▼
-                    ┌──────────────────────────────────────────┐
-                    │  SQLite（movies.db，slug = 片名+年份）     │
-                    │  评分量纲归一 · 加权计算 · 评分历史快照     │
-                    └───────────────┬──────────────────────────┘
-                                    ▼
-                    ┌──────────────────────────────────────────┐
-                    │  site/data/movies.json（197 KB）          │
-                    └───────────────┬──────────────────────────┘
-                                    ▼
-                    ┌──────────────────────────────────────────┐
-                    │  GitHub Pages · 原生 JS 渲染              │
-                    └──────────────────────────────────────────┘
+        ┌───────────────────────────────────────────────────────────┐
+        │ SQLite（movies.db，slug = douban-<subject id>）             │
+        │ 评分量纲归一 · 加权计算 · 评分历史快照                        │
+        └─────────────────────────┬─────────────────────────────────┘
+                                  ▼
+        ┌───────────────────────────────────────────────────────────┐
+        │ site/data/movies.json  →  GitHub Pages · 原生 JS 渲染       │
+        └───────────────────────────────────────────────────────────┘
 ```
 
-三条流水线各司其职：
+以豆瓣榜单为驱动，是因为 **subject id 直接来自榜单**：豆瓣侧不再需要任何模糊匹配，
+"匹配到同名剧集"这一整类 bug 从结构上消失。`crawler/movie_list.py` 仍保留，
+但职责已变为"Rexxar 给不出英文名时的中英映射兜底"。
+
+四条流水线各司其职：
 
 | Workflow | 触发 | 职责 |
 |---|---|---|
-| `ci.yml` | push / PR | 跑 64 项离线测试 + 校验 workflow 语法与不变量 |
-| `crawl-deploy.yml` | 每周一、四 04:00 UTC / 手动 | 抓取 → 校验 → 提交数据 → 部署 |
+| `ci.yml` | push / PR | 跑离线测试 + 校验 workflow 语法与不变量 |
+| `crawl-deploy.yml` | 每月 1、16 号 04:17 UTC / 手动 | 抓取 → 校验 → 提交数据 → 部署 |
 | `deploy-site.yml` | push 改了前端时 | 只部署，不重新抓取 |
+| `diagnose-sources.yml` | 手动 | 在 Runner 真实出口 IP 上探测各数据源可用性 |
 
 `crawl-deploy` 刻意拆成 **fetch** 与 **deploy** 两个 job：`environment: github-pages` 会让 job
 一启动就登记一个 Pages deployment，若抓取 job 中途失败，那个 deployment 会永久留在队列里，
 把后续所有运行堵死。拆分后抓取失败绝不会碰到 Pages。
 
+定时刻意避开整点：GitHub 文档明确 "High load times include the start of every hour"，
+整点触发的定时任务更容易被延迟调度。
+
+### 为什么要有一个诊断 workflow
+
+豆瓣对不同 IP 段策略不同，而且**限流时返回 HTTP 200**，只看状态码会得出完全错误的结论。
+本项目的两次关键决策都来自它，而不是来自本地测试：
+
+- `search.douban.com` 在 Runner 上返回 200 但 `items` 为空 → 整个模块弃用它
+- `rexxar/api/v2/movie/<id>` 超额返回 HTTP 400，响应体 `{"msg":"subject_ip_rate_limit"}`
+  → 确诊是按 IP 的时间窗配额，与请求头无关（桌面/移动 UA、有无 cookie、Referer 粒度
+  四种变体表现一致）。再用 matrix 让 0.5s/2s/4s/8s 四档节流各跑一个独立 Runner，
+  得到 10/14/19/17 的成功数，**且四档的首次失败都落在第 10-11 次** —— 这说明配额是
+  按时间窗滚动的固定额度，放慢只能摊平、不能提高总额。这个结论直接决定了下面的
+  抓取策略，也否掉了两个诱人但错误的方案：按 IP 分片并行、以及"把节流调到 8s 就稳了"。
+
+改抓取逻辑前先跑一次 `diagnose-sources.yml`，用 Runner 的结论而不是本地的结论做决定。
+
+### 配额有限时怎么抓满 250 部
+
+Top250 每部要两次 Rexxar 请求（详情 + 短评），共约 500 次，而单个 Runner 的时间窗
+配额远不够。第一版的做法是固定 4s 节流 + 撞配额就退避重试，结果是 run `36262133540`
+在 **75 分钟整被 CI 强杀**，而且缓存只在成功路径提交 —— 一整轮颗粒无收。
+
+现在的做法是承认"一轮抓不完"，把它变成**单调递增的续抓**：
+
+| 机制 | 作用 |
+|---|---|
+| 基础节流降到 1.5s | 配额是固定额度，慢并不换来更多配额，只换来更长的墙钟 |
+| `DOUBAN_TIME_BUDGET`（默认 1200s） | 豆瓣阶段的墙钟硬上限，用尽即停止发请求 |
+| 详情与短评拆成两轮 | 详情是短评的前提，也是英文名的来源，冷启动时优先吃预算 |
+| 缓存在 `finally` 里保存 | 限流、超预算、抛异常都不丢已抓到的部分 |
+| CI 用 `if: always()` 提交 | 抓取失败也回传，下一轮从缓存接着补 |
+
+**退避重试基本是白等。** run `36267829360` 里 28 次"等 20s/40s/60s 再试"，
+只有 10 次在重试后成功，18 次耗满三次退避仍被拒 —— 一次退避要烧 120 秒，
+28 次就是 56 分钟里的绝大部分。配额按时间窗滚动，而窗口长度远大于退避上限，
+所以"多等一会儿"解决不了问题，只有"下一轮再来"。这也是把预算压到 1200s 的原因。
+
+于是覆盖率随每轮运行爬升：第一轮吃满预算补详情，第二轮详情走缓存、预算全给短评，
+第三轮起只剩榜单里的新面孔。代价是**冷启动需要几轮才能补齐**，换来的是任何一轮都
+必定能在 CI 超时内跑完并把成果落盘。
+
 ## 匹配策略：宁缺毋滥
 
-三个数据源靠"片名 + 年份"交叉对齐。规则是**规范化后标题必须完全相同，且上映年份必须吻合（±1）**，
-对不上就放弃该源，而不是取搜索结果的第一个。
+**只有烂番茄一侧需要匹配**。豆瓣的 subject id 直接来自官方榜单，不存在猜的问题；
+RT 侧则靠"片名 + 年份"对齐，规则是**规范化后标题必须完全相同，且上映年份必须吻合（±1）**，
+对不上就放弃，而不是取搜索结果的第一个。
 
 这不是保守，是修过的事故。旧实现无脑取 `hits[0]`，结果：
 
@@ -109,19 +164,35 @@ RottenDouban 把三个口径并排展示，再给一个加权总分，让你自�
 
 站点会显示错误电影的评分，而且看起来完全正常——这类错误比崩溃危险得多。
 
-**别名检索是另一回事**：《这个杀手不太冷》在 RT 索引里挂在 1994 年的 *The Professional* 条目下，
-所以 `_query_variants` 会依次尝试原名、去重音名、冒号前后两段，最多 4 次检索。
+**英文片名有三级来源**，因为华语片的 `original_title` 是空的（原名就是中文）：
 
-**确实查不到就不显示**：RT 的索引里没有《七宗罪》《你的名字》《活着》，
-豆瓣检索也可能返回同名剧集。这些情况下站点不显示该源分数，而不是显示错的。
+1. Rexxar 的 `original_title`
+2. Rexxar 的 `aka` 里的 ASCII 别名 —— 顺序不保证，《活着》是 `['人生','Lifetimes','To Live']`，
+   `Lifetimes` 排在前面却不是 RT 收录的那个，所以**逐个候选试**，由严格匹配器自校验
+3. TMDB 用中文片名反查 —— 这一级让 RT 覆盖率不再依赖豆瓣详情接口是否可达。
+   run `36267829360` 实测：即使只拿到 78 部详情，反查仍补出 153 个英文名，
+   最终 RT 命中 211/250。检索用 `language=zh-CN` 是为了让"标题精确匹配"生效
+   （用 `en-US` 搜中文片名也能命中，但落在兜底取首条那一级，全靠年份把关）
+
+《这个杀手不太冷》还需要 `_query_variants` 兜一层：它在 RT 索引里挂在 1994 年的
+*The Professional* 条目下，所以会依次尝试原名、去重音名、冒号前后两段。
+
+**确实查不到就不显示**：RT 的索引里没有《七宗罪》《你的名字》《活着》。
+这种情况下站点不显示番茄分，而不是显示错的。
 
 ### 当前覆盖率
 
+run `36267829360`（2026-09-26，冷启动第一轮，豆瓣详情只抓到 78 部）：
+
 | 数据源 | 覆盖 | 说明 |
 |---|---:|---|
-| 烂番茄评分 | 112 / 119 | 其余 7 部 RT 索引内确实不存在 |
-| 海报 | 119 / 119 | TMDB 提供 |
-| 豆瓣评分 | 57 / 119 | 见下方[已知限制](#已知限制) |
+| 豆瓣榜单字段 | 250 / 250 | 名次、评分、人数、海报、类型、地区全部来自榜单 |
+| 烂番茄评分 | 211 / 250 | 英文名由 TMDB 反查补出 153 个；未命中的多为 RT 索引内确实不存在 |
+| 豆瓣详情 | 78 / 250 | 受 Rexxar 配额限制，随每轮续抓递增 |
+| 豆瓣短评 | 26 / 250 | 排在详情之后，冷启动第一轮基本轮不到 |
+
+冷启动第一轮的 RT 覆盖已到 84%，因为**英文名不必等豆瓣详情**：TMDB 反查这一级
+顶住了 153 部。豆瓣详情与短评则靠跨轮续抓逐轮补齐。
 
 ## 快速开始
 
@@ -146,7 +217,7 @@ cd site && python -m http.server 8080
 
 ```bash
 pip install pytest pyyaml           # 仅测试需要
-python -m pytest                    # 64 项，全部离线，不碰网络
+python -m pytest                    # 112 项，全部离线，不碰网络
 ```
 
 ## 配置
@@ -155,79 +226,101 @@ python -m pytest                    # 64 项，全部离线，不碰网络
 
 | 变量 | 默认 | 作用 |
 |---|---|---|
-| `CRAWLER_MODE` | `full` | `full` 全流程 / `douban_only` 仅豆瓣匹配 / `site_only` 仅重出站点数据 |
-| `CRAWLER_LIMIT` | 全量 | 只抓片单前 N 部，本地调试用 |
-| `TMDB_API_KEY`<br>`TMDB_BEARER_TOKEN` | 空 | 配置后补海报、简介、编剧、MPAA 评级；不配也能跑 |
-| `MIN_MOVIES_TO_PUBLISH` | `50` | 发布下限。抓到的电影少于它就不覆盖 `site/data/`，保住线上旧数据 |
+| `CRAWLER_MODE` | `full` | `full` 全流程 / `site_only` 仅从 `movies.db` 重出站点数据 |
+| `CRAWLER_LIMIT` | 全量 | 只抓榜单前 N 部，本地调试用 |
+| `DOUBAN_TOP_N` | `250` | 榜单取前 N 名 |
+| `DOUBAN_REQUEST_DELAY` | `1.5` | 豆瓣基础请求间隔（秒）。配额是按时间窗的固定额度，放慢不换来更多配额 |
+| `DOUBAN_TIME_BUDGET` | `1200` | 豆瓣阶段的墙钟上限（秒），详情与短评两轮共用；用尽即停，剩余留给下一轮 |
+| `DOUBAN_RATE_LIMIT_RETRIES` | `3` | 撞上 IP 配额后的重试次数 |
+| `DOUBAN_RATE_LIMIT_BACKOFF` | `20` | 配额重试的退避基数（秒），按次数递增 |
+| `DOUBAN_COMMENT_COUNT` | `3` | 每部片抓几条热门短评 |
 | `DOUBAN_BLOCK_MIN_SAMPLES` | `12` | 判定豆瓣限流所需的最小实时样本数 |
-| `DOUBAN_BLOCK_EMPTY_RATIO` | `0.85` | 空结果占比达到该值即熔断 |
+| `DOUBAN_BLOCK_EMPTY_RATIO` | `0.85` | 空结果占比达到该值即熔断，剩余影片只读缓存 |
+| `TMDB_API_KEY`<br>`TMDB_BEARER_TOKEN` | 空 | 补海报、英文简介、MPAA 评级，并兼任中文名→英文名反查；不配也能跑 |
+| `MIN_MOVIES_TO_PUBLISH` | 目标数 × 0.8 | 发布下限。低于它就不覆盖 `site/data/`，保住线上旧数据 |
 | `CRAWLER_INSECURE_SSL` | 关 | 设 `1` 跳过证书校验，**仅**用于本地代理做 HTTPS 中间人时排障 |
 
 TMDB 密钥放在仓库 **Settings → Secrets and variables → Actions**，不要写进代码。
 
 ## 测试
 
-64 项 pytest，全部离线（构造数据 + 打桩，不碰豆瓣 / RT 网络）：
+112 项 pytest，全部离线（构造数据 + 打桩，不碰豆瓣 / RT / TMDB 网络），约 2 秒跑完：
 
-| 文件 | 覆盖 |
-|---|---|
-| `test_rotten_tomatoes_match.py` | 同名翻拍片择优、年份门槛、重音归一、别名变体 |
-| `test_douban_match.py` | 标题+年份双重校验、旧缓存键回退、限流比例判定 |
-| `test_scoring.py` | 加权算法、量纲、缺源权重重分配 |
-| `test_database.py` | slug 唯一性、评分归一与夹取、历史快照 |
-| `test_pipeline.py` | 打桩三个数据源跑通 `main()`，验证落盘位置与退出码 |
-| `test_config.py` | `SITE_DIR` 指向回归锁 |
-| `test_workflows.py` | workflow 语法、fetch/deploy 必须拆分、禁止用 shell 短路吞掉退出码、禁止表达式直插 shell |
+| 文件 | 项数 | 覆盖 |
+|---|---:|---|
+| `test_douban.py` | 32 | 榜单分页与 rank 语义、翻页封顶、Rexxar 归一化、id 级缓存与旧格式识别、详情/短评两轮拆分、短评跨轮留存、时间预算与退避余量、IP 配额识别与重试 |
+| `test_workflows.py` | 19 | workflow 语法、fetch/deploy 必须拆分、禁止用 shell 短路吞掉退出码、禁止表达式直插 shell、提交必须 `if: always()`、推送必须收在**一个**步骤里并先 rebase、校验失败要丢弃新数据、Pages 部署方共用一个并发组 |
+| `test_pipeline.py` | 18 | 打桩四个数据源跑通 `main()`：落盘位置、退出码、字段贯通、TMDB 反查、限流降级、短评阶段的增量与中止、制片国家的榜单兜底 |
+| `test_tmdb_match.py` | 14 | 检索 language 跟着查询语言走、中文译名精确命中、模糊匹配的年份把关、兜底路径保留 |
+| `test_rotten_tomatoes_match.py` | 9 | 同名翻拍片择优、年份门槛、重音归一、别名变体 |
+| `test_database.py` | 9 | slug 唯一性、评分归一与夹取、历史快照、导出不含历史 |
+| `test_scoring.py` | 7 | 加权算法、量纲、缺源权重重分配 |
+| `test_config.py` | 4 | `SITE_DIR` 指向回归锁 |
 
-其中 `test_config.py` 与 `test_pipeline.py` 是**事故回归锁**：它们钉住的正是曾经导致
-线上数据静默停更三个多月的两个错误（输出目录写错、失败被吞掉后 CI 照样绿灯）。
+两类测试值得单独说：
+
+- **事故回归锁** — `test_config.py` 与 `test_pipeline.py` 钉住的是曾经导致线上数据
+  静默停更三个多月的两个错误（输出目录写错、失败被吞掉后 CI 照样绿灯）。
+- **夹具防漂移** — `test_pipeline.py` 的榜单数据由**真实的 `fetch_top_list`** 产出
+  （只桩掉网络层），而不是手写字典。之前正是夹具与真实输出的键名漂移
+  （`rank` vs `douban_rank`）掩盖了一个线上会 KeyError 的 bug。
 
 ## 项目结构
 
 ```
 crawler/
   config.py            路径、权重、TLS；无 import 副作用
-  movie_list.py        片单（title_en / title_cn / year），119 部
-  rotten_tomatoes.py   RT Algolia 检索 + 择优
-  douban.py            豆瓣 window.__DATA__ 解析 + 缓存 + 限流熔断
-  tmdb_api.py          TMDB 详情（可选）
+  douban.py            豆瓣榜单 + Rexxar 详情/短评 + id 级缓存 + 配额退避 + 时间预算
+  rotten_tomatoes.py   RT Algolia 检索 + 严格择优
+  tmdb_api.py          TMDB 详情（可选），兼任中文名→英文名反查（检索按 zh-CN）
+  movie_list.py        中英片名映射，仅在 Rexxar 给不出英文名时兜底
   database.py          SQLite：slug 唯一键、评分量纲归一
   site_generator.py    输出 site/data/{movies.json,movies.csv,stats.json}
   main.py              全流程入口，返回退出码供 CI 判断
   data/
-    douban_cache.json  已入库，CI 每轮回传增量
+    douban_cache.json  按 subject id 缓存详情，CI 每轮回传增量
 site/                  GitHub Pages 直接上传这个目录
   index.html  css/  js/app.js  data/movies.json
 scripts/
+  diagnose_sources.py  在 Runner 出口 IP 上探测各数据源可用性
+  diagnose_rexxar.py   Rexxar IP 配额探测（配合 matrix 分档节流）
   update_site.py       不碰上游 API，仅从 movies.db 重出站点数据
-  verify_site.py       校验量纲、必填字段、占位链接
+  verify_site.py       校验量纲、必填字段、占位链接、短评类型
   check_db.py          查看本地库概况
   check_cache.py       查看豆瓣缓存概况
-tests/                 64 项离线测试
-.github/workflows/     ci.yml · crawl-deploy.yml · deploy-site.yml
+tests/                 112 项离线测试
+.github/workflows/     ci · crawl-deploy · deploy-site · diagnose-sources
 ```
 
 ## 已知限制
 
-- **豆瓣覆盖率偏低且增长缓慢**。豆瓣会限流数据中心 IP：返回 HTTP 200，但页面里没有
-  `window.__DATA__`，或有 `__DATA__` 而 `items` 为空（CI 实测后者是主流形态）。
-  爬虫按空结果比例熔断后回落到缓存，缓存随每轮运行逐步补齐——实测已从 6 条自愈到 57 条。
-  要一次填满，需在住宅 IP 下本地跑一遍把 `douban_cache.json` 灌满后提交。
-- **片单是手工维护的 119 部**（`crawler/movie_list.py`），不是完整的豆瓣 Top 250。
-- **豆瓣只用搜索接口**，拿不到中文简介、导演、演员、短评，站点上这些字段为空。
-- **海报走远程直链**（TMDB / RT / 豆瓣图床），不下载入库；豆瓣图床需要 `no-referrer`，前端已处理。
-- **GitHub 会在仓库 60 天无人工活动后停掉定时任务**。本仓库有 bot 定期提交数据可缓解，
-  长期闲置后仍建议手动 dispatch 一次。
+- **豆瓣详情一轮抓不满 250 部**。`rexxar/api/v2/movie/<id>` 超额返回 HTTP 400
+  （`{"msg":"subject_ip_rate_limit"}`）。CI matrix 实测：0.5s 节流 10/20 成功、
+  2s → 14、4s → 19、8s → 17（8s 的失败是 SSL 握手超时而非配额），
+  且各档首次失败都在第 10-11 次 —— 配额是按时间窗滚动的**固定额度**，放慢只能摊平。
+  冷启动第一轮实测只补到 78/250 部详情。因此改为时间预算 + 跨轮续抓
+  （见[配额有限时怎么抓满 250 部](#配额有限时怎么抓满-250-部)）：
+  **冷启动需要几轮才能补齐详情与短评**，覆盖率随每轮运行单调递增。
+  固定 4s 节流的旧方案实测在 75 分钟被 CI 强杀且缓存全丢，已废弃。
+- **`search.douban.com` 在 CI 上不可用**：返回 200 但 `items` 为空。整个模块已弃用它，
+  改用榜单 + Rexxar。本地住宅 IP 上它仍然可用，所以这个差异只能在 CI 里发现。
+- **短评条数有限**（默认每部 3 条）。豆瓣短评接口同样受配额约束，条数越多耗时越长。
+- **海报走远程直链**（TMDB / 豆瓣图床），不下载入库；豆瓣图床需要 `no-referrer`，前端已处理。
+  好处是仓库体积小，代价是图床策略变化时海报会失效。
+- **GitHub 会在仓库 60 天无活动后停掉定时任务**（官方文档原文："scheduled workflows are
+  automatically disabled when no repository activity has occurred in 60 days"，
+  且未定义何种行为算 activity）。本仓库每半月有一次 bot 数据提交，但**不能保证**这算活动，
+  长期闲置后请到 Actions 页面确认 `Fetch Data and Deploy` 仍是 `active`，
+  必要时手动 dispatch 一次或用 `PUT /actions/workflows/{id}/enable` 重新启用。
 
 ## 贡献
 
 1. Fork 本仓库并新建分支
-2. `python -m pytest` 确认 64 项全绿
-3. 涉及匹配逻辑的改动请补测试——本项目最贵的 bug 都出在"匹配到了错误的电影"
-4. 提 PR；`ci.yml` 会自动跑测试
-
-新增片单条目只需在 `crawler/movie_list.py` 追加一行 `{"title_en", "title_cn", "year"}`，
-`year` 务必填写：它是区分同名翻拍片的唯一依据。
+2. `pip install pytest pyyaml && python -m pytest` 确认 112 项全绿
+3. **改动抓取逻辑前，先手动跑一次 `diagnose-sources.yml`** —— 豆瓣对不同 IP 段策略不同，
+   本地能通不代表 CI 能通，反之亦然
+4. 涉及匹配逻辑的改动请补测试——本项目最贵的 bug 都出在"匹配到了错误的电影"
+5. 提 PR；`ci.yml` 会自动跑测试
 
 ## 许可与数据来源
 
@@ -236,7 +329,7 @@ tests/                 64 项离线测试
 本项目**不托管任何影视内容**，仅聚合公开的评分元数据：
 
 - 评分与影片元数据来自 [Rotten Tomatoes](https://www.rottentomatoes.com/) 的公开搜索接口
-- 中文标题与评分来自 [豆瓣电影](https://movie.douban.com/) 的公开搜索页
+- 中文标题、评分、简介与短评来自 [豆瓣电影](https://movie.douban.com/) 的公开榜单与移动端接口
 - 海报与简介来自 [TMDB](https://www.themoviedb.org/) API
 
 各来源的数据与商标归其各自所有者。本项目为个人学习用途，请遵守各数据源的服务条款；

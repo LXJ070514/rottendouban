@@ -169,6 +169,8 @@ def _fetch_details(client, entries, hand_map, rt_crawler, use_tmdb, logger, hits
         movie["category"] = "豆瓣Top250"
         movie["rt_url"] = ""
         movie["year"] = _as_year(entry.get("douban_release_date"))
+        # 榜单自带制片国家/地区，详情未抓到时先顶上 —— 冷启动的头几轮全靠它
+        movie["douban_countries"] = entry.get("douban_regions") or ""
 
         detail = None
         if client.blocked:
@@ -188,7 +190,8 @@ def _fetch_details(client, entries, hand_map, rt_crawler, use_tmdb, logger, hits
                 "douban_director": ", ".join(detail.get("directors") or []),
                 "douban_cast": ", ".join(detail.get("actors") or []),
                 "douban_comments": json.dumps(detail.get("comments") or [], ensure_ascii=False),
-                "douban_countries": ", ".join(detail.get("countries") or []),
+                "douban_countries": (", ".join(detail.get("countries") or [])
+                                     or movie.get("douban_countries") or ""),
                 "douban_durations": ", ".join(detail.get("durations") or []),
                 "douban_genre": movie.get("douban_genre") or ", ".join(detail.get("genres") or []),
                 "douban_poster": movie.get("douban_poster") or detail.get("cover_url") or "",

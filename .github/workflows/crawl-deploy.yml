@@ -18,7 +18,10 @@ permissions:
   id-token: write   # actions/deploy-pages 需要
 
 concurrency:
-  group: rottendouban-${{ github.workflow }}-${{ github.ref }}
+  # 与 deploy-site.yml 共用一个组：两条流水线都会部署 Pages。分组若各自独立，
+  # 抓取途中的一次前端提交会让 deploy-site 把上一轮的 movies.json 重新部署上去，
+  # 线上数据静默回退，直到半个月后的下一次定时抓取才被纠正。
+  group: rottendouban-${{ github.ref }}
   cancel-in-progress: false
 
 env:
@@ -62,27 +65,6 @@ jobs:
         # 不再用 `|| true` / continue-on-error：上游抖动时 crawler 会因低于
         # MIN_MOVIES_TO_PUBLISH 而非零退出，此处让它如实失败并保留线上旧数据
 
-      # 缓存必须独立于抓取成败回传：豆瓣按 IP 的时间窗配额撑不住一轮抓满
-      # 250×2 次请求，靠"每轮补一点、下轮从缓存接着补"才能让覆盖率单调递增。
-      # 放在 Verify 之前 + if: always()，抓取失败时缓存照样落地。
-      - name: Commit douban cache
-        if: always()
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f crawler/data/douban_cache.json
-          if git diff --cached --quiet; then
-            echo "豆瓣缓存无变化"
-            exit 0
-          fi
-          SIZE=$(python -c "import json;print(len(json.load(open('crawler/data/douban_cache.json'))))")
-          git commit -m "chore(douban): cache $SIZE subjects [skip ci]"
-          # checkout@v4 处于 detached HEAD，git pull --rebase 不可用；
-          # 且并发推送（另一次 run 或人工提交）会让裸 push 非快进失败、整轮成果丢失
-          git fetch origin "$GITHUB_REF_NAME"
-          git rebase "origin/$GITHUB_REF_NAME"
-          git push origin "HEAD:$GITHUB_REF_NAME"
-
       - name: Verify site data
         id: after
         env:
@@ -99,21 +81,53 @@ jobs:
             exit 1
           fi
 
-      - name: Commit refreshed data
+      # 一个步骤提交全部改动，不是图省事 —— 分开提交会让工作树里留着
+      # 未提交的 movies.json（爬虫每轮都会重写它，而它是被跟踪的文件），
+      # 后面的 git rebase 会直接以 "You have unstaged changes" 失败。
+      # 上一个 run 36267829360 正是死在这里：78 条详情抓完，缓存一条没推上去。
+      # 另：movies.csv / stats.json 在 .gitignore 里，Pages 直接上传 ./site 目录，
+      # 不需要入库，所以这里只提交 douban_cache.json 与 movies.json。
+      - name: Commit data
+        if: always()
         env:
-          NEW_COUNT: ${{ steps.after.outputs.count }}
+          # 校验没过就不发布 movies.json，只回传缓存 —— 缓存是跨轮续抓的本钱，
+          # 丢了就得从零重抓；movies.json 丢了下一轮会重新生成。
+          VERIFIED: ${{ steps.after.outcome }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f site/data/movies.json site/data/movies.csv site/data/stats.json
+
+          if [ "$VERIFIED" != "success" ]; then
+            echo "站点校验未通过，丢弃这份 movies.json（旧版本仍在仓库里），只回传缓存"
+            git checkout -- site/data/movies.json 2>/dev/null || true
+          else
+            git add -f site/data/movies.json
+          fi
+
+          if [ -f crawler/data/douban_cache.json ]; then
+            git add -f crawler/data/douban_cache.json
+          else
+            echo "缓存文件不存在，跳过"
+          fi
+
           if git diff --cached --quiet; then
-            echo "站点数据无变化"
+            echo "无数据变化"
             exit 0
           fi
-          git commit -m "Refresh data: $NEW_COUNT movies [skip ci]"
+
+          SIZE=0
+          if [ -f crawler/data/douban_cache.json ]; then
+            SIZE=$(python -c "import json;print(len(json.load(open('crawler/data/douban_cache.json'))))")
+          fi
+          git commit -m "chore(data): cache $SIZE subjects [skip ci]"
+
+          # checkout@v4 处于 detached HEAD，git pull --rebase 用不了；
+          # 且并发推送（另一次 run 或人工提交）会让裸 push 非快进失败。
+          # 提交完成 → 工作树干净 → rebase 才能正常工作。
           git fetch origin "$GITHUB_REF_NAME"
           git rebase "origin/$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
+          echo "已回传：缓存 $SIZE 条"
 
       - name: Summary
         run: |

@@ -28,6 +28,10 @@ jobs:
           python-version: '3.11'
 
       - name: Probe data sources
+        env:
+          # TMDB 中文片名反查探针需要真密钥，否则那一项只会报"未配置"
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          TMDB_BEARER_TOKEN: ${{ secrets.TMDB_BEARER_TOKEN }}
         run: python scripts/diagnose_sources.py
 
   # Rexxar 的 HTTP 400 响应体是 {"msg":"subject_ip_rate_limit"}，即按 IP 配额。
@@ -35,9 +39,11 @@ jobs:
   # 吃光、后面的档位一律 0 成功，结论毫无意义（上一轮的请求头对照就踩了这个坑，
   # C/D 两个变体得 0 并不是因为它们差，而是因为 A/B 已经把配额用完了）。
   #
-  # 要区分两种可能：配额是"每 IP 总量"还是"每 IP 时间窗"。
-  # 放慢就能持续成功 → 时间窗，只需调大 DOUBAN_REQUEST_DELAY；
-  # 放慢仍卡在相近数量 → 总量，只能靠 matrix 分片（每片一个 IP）扩容。
+  # 这个 job 已经回答过它要问的问题：四档各 20 次连发得 10/14/19/17 成功，
+  # 且首次失败都落在第 10-11 次 —— 配额是按时间窗滚动的固定额度，放慢只能摊平、
+  # 不能提高总额，所以"按 IP 分片并行"与"把节流调到 8s 就稳了"都被否掉，
+  # 最终方案是时间预算 + 跨轮续抓。保留本 job 作为回归探针：若哪一档的成功数
+  # 明显变化，说明豆瓣改了配额策略，抓取参数需要重新标定。
   rexxar-throttle:
     runs-on: ubuntu-latest
     timeout-minutes: 25

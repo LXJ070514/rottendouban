@@ -19,8 +19,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: rottendouban-pages-${{ github.ref }}
-  cancel-in-progress: true
+  # 与 crawl-deploy.yml 共用一个组：两条流水线都会部署 Pages，若各自排队，
+  # 抓取途中推一次前端改动就会让本 workflow 把上一轮的 movies.json 重新部署上去，
+  # 线上数据静默回退到半个月后才会被下一次定时抓取纠正。
+  # cancel-in-progress: false —— 部署很快，排队等一下比取消掉一次部署更安全。
+  group: rottendouban-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy:

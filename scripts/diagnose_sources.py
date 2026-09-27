@@ -61,7 +61,7 @@ try:
 except Exception as e:
     record("RT Algolia 搜索", status, body, "FAIL", str(e)[:80])
 
-# ---------- 2. 豆瓣搜索页（当前在用，已知会被限流）----------
+# ---------- 2. 豆瓣搜索页（爬虫已弃用，留作对照）----------
 status, body = fetch(
     "https://search.douban.com/movie/subject_search?search_text="
     + urllib.parse.quote("肖申克的救赎"),
@@ -76,7 +76,7 @@ elif status == 200:
 else:
     record("豆瓣搜索页 __DATA__", status, body, "FAIL", body[:80])
 
-# ---------- 3. Top250 HTML（自动片单的候选来源）----------
+# ---------- 3. Top250 HTML（爬虫已弃用，留作对照：榜单走 j/chart/top_list）----------
 status, body = fetch("https://movie.douban.com/top250?start=0&filter=")
 if status == 200:
     titles = re.findall(r'<span class="title">([^<]+)</span>', body)
@@ -139,6 +139,64 @@ if status == 200:
         record("Rexxar 热门短评", status, body, "EMPTY", f"非 JSON: {e}")
 else:
     record("Rexxar 热门短评", status, body, "FAIL", body[:80])
+
+# ---------- 7. TMDB 中文片名反查（language 是否影响命中质量）----------
+# 反查本身不依赖 language：run 36267829360 里用 en-US 搜中文片名也拿到了
+# 153/250 的结果（TMDB 索引了译名，落在 results[0]）。这一项要回答的是
+# 更细的问题：换 zh-CN 能否让命中从"兜底取首条"抬到"标题精确匹配"，
+# 从而少走后面那道纯靠年份的模糊判断。改 search_movie 的检索语言前先跑一次。
+TMDB_KEY = os.environ.get("TMDB_API_KEY", "")
+TMDB_TOKEN = os.environ.get("TMDB_BEARER_TOKEN", "")
+if not TMDB_KEY and not TMDB_TOKEN:
+    record("TMDB 中文反查", None, "", "FAIL", "未配置 TMDB_API_KEY / TMDB_BEARER_TOKEN")
+else:
+    tmdb_headers = {"Content-Type": "application/json"}
+    tmdb_query = {}
+    found_id = None
+    if TMDB_TOKEN:
+        tmdb_headers["Authorization"] = f"Bearer {TMDB_TOKEN}"
+    else:
+        tmdb_query["api_key"] = TMDB_KEY
+
+    for lang in ("en-US", "zh-CN"):
+        params = dict(tmdb_query, query="控方证人", language=lang,
+                      primary_release_year="1957", include_adult="false")
+        status, body = fetch(
+            "https://api.themoviedb.org/3/search/movie?" + urllib.parse.urlencode(params),
+            headers=tmdb_headers)
+        if status != 200:
+            record(f"TMDB 搜索 lang={lang}", status, body, "FAIL", body[:80])
+            continue
+        try:
+            res = json.loads(body).get("results") or []
+        except json.JSONDecodeError as e:
+            record(f"TMDB 搜索 lang={lang}", status, body, "EMPTY", f"非 JSON: {e}")
+            continue
+        first = res[0] if res else {}
+        if lang == "zh-CN" and first.get("id"):
+            found_id = first["id"]
+        record(f"TMDB 搜索 lang={lang}", status, body, "OK" if res else "EMPTY",
+               f"{len(res)} 条，首条 title={first.get('title')!r} "
+               f"original={first.get('original_title')!r} "
+               f"date={first.get('release_date')!r}")
+
+    # 详情必须回英文 title —— main.py 靠它拿英文片名去匹配 RT
+    if found_id:
+        status, body = fetch(
+            f"https://api.themoviedb.org/3/movie/{found_id}?"
+            + urllib.parse.urlencode(dict(tmdb_query, language="en-US")),
+            headers=tmdb_headers)
+        if status == 200:
+            try:
+                d = json.loads(body)
+                record("TMDB 详情 lang=en-US", status, body, "OK" if d.get("title") else "EMPTY",
+                       f"title={d.get('title')!r} original={d.get('original_title')!r}")
+            except json.JSONDecodeError as e:
+                record("TMDB 详情 lang=en-US", status, body, "EMPTY", f"非 JSON: {e}")
+        else:
+            record("TMDB 详情 lang=en-US", status, body, "FAIL", body[:80])
+    else:
+        record("TMDB 详情 lang=en-US", None, "", "EMPTY", "中文搜索无结果，无从取 id")
 
 # ---------- 出口 IP（判断是否数据中心段）----------
 status, body = fetch("https://api.ipify.org?format=json")
