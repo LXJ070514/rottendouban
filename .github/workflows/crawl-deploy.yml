@@ -182,7 +182,7 @@ jobs:
                     f'（HTTP 400 + `subject_ip_rate_limit`）撑不住一轮抓满 250×2 次请求，'
                     f'故设 {os.environ.get("DOUBAN_TIME_BUDGET", "1200")}s 时间预算，'
                     f'超出的条目下一轮从缓存续抓，**覆盖率逐轮递增**。')
-              print(f'>\n> 对照：78 → 101 → 158 部（前三轮实测）。'
+              print(f'>\n> 对照：78 → 101 → 158 → 206 部（四轮实测）。'
                     f'若本行数字不升，说明配额策略变了，需重跑 diagnose-sources.yml 标定。')
           PY
 
