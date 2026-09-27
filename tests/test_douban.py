@@ -316,6 +316,57 @@ def test_backoff_gives_up_after_the_retry_cap(client, monkeypatch):
     assert len(calls) == 2, "首次 + 1 次重试"
 
 
+def test_get_raises_nopermission_on_subject_level_denial(client, monkeypatch):
+    """HTTP 403 + need_permission 是**条目级**权限拒绝，与配额无关。
+
+    实测这三个条目在住宅 IP 与 Runner 上都稳定 403，而同批次相邻 subject 一律 200
+    —— 是豆瓣按条目设的权限。必须与 RateLimited 区分：对它重试是纯浪费。
+    """
+    class _Denied(douban_mod.urllib.error.HTTPError):
+        def __init__(self):
+            super().__init__("https://m.douban.com/rexxar/api/v2/movie/1307528", 403,
+                             "Forbidden", {}, None)
+            self._body = ('{"request": "GET /v2/movie/1307528", '
+                          '"msg": "need_permission", "code": 1000}').encode()
+
+        def read(self, *a):
+            return self._body
+
+    monkeypatch.setattr(douban_mod.urllib.request, "urlopen",
+                        lambda *a, **k: (_ for _ in ()).throw(_Denied()))
+    with pytest.raises(douban_mod.NoPermission):
+        douban_mod._get("https://m.douban.com/rexxar/api/v2/movie/1307528", "https://r")
+
+
+def test_request_gives_up_immediately_on_need_permission(client, monkeypatch):
+    """被拒绝就该立刻停手：不重试、不占退避额度，并记下 id 供上层报告。"""
+    calls = []
+    slept = []
+    monkeypatch.setattr(douban_mod, "_get",
+                        lambda url, referer, timeout=15: calls.append(url) or
+                        (_ for _ in ()).throw(douban_mod.NoPermission(url)))
+    monkeypatch.setattr(douban_mod.time, "sleep", lambda s: slept.append(s))
+
+    assert client._request("https://m.douban.com/rexxar/api/v2/movie/1307528", "https://r") is None
+    assert len(calls) == 1, f"不该重试，实际请求 {len(calls)} 次"
+    assert slept == [], "不该为条目级拒绝而退避"
+    assert client.backoff_slept == 0, "也不该占用退避额度"
+    assert "1307528" in client.denied_ids
+
+
+def test_fetch_subject_returns_none_on_need_permission(client, monkeypatch):
+    """对上层表现为"这部没有详情"，降级继续，而不是把异常抛穿整轮。"""
+    monkeypatch.setattr(douban_mod, "_get",
+                        lambda url, referer, timeout=15:
+                        (_ for _ in ()).throw(douban_mod.NoPermission(url)))
+    assert client.fetch_subject("1307528") is None
+    assert "1307528" in client.denied_ids
+
+
+def test_denied_ids_start_empty(client):
+    assert client.denied_ids == set()
+
+
 # ==================== 时间预算 ====================
 
 def test_budget_exhaustion_stops_requests(client, monkeypatch):

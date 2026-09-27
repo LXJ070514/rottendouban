@@ -16,6 +16,7 @@ bug 随之消失。
 import json
 import logging
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -86,8 +87,17 @@ class RateLimited(DoubanError):
     """
 
 
+class NoPermission(DoubanError):
+    """该 subject 的 Rexxar 详情被豆瓣拒绝：HTTP 403 + {"msg":"need_permission"}。
+
+    与配额无关，**重试无意义**。实测这三个条目在住宅 IP 与 Runner 上都稳定 403，
+    而同批次相邻的其它 subject 一律 200 —— 是豆瓣按条目设的权限，不是 IP 问题。
+    既然拿不到就不该反复试：既浪费退避额度，也会让日志看起来像"抓取不稳"。
+    """
+
+
 def _get(url: str, referer: str, timeout: int = 15):
-    """GET 并解析 JSON。返回 None 表示拿不到数据；配额耗尽抛 RateLimited。"""
+    """GET 并解析 JSON。返回 None 表示拿不到数据；按错误类型抛对应异常。"""
     headers = {
         "User-Agent": _UA,
         "Accept": "application/json, text/plain, */*",
@@ -106,6 +116,8 @@ def _get(url: str, referer: str, timeout: int = 15):
             pass
         if "subject_ip_rate_limit" in detail:
             raise RateLimited(url) from e
+        if "need_permission" in detail:
+            raise NoPermission(url) from e
         logger.warning(f"豆瓣 HTTP {e.code}: {url[:90]}")
         return None
     except (urllib.error.URLError, TimeoutError, OSError) as e:
@@ -158,6 +170,8 @@ class DoubanClient:
         self.budget_exhausted = False
         # 累计退避睡眠，用于给退避封顶（见 _request）
         self.backoff_slept = 0.0
+        # 被豆瓣按条目拒绝（need_permission）的 subject id —— 这些不该再试
+        self.denied_ids = set()
         if use_cache:
             self._load_cache()
 
@@ -216,6 +230,14 @@ class DoubanClient:
             self._throttle()
             try:
                 data = _get(url, referer)
+                break
+            except NoPermission:
+                # 条目级权限拒绝，等多久都不会变 —— 立即停手，不占退避额度
+                logger.info(f"豆瓣拒绝该条目（need_permission），跳过: {url[:80]}")
+                m = re.search(r"/movie/(\d+)", url)
+                if m:
+                    self.denied_ids.add(m.group(1))
+                data = None
                 break
             except RateLimited:
                 if attempt >= RATE_LIMIT_RETRIES:

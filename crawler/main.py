@@ -286,10 +286,16 @@ def _fetch_details(client, entries, hand_map, rt_crawler, use_tmdb, logger, hits
     # 预算用尽后剩余条目会静默走完循环（只做 RT/TMDB，不碰豆瓣）。
     # 明确报出来，否则"这一轮为什么只有 N 条详情"要靠翻日志数行才能看出来。
     missing = [m for m in movies if not m.get("douban_synopsis")]
+    denied = getattr(client, "denied_ids", set())
     if missing:
         logger.info(f"详情阶段结束: {total - len(missing)}/{total} 部已有中文详情，"
                     f"其余 {len(missing)} 部留给下一轮续抓"
                     f"（预算用尽={client.budget_exhausted}，豆瓣限流={client.blocked}）")
+    if denied:
+        # 与配额无关：这些条目在住宅 IP 上同样 403 need_permission，
+        # 重试多少次都拿不到，续抓只会一直背着它们
+        logger.info(f"豆瓣按条目拒绝（need_permission）{len(denied)} 部，"
+                    f"已跳过且不会重试: {', '.join(sorted(denied))}")
 
     return movies
 
