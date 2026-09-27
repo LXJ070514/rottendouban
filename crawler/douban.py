@@ -42,21 +42,22 @@ _UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 # 限流判定：至少这么多实时样本，且空结果占比达到该阈值
 BLOCK_MIN_SAMPLES = int(os.environ.get("DOUBAN_BLOCK_MIN_SAMPLES", 12))
 BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
-# 基础节流 1.5s，撞配额时由退避接管 —— 退避是**必要**的，不是浪费。
-# 配额按时间窗滚动：额度用尽后必须等过一个窗口才有新额度，等待是唯一途径。
-# run 36296432188 实测的窗口产出：
-#   窗口1 → 74 条详情（耗时约 156s）
-#   等 ~400s → 窗口2 → 23 条
-#   等 ~500s → 窗口3 → 4 条
-#   等 ~91s  → 窗口4 → 1 条
-# 产出递减很快，但等待确实换来了 28 条，砍掉退避会直接损失这些。
-# 曾误判为"退避是负收益"并加过 180s 封顶，按上面的窗口结构推算那会停在窗口1、
-# 净损失 28 条 —— 已撤销。
+# 基础节流 1.5s，撞配额时由退避接管，但退避总睡眠有上限。
+# CI matrix 实测（每档独立 Runner/IP）：0.5s→10 成功、2s→14、4s→19、8s→17，
+# 各档首次失败都在第 10-11 次 → 配额按时间窗滚动。
+# 封顶值是实测标定的，两次线上运行的对照：
+#   不封顶（run 36296432188）：详情 101、短评 0/75 中止、预算 1182s 用尽、22.3 分钟
+#   封顶 180s（run 36298235604）：详情 158、短评 132/132 跑完、预算未用尽、15.3 分钟
+# 差异的机制：撞配额后干等 400s 是把整条流水线堵死；封顶后改为"放弃这一条、
+# 继续下一条"，其间穿插的 RT/TMDB 调用本身就拉长了豆瓣请求的自然间隔，
+# 后续请求常常就能通过。省下的墙钟还够把短评阶段跑完。
 # 固定 4s 节流仍不可行：250 部 × 2 请求 = 500 次，光节流就 33 分钟，
-# 实测 75 分钟被 CI 强杀、缓存颗粒无收。故用"小基础节流 + 退避 + 时间预算"。
+# 实测 75 分钟被 CI 强杀、缓存颗粒无收。
 REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 1.5))
 RATE_LIMIT_RETRIES = int(os.environ.get("DOUBAN_RATE_LIMIT_RETRIES", 3))
 RATE_LIMIT_BACKOFF = float(os.environ.get("DOUBAN_RATE_LIMIT_BACKOFF", 20))
+# 退避累计睡眠上限（秒）。触顶后不再为退避而等，本节条目直接留给下一轮续抓。
+RATE_LIMIT_SLEEP_BUDGET = float(os.environ.get("DOUBAN_RATE_LIMIT_SLEEP_BUDGET", 180))
 # 豆瓣阶段的时间预算（秒）。用尽即停止发请求，剩余条目留给下一轮从缓存续抓，
 # 以保证整轮抓取必定能在 CI 超时内跑完并把缓存提交上去。
 TIME_BUDGET = float(os.environ.get("DOUBAN_TIME_BUDGET", 1200))
@@ -145,6 +146,8 @@ class DoubanClient:
         self._last_request = 0.0
         self._started = time.time()
         self.budget_exhausted = False
+        # 累计退避睡眠，用于给退避封顶（见 _request）
+        self.backoff_slept = 0.0
         if use_cache:
             self._load_cache()
 
@@ -185,12 +188,15 @@ class DoubanClient:
         self._last_request = time.time()
 
     def _request(self, url: str, referer: str):
-        """带配额退避的单次请求。
+        """带配额退避的单次请求，退避总睡眠封顶。
 
-        撞上 subject_ip_rate_limit 时等待后重试。等待是**唯一**能拿到新额度的
-        途径（配额按时间窗滚动），实测每等过一个窗口能继续抓 74/23/4/1 条，
-        所以不能给退避封顶 —— 试过，会损失后续窗口的全部产出。
-        预算用尽时不再发请求，直接返回 None。
+        撞上 subject_ip_rate_limit 时等待后重试；累计睡眠触顶后不再干等，
+        本节条目直接放弃、留给下一轮续抓。
+
+        封顶不是"省钱"而是"别堵路"：不封顶时一次撞配额会连睡 400s，
+        整条流水线停在那里，短评阶段根本没时间跑。封顶后改为放弃这一条、
+        继续下一条，其间穿插的 RT/TMDB 调用拉长了豆瓣请求的自然间隔，
+        后续请求常常就能过。实测详情 101→158、短评 0→158、耗时 22.3→15.3 分钟。
         """
         if not self._check_budget():
             return None
@@ -206,9 +212,15 @@ class DoubanClient:
                     logger.warning(f"配额重试 {attempt} 次仍被限流，放弃: {url[:80]}")
                     break
                 wait = RATE_LIMIT_BACKOFF * (attempt + 1)
+                if self.backoff_slept + wait > RATE_LIMIT_SLEEP_BUDGET:
+                    logger.info(
+                        f"退避睡眠已达上限（{self.backoff_slept:.0f}s/"
+                        f"{RATE_LIMIT_SLEEP_BUDGET:.0f}s），不再等待，本条留给下一轮")
+                    break
                 logger.info(f"豆瓣配额限流，等待 {wait:.0f}s 后重试 "
                             f"({attempt + 1}/{RATE_LIMIT_RETRIES}): {url[:70]}")
                 time.sleep(wait)
+                self.backoff_slept += wait
 
         if data is None or (isinstance(data, (list, dict)) and not data):
             self.empty_lookups += 1

@@ -270,14 +270,16 @@ def test_comments_survive_a_cache_roundtrip(tmp_path, monkeypatch):
     assert second.cached_subject("1292052")["comments"][0]["user"] == "文泽尔"
 
 
-def test_backoff_waits_past_the_retry_cap(client, monkeypatch):
-    """退避是唯一能拿到新额度的途径，不能封顶。
+def test_backoff_sleep_is_capped(client, monkeypatch):
+    """退避总睡眠有上限，触顶后不再干等。
 
-    曾误判"退避是负收益"并加过封顶，实测数据推翻了这个判断：
-    配额按时间窗滚动，每个窗口分别产出 74/23/4/1 条详情，
-    封顶会直接损失后续窗口的全部产出。这条测试钉住"依然会等"。
+    这条不是"省钱"而是"别堵路"：不封顶时一次撞配额会连睡 400s，整条流水线停摆，
+    短评阶段根本轮不上。线上两次对照（run 36296432188 vs 36298235604）：
+    详情 101→158、短评 0/75 中止→132/132 跑完、耗时 22.3→15.3 分钟。
     """
     monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 30)
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_SLEEP_BUDGET", 50)
+    monkeypatch.setattr(client, "backoff_slept", 0.0)
     slept = []
     monkeypatch.setattr(douban_mod.time, "sleep", lambda s: slept.append(s))
     monkeypatch.setattr(douban_mod, "_get",
@@ -285,8 +287,22 @@ def test_backoff_waits_past_the_retry_cap(client, monkeypatch):
                             douban_mod.RateLimited(url)))
 
     assert client._request("https://x", "https://r") is None
-    # 默认重试 3 次 → 等 30 / 60 / 90，然后放弃
-    assert slept == [30, 60, 90], f"退避序列不符: {slept}"
+    # 第一次要 30s（累计 30 ≤ 50）→ 睡；第二次要 60s 会超上限 → 停手不再等
+    assert slept == [30], f"应只睡第一次退避，实际 {slept}"
+    assert client.backoff_slept == 30
+
+
+def test_backoff_with_zero_budget_never_sleeps(client, monkeypatch):
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_BACKOFF", 30)
+    monkeypatch.setattr(douban_mod, "RATE_LIMIT_SLEEP_BUDGET", 0)
+    monkeypatch.setattr(client, "backoff_slept", 0.0)
+    slept = []
+    monkeypatch.setattr(douban_mod.time, "sleep", lambda s: slept.append(s))
+    monkeypatch.setattr(douban_mod, "_get",
+                        lambda url, referer, timeout=15: (_ for _ in ()).throw(
+                            douban_mod.RateLimited(url)))
+    assert client._request("https://x", "https://r") is None
+    assert slept == [], f"预算为 0 时不该为退避而睡，实际 {slept}"
 
 
 def test_backoff_gives_up_after_the_retry_cap(client, monkeypatch):
