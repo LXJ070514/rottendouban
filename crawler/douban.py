@@ -42,15 +42,20 @@ _UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 # 限流判定：至少这么多实时样本，且空结果占比达到该阈值
 BLOCK_MIN_SAMPLES = int(os.environ.get("DOUBAN_BLOCK_MIN_SAMPLES", 12))
 BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
-# 基础节流 1.5s，撞配额时由退避接管。
+# 基础节流 1.5s，撞配额时由退避接管（但退避有总额上限，见下）。
 # CI matrix 实测（每档独立 Runner/IP，各连发 20 次）：0.5s→10 成功、2s→14、4s→19、
 # 8s→17（8s 的失败是 SSL 握手超时而非配额），各档首次失败都在第 10-11 次，
 # 说明配额按时间窗滚动。但固定 4s 不可行：250 部 × 2 请求 = 500 次，
 # 光节流就 33 分钟，叠加退避后实测 75 分钟被 CI 强杀、缓存颗粒无收。
-# 故改为"小基础节流 + 配额退避 + 时间预算 + 跨轮续抓"。
+# 故改为"小基础节流 + 有限退避 + 时间预算 + 跨轮续抓"。
 REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 1.5))
 RATE_LIMIT_RETRIES = int(os.environ.get("DOUBAN_RATE_LIMIT_RETRIES", 3))
 RATE_LIMIT_BACKOFF = float(os.environ.get("DOUBAN_RATE_LIMIT_BACKOFF", 20))
+# 退避累计睡眠上限（秒）。run 36296432188 实测：25 次退避睡掉 920s，
+# 占满 1200s 预算的 77%，只换来 4 条详情，代价是 139 条连试都没试上。
+# 配额是时间窗额度，"多等一会儿"换不来额度，只换掉别人的机会 —— 所以给退避
+# 封顶，把预算留给真正能发出去的请求，剩余的下一轮再说。
+RATE_LIMIT_SLEEP_BUDGET = float(os.environ.get("DOUBAN_RATE_LIMIT_SLEEP_BUDGET", 180))
 # 豆瓣阶段的时间预算（秒）。用尽即停止发请求，剩余条目留给下一轮从缓存续抓，
 # 以保证整轮抓取必定能在 CI 超时内跑完并把缓存提交上去。
 TIME_BUDGET = float(os.environ.get("DOUBAN_TIME_BUDGET", 1200))
@@ -139,6 +144,8 @@ class DoubanClient:
         self._last_request = 0.0
         self._started = time.time()
         self.budget_exhausted = False
+        # 累计退避睡眠，用于给退避封顶（见 _request）
+        self.backoff_slept = 0.0
         if use_cache:
             self._load_cache()
 
@@ -181,8 +188,10 @@ class DoubanClient:
     def _request(self, url: str, referer: str):
         """带配额退避的单次请求。
 
-        撞上 subject_ip_rate_limit 时等待后重试 —— CI 实测配额按时间窗滚动，
-        等一个窗口就能继续，直接放弃会让缓存永远补不满。
+        撞上 subject_ip_rate_limit 时等待后重试，但退避总睡眠受
+        RATE_LIMIT_SLEEP_BUDGET 封顶 —— 配额是时间窗额度，睡久了换不来额度，
+        只会把预算从"还能发出去的请求"手里抢走。封顶用尽后立即放弃本次请求，
+        由上层跨轮续抓。
         预算用尽时不再发请求，直接返回 None。
         """
         if not self._check_budget():
@@ -195,13 +204,19 @@ class DoubanClient:
                 data = _get(url, referer)
                 break
             except RateLimited:
+                wait = RATE_LIMIT_BACKOFF * (attempt + 1)
                 if attempt >= RATE_LIMIT_RETRIES:
                     logger.warning(f"配额重试 {attempt} 次仍被限流，放弃: {url[:80]}")
                     break
-                wait = RATE_LIMIT_BACKOFF * (attempt + 1)
+                if self.backoff_slept + wait > RATE_LIMIT_SLEEP_BUDGET:
+                    logger.info(
+                        f"退避睡眠已达上限（{self.backoff_slept:.0f}s/"
+                        f"{RATE_LIMIT_SLEEP_BUDGET:.0f}s），不再等待，本条留给下一轮")
+                    break
                 logger.info(f"豆瓣配额限流，等待 {wait:.0f}s 后重试 "
                             f"({attempt + 1}/{RATE_LIMIT_RETRIES}): {url[:70]}")
                 time.sleep(wait)
+                self.backoff_slept += wait
 
         if data is None or (isinstance(data, (list, dict)) and not data):
             self.empty_lookups += 1

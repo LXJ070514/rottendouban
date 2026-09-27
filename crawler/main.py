@@ -283,6 +283,14 @@ def _fetch_details(client, entries, hand_map, rt_crawler, use_tmdb, logger, hits
 
         movies.append(movie)
 
+    # 预算用尽后剩余条目会静默走完循环（只做 RT/TMDB，不碰豆瓣）。
+    # 明确报出来，否则"这一轮为什么只有 N 条详情"要靠翻日志数行才能看出来。
+    missing = [m for m in movies if not m.get("douban_synopsis")]
+    if missing:
+        logger.info(f"详情阶段结束: {total - len(missing)}/{total} 部已有中文详情，"
+                    f"其余 {len(missing)} 部留给下一轮续抓"
+                    f"（预算用尽={client.budget_exhausted}，豆瓣限流={client.blocked}）")
+
     return movies
 
 
