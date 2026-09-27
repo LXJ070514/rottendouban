@@ -42,3 +42,7 @@ nul
 .env
 venv/
 .venv/
+
+# 临时调试产物（API 响应转储）
+.r.json
+.j.json
