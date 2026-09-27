@@ -56,7 +56,9 @@ BLOCK_EMPTY_RATIO = float(os.environ.get("DOUBAN_BLOCK_EMPTY_RATIO", 0.85))
 REQUEST_DELAY = float(os.environ.get("DOUBAN_REQUEST_DELAY", 1.5))
 RATE_LIMIT_RETRIES = int(os.environ.get("DOUBAN_RATE_LIMIT_RETRIES", 3))
 RATE_LIMIT_BACKOFF = float(os.environ.get("DOUBAN_RATE_LIMIT_BACKOFF", 20))
-# 退避累计睡眠上限（秒）。触顶后不再为退避而等，本节条目直接留给下一轮续抓。
+# 退避的**累计**睡眠上限（秒），整轮口径而非单请求：单请求最多也就等
+# 20+40+60=120s，所以这个值只可能做累计约束。
+# 语义 = 整轮最多为退避花 180s，之后撞配额立刻放弃、把预算留给下一条。
 RATE_LIMIT_SLEEP_BUDGET = float(os.environ.get("DOUBAN_RATE_LIMIT_SLEEP_BUDGET", 180))
 # 豆瓣阶段的时间预算（秒）。用尽即停止发请求，剩余条目留给下一轮从缓存续抓，
 # 以保证整轮抓取必定能在 CI 超时内跑完并把缓存提交上去。
