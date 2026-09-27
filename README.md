@@ -8,6 +8,7 @@
 
 [![CI](https://img.shields.io/github/actions/workflow/status/LXJ070514/rottendouban/ci.yml?label=CI&logo=githubactions&logoColor=white)](https://github.com/LXJ070514/rottendouban/actions/workflows/ci.yml)
 [![Fetch & Deploy](https://img.shields.io/github/actions/workflow/status/LXJ070514/rottendouban/crawl-deploy.yml?label=Fetch%20%26%20Deploy&logo=githubactions&logoColor=white)](https://github.com/LXJ070514/rottendouban/actions/workflows/crawl-deploy.yml)
+[![Release](https://img.shields.io/github/v/release/LXJ070514/rottendouban?label=release&logo=github)](https://github.com/LXJ070514/rottendouban/releases)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen)](#运行时零依赖)
 [![License](https://img.shields.io/github/license/LXJ070514/rottendouban)](LICENSE)
@@ -329,6 +330,14 @@ tests/                 137 项离线测试
   固定 4s 节流的旧方案实测在 75 分钟被 CI 强杀且缓存全丢，已废弃。
 - **`search.douban.com` 在 CI 上不可用**：返回 200 但 `items` 为空。整个模块已弃用它，
   改用榜单 + Rexxar。本地住宅 IP 上它仍然可用，所以这个差异只能在 CI 里发现。
+- **部分 Runner IP 段上，豆瓣榜单接口会要求登录**。实测有一次 Runner 出口 IP
+  （`172.185.54.241`）对 `j/chart/top_list` 与搜索页一律返回
+  `403 {"error code": 008, please login}`，而同批 Rexxar 接口正常。
+  这种 IP 上榜单只能取到约 190 部，会低于 `MIN_MOVIES_TO_PUBLISH` 而**如实失败**
+  （线上旧数据保持不变，不会被半截数据覆盖）。Runner 出口 IP 是轮换的，历史上多次
+  抓取都成功（最近一次取满 250 部），故判断这是 IP 段层面的波动而非代码缺陷 ——
+  遇到失败先跑 `diagnose-sources.yml`，它会报出当前的出口 IP 与各数据源结论，
+  据此区分"IP 段问题"与"代码问题"。
 - **有 3 部片拿不到豆瓣详情，这是豆瓣侧的限制而非抓取问题**。《进击的巨人》最终季
   完结篇（前/后篇）与《盲井》的 Rexxar 详情返回 `403 {"msg":"need_permission"}`。
   实测在住宅 IP 上同样 403、而同批次相邻 subject 一律 200，故为条目级权限
