@@ -133,16 +133,20 @@
     function getPoster(m) {
         const rtUrl = sanitizeUrl(m.poster_url);
         const dbUrl = sanitizeUrl(m.douban_poster);
-        // If we have a real RT image, use it; if douban, use with no-referrer
-        if (rtUrl && !rtUrl.includes('example')) return { url: rtUrl, referrer: false };
-        if (dbUrl) return { url: dbUrl, referrer: true };
+        // 豆瓣图床是**反向**防盗链：缺 Referer 才回 418，带 Referer 一律 200。
+        // 曾按常见做法加 referrerpolicy="no-referrer"，结果整批海报 418 全挂。
+        // 实测（浏览器内 new Image）+ curl 四种 Referer 对照一致：
+        //   无 Referer→418、movie.douban.com→200、github.io→200、img9.doubanio.com→200
+        // 默认策略会带上本站 URL 作为 Referer，正好满足它。
+        if (rtUrl && !rtUrl.includes('example')) return rtUrl;
+        if (dbUrl) return dbUrl;
         // Fallback: unique placeholder per movie via picsum
-        return { url: `https://picsum.photos/seed/movie${m.id}/400/600`, referrer: false };
+        return `https://picsum.photos/seed/movie${m.id}/400/600`;
     }
 
     function renderCard(m) {
-        const poster = getPoster(m);
-        const posterHtml = `<img class="card-poster" src="${poster.url}" alt="${esc(m.title)}" loading="lazy" ${poster.referrer ? 'referrerpolicy="no-referrer"' : ''} onerror="this.src='https://picsum.photos/seed/fallback${m.id}/400/600'">`;
+        const posterUrl = getPoster(m);
+        const posterHtml = `<img class="card-poster" src="${posterUrl}" alt="${esc(m.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/fallback${m.id}/400/600'">`;
 
         const pills = [];
         if (m.tomatometer >= 0) {
@@ -200,8 +204,8 @@
         const overlay = document.getElementById('modal-overlay');
         const body = document.getElementById('modal-body');
 
-        const poster = getPoster(m);
-        const posterHtml = `<img class="detail-poster" src="${poster.url}" alt="${esc(m.title)}" ${poster.referrer ? 'referrerpolicy="no-referrer"' : ''} onerror="this.src='https://picsum.photos/seed/fallback${m.id}/300/420'">`;
+        const posterUrl = getPoster(m);
+        const posterHtml = `<img class="detail-poster" src="${posterUrl}" alt="${esc(m.title)}" onerror="this.src='https://picsum.photos/seed/fallback${m.id}/300/420'">`;
 
         // Score circles
         const circles = [];
